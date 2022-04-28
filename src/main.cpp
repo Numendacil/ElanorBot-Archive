@@ -1,124 +1,157 @@
 // 注意: 本项目的所有源文件都必须是 UTF-8 编码
 
-// 这是一个“反撤回”机器人
-// 在群里回复 “/anti-recall enabled.” 或者 “撤回没用” 之后
-// 如果有人在群里撤回，那么机器人会把撤回的内容再发出来
-
-#include <iostream>
-#include <map>
+#include <unordered_map>
+#include <memory>
+#include <mutex>
+#include <algorithm>
 #include <mirai.h>
-#include "myheader.h"
+#include "Common.hpp"
+#include "ElanorBot.hpp"
+#include "Factory.hpp"
+#include "MessageQueue.hpp"
+#include "utils/log.h"
+#include "Command/GroupCommandBase.hpp"
+
+
 using namespace std;
 using namespace Cyan;
 
 int main()
 {
-#if defined(WIN32) || defined(_WIN32)
-	// 切换代码页，让 CMD 可以显示 UTF-8 字符
-	system("chcp 65001");
-#endif
+	// Call this before everything else
+	Common::Init();
 
-	MiraiBot bot;
-	SessionOptions opts;
-	opts.BotQQ = 123456789_qq;				// 请修改为你的机器人QQ
-	opts.HttpHostname = "localhost";		// 请修改为和 mirai-api-http 配置文件一致
-	opts.WebSocketHostname = "localhost";	// 同上
-	opts.HttpPort = 8080;					// 同上
-	opts.WebSocketPort = 8080;				// 同上
-	opts.VerifyKey = "VerifyKey";			// 同上
+	const QQ_t Owner = 1942036996_qq;
+
+	unordered_map<GID_t, shared_ptr<ElanorBot>> Bots;
+	MiraiBot client;
+	SessionOptions opts = SessionOptions::FromJsonFile("./config.json");
+
+	vector<string> list = Factory<GroupCommandBase>::GetKeyList();
+	vector<pair<string, unique_ptr<GroupCommandBase>>> CommandList;
+	for (const auto& s : list)
+		CommandList.emplace_back(s, Factory<GroupCommandBase>::Make(s));
+	sort(CommandList.begin(), CommandList.end(), [](const pair<string, unique_ptr<GroupCommandBase>>& a, 
+							const pair<string, unique_ptr<GroupCommandBase>>& b)
+						{
+							return (a.second)->Priority() > (b.second)->Priority();
+						});
+
+	client.On<GroupMessage>([&, &CommandList = as_const(CommandList)](GroupMessage gm) 
+	{
+		shared_ptr<ElanorBot> bot;
+		static mutex mtx_bots;
+		{
+			lock_guard<mutex> lk(mtx_bots);
+			if (!Bots[gm.Sender.Group.GID])
+				Bots[gm.Sender.Group.GID] = make_shared<ElanorBot>(gm.Sender.Group.GID, Owner);
+			bot = Bots[gm.Sender.Group.GID];
+		}
+
+		int priority = -1;
+		for (const auto& p : CommandList)
+		{
+			if ((p.second)->Priority() < priority)
+				break;
+			if (bot->CheckAuth(gm.Sender, p.first))
+			{
+				vector<string> token;
+				if ((p.second)->Parse(gm.MessageChain, token))
+				{
+					(p.second)->Execute(gm, client, *bot, token);
+					priority = (p.second)->Priority();
+				}
+			}
+		}
+	});
+
+
+	// 在失去与mah的连接后重连
+	client.On<LostConnection>([&client](LostConnection e)
+	{
+		MessageQueue::GetInstance().Pause();
+		logging::WARN("<" + to_string(e.Code) + "> " + e.ErrorMessage);
+		MiraiBot::SleepSeconds(20);
+		int sleep = 2;
+		while (true)
+		{
+			try
+			{
+				logging::INFO("尝试连接 mirai-api-http...");
+				client.Reconnect();
+				logging::INFO("与 mirai-api-http 重新建立连接!");
+				MessageQueue::GetInstance().Resume();
+				break;
+			}
+			catch (const std::exception& ex)
+			{
+				logging::WARN(ex.what());
+			}
+			MiraiBot::SleepSeconds(sleep);
+			sleep = (sleep > 30)? 60 : sleep * 2;
+		}
+	});
+
+
+	client.On<EventParsingError>([](EventParsingError e)
+	{
+		try
+		{
+			e.Rethrow();
+		}
+		catch (const std::exception& ex)
+		{
+			logging::WARN("解析事件时出现错误: " + string(ex.what()));
+		}
+	});
+
+
 
 	while (true)
 	{
 		try
 		{
-			cout << "尝试与 mirai-api-http 建立连接..." << endl;
-			bot.Connect(opts);
+			logging::INFO("尝试与 mirai-api-http 建立连接...");
+			client.Connect(opts);
 			break;
 		}
 		catch (const std::exception& ex)
 		{
-			cout << ex.what() << endl;
+			logging::WARN(ex.what());
 		}
-		MiraiBot::SleepSeconds(1);
+		MiraiBot::SleepSeconds(3);
 	}
-	cout << "Bot Working..." << endl;
 
-	// 用map记录哪些群启用了“反撤回”功能
-	map<GID_t, bool> groups;
-
-	bot.On<GroupMessage>(
-		[&](GroupMessage m)
+	// 检查一下版本
+	try
+	{
+		string mah_version = client.GetMiraiApiHttpVersion();
+		string mc_version = client.GetMiraiCppVersion();
+		logging::INFO("mirai-api-http 的版本: " + mah_version
+			+ "; mirai-cpp 的版本: " + mc_version);
+		if (mah_version != mc_version)
 		{
-			try
-			{
-				string plain = m.MessageChain.GetPlainText();
-				if (plain == "/anti-recall enabled." || plain == "撤回没用")
-				{
-					groups[m.Sender.Group.GID] = true;
-					m.Reply(MessageChain().Plain("撤回也没用，我都看到了"));
-					return;
-				}
-				if (plain == "/anti-recall disabled." || plain == "撤回有用")
-				{
-					groups[m.Sender.Group.GID] = false;
-					m.Reply(MessageChain().Plain("撤回有用"));
-					return;
-				}
-			}
-			catch (const std::exception& ex)
-			{
-				cout << ex.what() << endl;
-			}
-		});
+			logging::WARN("Warning: 你的 mirai-api-http 插件的版本与 mirai-cpp 的版本不同，可能存在兼容性问题。");
+		}
+	}
+	catch (const std::exception& ex)
+	{
+		logging::WARN(ex.what());
+	}
+	logging::INFO("Bot Working...");
+	MessageQueue::GetInstance().Start(client);
 
 
-	bot.On<GroupRecallEvent>(
-		[&](GroupRecallEvent e)
-		{
-			try
-			{
-				if (!groups[e.Group.GID]) return;
-				auto recalled_mc = bot.GetGroupMessageFromId(e.MessageId).MessageChain;
-				auto mc = "刚刚有人撤回了: " + recalled_mc;
-				bot.SendMessage(e.Group.GID, mc);
-			}
-			catch (const std::exception& ex)
-			{
-				cout << ex.what() << endl;
-			}
-		});
-
-	// 在失去与mah的连接后重连
-	bot.On<LostConnection>([&](LostConnection e)
-		{
-			cout << e.ErrorMessage << " (" << e.Code << ")" << endl;
-			while (true)
-			{
-				try
-				{
-					cout << "尝试连接 mirai-api-http..." << endl;
-					bot.Reconnect();
-					cout << "与 mirai-api-http 重新建立连接!" << endl;
-					break;
-				}
-				catch (const std::exception& ex)
-				{
-					cout << ex.what() << endl;
-				}
-				MiraiBot::SleepSeconds(1);
-			}
-		});
 
 	string cmd;
 	while (cin >> cmd)
 	{
 		if (cmd == "exit")
 		{
-			// 程序结束前必须调用 Disconnect，否则 mirai-api-http 会内存泄漏。
-			bot.Disconnect();
+			MessageQueue::GetInstance().Stop();
+			client.Disconnect();
 			break;
 		}
 	}
-
 	return 0;
 }
