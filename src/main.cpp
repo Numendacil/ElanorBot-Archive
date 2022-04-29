@@ -24,7 +24,7 @@ int main()
 	const QQ_t Owner = 1942036996_qq;
 
 	unordered_map<GID_t, shared_ptr<ElanorBot>> Bots;
-	MiraiBot client;
+	shared_ptr<MiraiBot> client = make_shared<MiraiBot>();
 	SessionOptions opts = SessionOptions::FromJsonFile("./config.json");
 
 	vector<string> list = Factory<GroupCommandBase>::GetKeyList();
@@ -37,7 +37,7 @@ int main()
 							return (a.second)->Priority() > (b.second)->Priority();
 						});
 
-	client.On<GroupMessage>([&, &CommandList = as_const(CommandList)](GroupMessage gm) 
+	client->On<GroupMessage>([&, &CommandList = as_const(CommandList)](GroupMessage gm) 
 	{
 		shared_ptr<ElanorBot> bot;
 		static mutex mtx_bots;
@@ -58,7 +58,7 @@ int main()
 				vector<string> token;
 				if ((p.second)->Parse(gm.MessageChain, token))
 				{
-					(p.second)->Execute(gm, client, *bot, token);
+					(p.second)->Execute(gm, client, bot, token);
 					priority = (p.second)->Priority();
 				}
 			}
@@ -67,7 +67,7 @@ int main()
 
 
 	// 在失去与mah的连接后重连
-	client.On<LostConnection>([&client](LostConnection e)
+	client->On<LostConnection>([&client](LostConnection e)
 	{
 		MessageQueue::GetInstance().Pause();
 		logging::WARN("<" + to_string(e.Code) + "> " + e.ErrorMessage);
@@ -78,7 +78,7 @@ int main()
 			try
 			{
 				logging::INFO("尝试连接 mirai-api-http...");
-				client.Reconnect();
+				client->Reconnect();
 				logging::INFO("与 mirai-api-http 重新建立连接!");
 				MessageQueue::GetInstance().Resume();
 				break;
@@ -93,7 +93,7 @@ int main()
 	});
 
 
-	client.On<EventParsingError>([](EventParsingError e)
+	client->On<EventParsingError>([](EventParsingError e)
 	{
 		try
 		{
@@ -112,7 +112,7 @@ int main()
 		try
 		{
 			logging::INFO("尝试与 mirai-api-http 建立连接...");
-			client.Connect(opts);
+			client->Connect(opts);
 			break;
 		}
 		catch (const std::exception& ex)
@@ -125,8 +125,8 @@ int main()
 	// 检查一下版本
 	try
 	{
-		string mah_version = client.GetMiraiApiHttpVersion();
-		string mc_version = client.GetMiraiCppVersion();
+		string mah_version = client->GetMiraiApiHttpVersion();
+		string mc_version = client->GetMiraiCppVersion();
 		logging::INFO("mirai-api-http 的版本: " + mah_version
 			+ "; mirai-cpp 的版本: " + mc_version);
 		if (mah_version != mc_version)
@@ -149,7 +149,7 @@ int main()
 		if (cmd == "exit")
 		{
 			MessageQueue::GetInstance().Stop();
-			client.Disconnect();
+			client->Disconnect();
 			break;
 		}
 	}

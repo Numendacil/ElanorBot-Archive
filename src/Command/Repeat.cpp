@@ -16,9 +16,9 @@ bool Repeat::Parse(const MessageChain& msg, vector<string>& token)
 	return true;
 }
 
-bool Repeat::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot, const vector<string>& token)
+bool Repeat::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
-	auto state = bot.GetState<LastMessage>("Repeat");
+	auto state = bot->GetState<LastMessage>("Repeat");
 	auto lock = state->GetLock();
 
 	if (token[0] == state->LastMsg.ToString())

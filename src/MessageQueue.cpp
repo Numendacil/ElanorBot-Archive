@@ -5,7 +5,7 @@
 using namespace Cyan;
 using namespace std;
 
-void MessageQueue::recv(MiraiBot& bot)
+void MessageQueue::recv(shared_ptr<MiraiBot> bot)
 {
 	while(true)
 	{
@@ -26,7 +26,7 @@ void MessageQueue::recv(MiraiBot& bot)
 		try
 		{
 			this_thread::sleep_for(std::chrono::seconds(1));
-			bot.SendMessage(msg.gid, msg.msg, msg.mid);
+			bot->SendMessage(msg.gid, msg.msg, msg.mid);
 			this->message.pop();
 		}
 		catch (runtime_error& e)
@@ -36,7 +36,7 @@ void MessageQueue::recv(MiraiBot& bot)
 	}
 }
 
-void MessageQueue::Start(MiraiBot& bot)
+void MessageQueue::Start(shared_ptr<MiraiBot> bot)
 {
 	assert(!this->th.joinable());
 	{

@@ -20,7 +20,7 @@ public:
 		return m;
 	}
 
-	void Start(Cyan::MiraiBot&);
+	void Start(std::shared_ptr<Cyan::MiraiBot>);
 	void Stop(void);
 	void Pause(void);
 	void Resume(void);
@@ -38,7 +38,7 @@ private:
 	};
 
 	MessageQueue() {}
-	void recv(Cyan::MiraiBot&);
+	void recv(std::shared_ptr<Cyan::MiraiBot>);
 
 	std::mutex mtx;
 	std::condition_variable cv;

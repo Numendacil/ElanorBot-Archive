@@ -22,9 +22,10 @@ bool WhiteList::Parse(const MessageChain& msg, vector<string>& token)
 	return false;
 }
 
-bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot, const vector<string>& token)
+bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
 	assert(token.size() > 1);
+	logging::INFO("Calling whitelist<WhiteList>" + Common::GetDescription(gm));
 	string command = token[1];
 	if (command == "help" || command == "h")
 	{
@@ -35,7 +36,7 @@ bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot
 
 	if (command == "clear")
 	{
-		bot.WhiteListClear();
+		bot->WhiteListClear();
 		logging::INFO("清除成功<WhiteList>" + Common::GetDescription(gm, false));
 		Common::SendGroupMessage(gm, MessageChain().Plain("白名单归零了捏"));
 		return true;
@@ -43,16 +44,16 @@ bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot
 
 	if (command == "clean")
 	{
-		auto list = bot.GetWhiteList();
+		auto list = bot->GetWhiteList();
 		for (const auto& id : list)
 		{
 			try
 			{
-				client.GetGroupMemberInfo(gm.Sender.Group.GID, id);
+				client->GetGroupMemberInfo(gm.Sender.Group.GID, id);
 			}
 			catch (const MiraiApiHttpException& e)	// No such member
 			{
-				bot.WhiteListDelete(id);
+				bot->WhiteListDelete(id);
 			}
 		}
 		logging::INFO("整理成功<WhiteList>" + Common::GetDescription(gm, false));
@@ -62,13 +63,13 @@ bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot
 
 	if (command == "list")
 	{
-		auto list = bot.GetWhiteList();
+		auto list = bot->GetWhiteList();
 		string msg = "本群白名单:\n";
 		for (const auto& id : list)
 		{
 			try
 			{
-				auto profile = client.GetGroupMemberInfo(gm.Sender.Group.GID, id);
+				auto profile = client->GetGroupMemberInfo(gm.Sender.Group.GID, id);
 				msg += to_string(id.ToInt64()) + " (" + profile.MemberName + ")\n";
 			}
 			catch (const MiraiApiHttpException& e)	// No such member
@@ -112,7 +113,7 @@ bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot
 			string msg = "查询结果:\n";
 			for (const auto& id : arr)
 			{
-				msg += to_string(id.ToInt64()) + ((bot.IsWhiteList(id))? " 在白名单中\n" : " 不在白名单中\n");
+				msg += to_string(id.ToInt64()) + ((bot->IsWhiteList(id))? " 在白名单中\n" : " 不在白名单中\n");
 			}
 			logging::INFO("查询成功<WhiteList>" + Common::GetDescription(gm, false));
 			Common::SendGroupMessage(gm, MessageChain().Plain(msg));
@@ -122,7 +123,7 @@ bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot
 		if (command == "add")
 		{
 			for (const auto& id : arr)
-				bot.WhiteListAdd(id);
+				bot->WhiteListAdd(id);
 			logging::INFO("添加成功<WhiteList>" + Common::GetDescription(gm, false));
 			Common::SendGroupMessage(gm, MessageChain().Plain("白名单更新好了捏"));
 			return true;
@@ -131,7 +132,7 @@ bool WhiteList::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot
 		if (command == "delete" || command == "del")
 		{
 			for (const auto& id : arr)
-				bot.WhiteListDelete(id);
+				bot->WhiteListDelete(id);
 			logging::INFO("删除成功<WhiteList>" + Common::GetDescription(gm, false));
 			Common::SendGroupMessage(gm, MessageChain().Plain("白名单更新好了捏"));
 			return true;

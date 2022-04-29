@@ -20,12 +20,13 @@ bool RollDice::Parse(const MessageChain& msg, vector<string>& token)
 	return false;
 }
 
-bool RollDice::Execute(const GroupMessage& gm, MiraiBot& client, ElanorBot& bot, const vector<string>& token)
+bool RollDice::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
 	int i = 0;
 	int j = 0;
 	int result[10];
 	assert(token.size() > 1);
+	logging::INFO("Calling RollDice<RollDice>" + Common::GetDescription(gm));
 	string command = token[1];
 	if (command == "help" || command == "h")
 	{
