@@ -21,9 +21,9 @@ public:
 		return t;
 	}
 
-	size_t LaunchOnce(std::function<void()>, std::chrono::milliseconds);
-	size_t LaunchLoop(std::function<void()>, std::chrono::milliseconds, bool = false);
-	size_t LaunchLoopPrecise(std::function<void()>, std::chrono::milliseconds, bool = false);
+	size_t LaunchOnce(std::function<void()> func, std::chrono::milliseconds delay);
+	size_t LaunchLoop(std::function<void()> func, std::chrono::milliseconds interval, bool RandStart = false);
+	size_t LaunchAt(std::function<void()> func, const std::string& cron_str, int num = -1);
 
 	void Stop(size_t id)
 	{
@@ -34,6 +34,17 @@ public:
 				p.second.stop = true;
 		}
 		cv.notify_all();
+	}
+	
+	bool IsRunning(size_t id)
+	{
+		std::lock_guard<std::mutex> lk(this->mtx);
+		for (auto& p : this->worker)
+		{
+			if (p.second.id == id)
+				return !p.second.finished;
+		}
+		return false;
 	}
 
 

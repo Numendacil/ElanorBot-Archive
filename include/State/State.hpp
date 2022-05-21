@@ -3,5 +3,8 @@
 
 #include "StateBase.hpp"
 #include "LastMessage.hpp"
+#include "CoolDown.hpp"
+#include "BililiveList.hpp"
+#include "Activity.hpp"
 
 #endif

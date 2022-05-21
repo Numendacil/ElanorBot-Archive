@@ -2,13 +2,30 @@
 #define _LAST_REPEAT_HPP_
 
 #include "StateBase.hpp"
+#include <mutex>
 #include <mirai/defs/MessageChain.hpp>
 
 class LastMessage : public StateBase
 {
-public:
+protected:
 	Cyan::MessageChain LastMsg = Cyan::MessageChain();
 	bool Repeated = false;
+	mutable std::mutex mtx;
+
+public:
+	void Set(const Cyan::MessageChain& m, bool r)
+	{
+		std::lock_guard<std::mutex> lk(this->mtx);
+		this->LastMsg = m;
+		this->Repeated = r;
+	}
+
+	void Get(Cyan::MessageChain& m, bool& r) const
+	{
+		std::lock_guard<std::mutex> lk(this->mtx);
+		m = this->LastMsg;
+		r = this->Repeated;
+	}
 
 	nlohmann::json Serialize() override 
 	{

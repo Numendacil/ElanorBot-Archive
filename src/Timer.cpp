@@ -1,5 +1,7 @@
 #include "Timer.hpp"
 #include "Common.hpp"
+#include "utils/croncpp.h"
+#include "utils/log.h"
 
 using namespace std;
 
@@ -10,6 +12,8 @@ size_t Timer::GetWorker(void)
 	{
 		if (this->worker[i].second.finished)
 		{
+			if (this->worker[i].first.joinable())
+				this->worker[i].first.join();
 			this->worker[i].second = {this->id_count, false, false};
 			return i;
 		}
@@ -31,7 +35,16 @@ size_t Timer::LaunchOnce(function<void()> func, chrono::milliseconds delay)
 			if (cv.wait_for(lk, delay, [this, idx]{ return this->worker[idx].second.stop;}))
 				return;
 		}
-		func();
+
+		try
+		{
+			func();
+		}
+		catch (const exception& e)
+		{
+			logging::WARN("Exception occured <Timer::LaunchOnce>: " + string(e.what()));
+		}
+
 		{
 			lock_guard<mutex> lk(this->mtx);
 			this->worker[idx].second.finished = true;
@@ -61,9 +74,18 @@ size_t Timer::LaunchLoop(function<void()> func, chrono::milliseconds interval, b
 				}
 			}
 		}
+
 		while (true)
 		{
-			func();
+			try
+			{
+				func();
+			}
+			catch (const exception &e)
+			{
+				logging::WARN("Exception occured <Timer::LaunchLoop>: " + string(e.what()));
+			}
+
 			{
 				unique_lock<mutex> lk(this->mtx);
 				if (cv.wait_for(lk, interval, [this, idx]{ return this->worker[idx].second.stop;}))
@@ -79,33 +101,41 @@ size_t Timer::LaunchLoop(function<void()> func, chrono::milliseconds interval, b
 
 
 
-size_t Timer::LaunchLoopPrecise(function<void()> func, chrono::milliseconds interval, bool RandStart)
+size_t Timer::LaunchAt(function<void()> func, const string& cron_str, int num)
 {
+	auto crontab = cron::make_cron(cron_str);
 	lock_guard<mutex> lk(this->mtx);
 	size_t idx = this->GetWorker();
-	this->worker[idx].first = thread([this, func, interval, RandStart, idx]
+	this->worker[idx].first = thread([this, func, crontab, num, idx]
 	{
-		if (RandStart)
+		int count = 0;
+		while (true)
 		{
-			std::uniform_real_distribution<float> dist(0, 1);
-			auto pre = interval * dist(Common::rng_engine);
+			auto t = cron::cron_next(crontab, chrono::system_clock::now());
 			{
 				unique_lock<mutex> lk(this->mtx);
-				if (cv.wait_for(lk, pre, [this, idx]{ return this->worker[idx].second.stop; }))
+				if (cv.wait_until(lk, t, [this, idx]{ return this->worker[idx].second.stop;}))
 				{
 					this->worker[idx].second.finished = true;
 					return;
 				}
 			}
-		}
-		while (true)
-		{
-			auto t = chrono::steady_clock::now() + interval;
-			func();
+
+			try
 			{
-				unique_lock<mutex> lk(this->mtx);
-				if (cv.wait_until(lk, t, [this, idx]{ return this->worker[idx].second.stop;}))
+				func();
+			}
+			catch (const exception &e)
+			{
+				logging::WARN("Exception occured <Timer::LaunchAt>: " + string(e.what()));
+			}
+
+			if (num > 0)
+			{
+				count++;
+				if (count >= num)
 				{
+					unique_lock<mutex> lk(this->mtx);
 					this->worker[idx].second.finished = true;
 					return;
 				}

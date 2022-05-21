@@ -4,6 +4,7 @@
 #include <memory>
 #include <mutex>
 #include <algorithm>
+#include <filesystem>
 #include <mirai.h>
 #include "Common.hpp"
 #include "ElanorBot.hpp"
@@ -31,20 +32,71 @@ int main()
 	vector<pair<string, unique_ptr<GroupCommandBase>>> CommandList;
 	for (const auto& s : list)
 		CommandList.emplace_back(s, Factory<GroupCommandBase>::Make(s));
-	sort(CommandList.begin(), CommandList.end(), [](const pair<string, unique_ptr<GroupCommandBase>>& a, 
-							const pair<string, unique_ptr<GroupCommandBase>>& b)
-						{
-							return (a.second)->Priority() > (b.second)->Priority();
-						});
+	sort(CommandList.begin(), 
+		CommandList.end(), 
+		[](const pair<string, unique_ptr<GroupCommandBase>>& a, const pair<string, unique_ptr<GroupCommandBase>>& b)
+		{
+			return (a.second)->Priority() > (b.second)->Priority();
+		});
 
-	client->On<GroupMessage>([&, &CommandList = as_const(CommandList)](GroupMessage gm) 
+	client->On<NudgeEvent>([client](NudgeEvent e)
 	{
+		try
+		{
+			static mutex mtx;
+			// 如果别人戳机器人，那么就让机器人戳回去
+			if (e.Target != client->GetBotQQ())
+				return;
+			if (e.FromId == client->GetBotQQ())
+				return;
+
+			if (e.FromKind == NudgeEvent::SubjectKind::Group)
+			{
+				string sender = client->GetGroupMemberInfo((GID_t)e.RawSubjectId, e.FromId).MemberName;
+				string group_name = client->GetGroupConfig((GID_t)e.RawSubjectId).Name;
+				logging::INFO("有人戳bot <OnNudgeEvent>\t<- [" + sender + "(" + to_string(e.FromId.ToInt64()) + "), " + group_name + "(" + to_string(((GID_t)e.RawSubjectId).ToInt64()) + ")]");
+				
+				unique_lock<mutex> lock(mtx, try_to_lock);
+				if (!lock)
+				{
+					logging::INFO("冷却中 <OnNudgeEvent>");
+					return;
+				}
+				
+				uniform_int_distribution<int> rng05(0, 5);
+				int i = rng05(Common::rng_engine);
+				if (i)
+				{
+					MiraiBot::SleepSeconds(1);
+					client->SendNudge(e.FromId, (GID_t)e.RawSubjectId);
+					logging::INFO("戳回去了 <OnNudgeEvent>\t-> [" + sender + "(" + to_string(e.FromId.ToInt64()) + "), " + group_name + "(" + to_string(((GID_t)e.RawSubjectId).ToInt64()) + ")]");
+				}
+				else
+				{
+					MessageQueue::GetInstance().Push((GID_t)e.RawSubjectId, MessageChain().At(e.FromId).Plain(" 戳你吗"));
+					logging::INFO("骂回去了 <OnNudgeEvent>\t-> [" + sender + "(" + to_string(e.FromId.ToInt64()) + "), " + group_name + "(" + to_string(((GID_t)e.RawSubjectId).ToInt64()) + ")]");
+				}
+				MiraiBot::SleepSeconds(1);
+			}
+		}
+		catch (MiraiApiHttpException &e)
+		{
+			logging::WARN("<" + to_string(e.Code) + "> " + e.Message);
+		}
+	});
+
+
+	client->On<GroupMessage>([&, client , &CommandList = as_const(CommandList)](GroupMessage gm) 
+	{
+		if (gm.Sender.QQ == client->GetBotQQ())
+			return;
+		
 		shared_ptr<ElanorBot> bot;
 		static mutex mtx_bots;
 		{
 			lock_guard<mutex> lk(mtx_bots);
 			if (!Bots[gm.Sender.Group.GID])
-				Bots[gm.Sender.Group.GID] = make_shared<ElanorBot>(gm.Sender.Group.GID, Owner);
+				Bots[gm.Sender.Group.GID] = make_shared<ElanorBot>(gm.Sender.Group.GID, Owner, client);
 			bot = Bots[gm.Sender.Group.GID];
 		}
 
@@ -53,13 +105,18 @@ int main()
 		{
 			if ((p.second)->Priority() < priority)
 				break;
-			if (bot->CheckAuth(gm.Sender, p.first))
+			vector<string> token;
+			if ((p.second)->Parse(gm.MessageChain, token))
 			{
-				vector<string> token;
-				if ((p.second)->Parse(gm.MessageChain, token))
+				if (bot->CheckAuth(gm.Sender, p.first))
 				{
-					(p.second)->Execute(gm, client, bot, token);
+					(p.second)->Execute(gm, bot, token);
 					priority = (p.second)->Priority();
+				}
+				else
+				{
+					logging::INFO("权限不足 <OnGroupMessage>: " + (token.size())? token[0] : string() + Common::GetDescription(gm, false));
+					MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("权限不足捏~"));
 				}
 			}
 		}
@@ -67,7 +124,7 @@ int main()
 
 
 	// 在失去与mah的连接后重连
-	client->On<LostConnection>([&client](LostConnection e)
+	client->On<LostConnection>([client](LostConnection e)
 	{
 		MessageQueue::GetInstance().Pause();
 		logging::WARN("<" + to_string(e.Code) + "> " + e.ErrorMessage);
@@ -138,8 +195,24 @@ int main()
 	{
 		logging::WARN(ex.what());
 	}
-	logging::INFO("Bot Working...");
 	MessageQueue::GetInstance().Start(client);
+	string path = "./bot";
+	for (const auto & entry : filesystem::directory_iterator(path))
+	{
+		if (entry.is_regular_file())
+		{
+			try
+			{
+				GID_t gid = (GID_t)stol(entry.path().stem());
+				Bots[gid] = make_shared<ElanorBot>(gid, Owner, client);
+			}
+			catch(const logic_error& e)
+			{
+				logging::WARN("Unexpected file found in ./bot directory: " + string(entry.path().filename()));
+			}
+		}
+	}
+	logging::INFO("Bot Working...");
 
 
 

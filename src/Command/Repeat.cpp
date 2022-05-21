@@ -1,6 +1,7 @@
 #include "utils/log.h"
 #include "Command/Repeat.hpp"
 #include "Common.hpp"
+#include "ElanorBot.hpp"
 #include "State/LastMessage.hpp"
 
 using namespace std;
@@ -16,30 +17,31 @@ bool Repeat::Parse(const MessageChain& msg, vector<string>& token)
 	return true;
 }
 
-bool Repeat::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
+	MessageChain LastMsg;
+	bool Repeated;
 	auto state = bot->GetState<LastMessage>("Repeat");
-	auto lock = state->GetLock();
+	state->Get(LastMsg, Repeated);
 
-	if (token[0] == state->LastMsg.ToString())
+	if (token[0] == LastMsg.ToString())
 	{
-		logging::INFO("有人复读<Repeat>: " + token[0] + Common::GetDescription(gm));
-		if (!state->Repeated)
+	//	logging::INFO("有人复读 <Repeat>: " + token[0] + Common::GetDescription(gm));
+		if (!Repeated)
 		{
 			uniform_int_distribution rng_repeat(1, 3);
 			if (rng_repeat(Common::rng_engine) == 1)
 			{
-				state->Repeated = true;
+				state->Set(gm.MessageChain, true);
 				Common::SendGroupMessage(gm, gm.MessageChain);
-				logging::INFO("bot复读成功<Repeat>" + Common::GetDescription(gm, false));
+				logging::INFO("bot复读成功 <Repeat>" + Common::GetDescription(gm, false));
 				return true;
 			}
 		}
 	}
 	else
 	{
-		state->LastMsg = gm.MessageChain;
-		state->Repeated = false;
+		state->Set(gm.MessageChain, false);
 	}
 	return false;
 }

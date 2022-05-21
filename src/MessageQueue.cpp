@@ -44,7 +44,7 @@ void MessageQueue::Start(shared_ptr<MiraiBot> bot)
 		this->start = true;
 		this->running = true;
 	}
-	this->th = thread(&MessageQueue::recv, this, ref(bot));
+	this->th = thread(&MessageQueue::recv, this, bot);
 }
 
 void MessageQueue::Stop(void)

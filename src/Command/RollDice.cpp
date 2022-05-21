@@ -1,6 +1,7 @@
 #include "utils/log.h"
 #include "Command/RollDice.hpp"
 #include "Common.hpp"
+#include "ElanorBot.hpp"
 
 using namespace std;
 using namespace Cyan;
@@ -9,7 +10,7 @@ bool RollDice::Parse(const MessageChain& msg, vector<string>& token)
 {
 	string str = msg.GetPlainText();
 	Common::ReplaceMark(str);
-	if (str.length() > char_traits<char>::length("#roll") + 1)
+	if (str.length() > char_traits<char>::length("#roll"))
 	{
 		Common::ToLower(str);
 		if (Common::Tokenize(token, str, 2) < 2)
@@ -20,18 +21,18 @@ bool RollDice::Parse(const MessageChain& msg, vector<string>& token)
 	return false;
 }
 
-bool RollDice::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool RollDice::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
 	int i = 0;
 	int j = 0;
 	int result[10];
 	assert(token.size() > 1);
-	logging::INFO("Calling RollDice<RollDice>" + Common::GetDescription(gm));
+	logging::INFO("Calling RollDice <RollDice>" + Common::GetDescription(gm));
 	string command = token[1];
 	if (command == "help" || command == "h")
 	{
-		logging::INFO("帮助文档<RollDice>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("usage:\n#roll <x>D<y>"));
+		logging::INFO("帮助文档 <RollDice>" + Common::GetDescription(gm, false));
+		Common::SendGroupMessage(gm, MessageChain().Plain("usage:\n#roll [x]D[y]"));
 		return true;
 	}
 	while (command[i + j] >= '0' && command[i + j] <= '9')
@@ -47,13 +48,13 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shar
 				round = stoi(command.substr(i, j));
 			if (round > 10)
 			{
-				logging::INFO("投掷次数错误<RollDice>: round = " + to_string(round) + Common::GetDescription(gm, false));
+				logging::INFO("投掷次数错误 <RollDice>: round = " + to_string(round) + Common::GetDescription(gm, false));
 				Common::SendGroupMessage(gm, MessageChain().Plain("骰子太多啦！"));
 				return false;
 			}
 			if (round < 1)
 			{
-				logging::INFO("投掷次数错误<RollDice>: round = " + to_string(round) + Common::GetDescription(gm, false));
+				logging::INFO("投掷次数错误 <RollDice>: round = " + to_string(round) + Common::GetDescription(gm, false));
 				Common::SendGroupMessage(gm, MessageChain().Plain("骰子不见了捏，怎么会事捏"));
 				return false;
 			}
@@ -76,7 +77,7 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shar
 					msg += (l)? " + " + to_string(result[i]) : to_string(result[i]);
 				}
 				msg += " = ";
-				logging::INFO("随机数生成<RollDice>: " + msg + to_string(ans) + Common::GetDescription(gm, false));
+				logging::INFO("随机数生成 <RollDice>: " + msg + to_string(ans) + Common::GetDescription(gm, false));
 				if (round == 1)
 					Common::SendGroupMessage(gm, MessageChain().Plain(gm.Sender.MemberName + " 掷出了: " + to_string(ans)));
 				else
@@ -86,13 +87,13 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<MiraiBot> client, shar
 		}
 		catch (out_of_range &)
 		{
-			logging::INFO("数字溢出<RollDice>" + Common::GetDescription(gm, false));
+			logging::INFO("数字溢出 <RollDice>" + Common::GetDescription(gm, false));
 			Common::SendGroupMessage(gm, MessageChain().Plain("数字太、太大了"));
 			return false;
 		}
 	}
 
-	logging::INFO("格式错误<RollDice>" + Common::GetDescription(gm, false));
-	Common::SendGroupMessage(gm, MessageChain().Plain("格式错误，使用示例 #roll 1D100"));
+	logging::INFO("格式错误 <RollDice>" + Common::GetDescription(gm, false));
+	Common::SendGroupMessage(gm, MessageChain().Plain("格式错了捏，使用示例 #roll 1D100"));
 	return false;
 }
