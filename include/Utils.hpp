@@ -1,7 +1,10 @@
-#ifndef _COMMON_HPP_
-#define _COMMON_HPP_
+#ifndef _UTILS_HPP_
+#define _UTILS_HPP_
 
+#include "mirai/third-party/nlohmann/json.hpp"
+#include "third-party/json.hpp"
 #include <random>
+#include <optional>
 #include <mirai/defs/MessageChain.hpp>
 #include <mirai/events/events.hpp>
 
@@ -10,10 +13,28 @@ namespace httplib_ssl_zlib
 	class Result;
 }
 
-namespace Common
+namespace Utils
+{
+	class BotConfig
+	{
+	private:
+		nlohmann::json config;
+
+	public:
+		BotConfig() = default;
+		BotConfig(const nlohmann::json& config) { this->config = config;}
+		bool FromFile(const std::string& filepath);
+
+		template<typename T>
+		T Get(const nlohmann::json::json_pointer& key, const T& value) const;
+		template<typename T>
+		std::optional<T> Get(const nlohmann::json::json_pointer& key) const;
+	};
+}
+
+namespace Utils
 {
 	extern std::mt19937 rng_engine;
-	extern const std::string WhiteSpace;
 	extern const std::string MediaFilePath;
 
 	void Init(void);

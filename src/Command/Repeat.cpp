@@ -1,6 +1,6 @@
-#include "utils/log.h"
+#include "third-party/log.h"
 #include "Command/Repeat.hpp"
-#include "Common.hpp"
+#include "Utils.hpp"
 #include "ElanorBot.hpp"
 #include "State/LastMessage.hpp"
 
@@ -26,15 +26,15 @@ bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 
 	if (token[0] == LastMsg.ToString())
 	{
-	//	logging::INFO("有人复读 <Repeat>: " + token[0] + Common::GetDescription(gm));
+	//	logging::INFO("有人复读 <Repeat>: " + token[0] + Utils::GetDescription(gm));
 		if (!Repeated)
 		{
 			uniform_int_distribution rng_repeat(1, 3);
-			if (rng_repeat(Common::rng_engine) == 1)
+			if (rng_repeat(Utils::rng_engine) == 1)
 			{
 				state->Set(gm.MessageChain, true);
-				Common::SendGroupMessage(gm, gm.MessageChain);
-				logging::INFO("bot复读成功 <Repeat>" + Common::GetDescription(gm, false));
+				Utils::SendGroupMessage(gm, gm.MessageChain);
+				logging::INFO("bot复读成功 <Repeat>" + Utils::GetDescription(gm, false));
 				return true;
 			}
 		}

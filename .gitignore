@@ -1,5 +1,12 @@
 .vscode/
+.vs/
+.cache/
 out/
 CMakeSettings.json
 .DS_Store
 build/
+.history
+CMakeFiles
+Makefile
+*.cmake
+CMakeCache.txt

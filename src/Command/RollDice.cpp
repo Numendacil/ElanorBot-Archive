@@ -1,6 +1,6 @@
-#include "utils/log.h"
+#include "third-party/log.h"
 #include "Command/RollDice.hpp"
-#include "Common.hpp"
+#include "Utils.hpp"
 #include "ElanorBot.hpp"
 
 using namespace std;
@@ -9,11 +9,11 @@ using namespace Cyan;
 bool RollDice::Parse(const MessageChain& msg, vector<string>& token)
 {
 	string str = msg.GetPlainText();
-	Common::ReplaceMark(str);
+	Utils::ReplaceMark(str);
 	if (str.length() > char_traits<char>::length("#roll"))
 	{
-		Common::ToLower(str);
-		if (Common::Tokenize(token, str, 2) < 2)
+		Utils::ToLower(str);
+		if (Utils::Tokenize(token, str, 2) < 2)
 			return false;
 		if (token[0] == "#roll")
 			return true;
@@ -27,12 +27,12 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 	int j = 0;
 	int result[10];
 	assert(token.size() > 1);
-	logging::INFO("Calling RollDice <RollDice>" + Common::GetDescription(gm));
+	logging::INFO("Calling RollDice <RollDice>" + Utils::GetDescription(gm));
 	string command = token[1];
 	if (command == "help" || command == "h")
 	{
-		logging::INFO("帮助文档 <RollDice>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("usage:\n#roll [x]D[y]"));
+		logging::INFO("帮助文档 <RollDice>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("usage:\n#roll [x]D[y]"));
 		return true;
 	}
 	while (command[i + j] >= '0' && command[i + j] <= '9')
@@ -48,14 +48,14 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 				round = stoi(command.substr(i, j));
 			if (round > 10)
 			{
-				logging::INFO("投掷次数错误 <RollDice>: round = " + to_string(round) + Common::GetDescription(gm, false));
-				Common::SendGroupMessage(gm, MessageChain().Plain("骰子太多啦！"));
+				logging::INFO("投掷次数错误 <RollDice>: round = " + to_string(round) + Utils::GetDescription(gm, false));
+				Utils::SendGroupMessage(gm, MessageChain().Plain("骰子太多啦！"));
 				return false;
 			}
 			if (round < 1)
 			{
-				logging::INFO("投掷次数错误 <RollDice>: round = " + to_string(round) + Common::GetDescription(gm, false));
-				Common::SendGroupMessage(gm, MessageChain().Plain("骰子不见了捏，怎么会事捏"));
+				logging::INFO("投掷次数错误 <RollDice>: round = " + to_string(round) + Utils::GetDescription(gm, false));
+				Utils::SendGroupMessage(gm, MessageChain().Plain("骰子不见了捏，怎么会事捏"));
 				return false;
 			}
 
@@ -72,28 +72,28 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 				string msg = "";
 				for (int l = 0; l < round; ++l)
 				{
-					result[i] = rngroll(Common::rng_engine);
+					result[i] = rngroll(Utils::rng_engine);
 					ans += result[i];
 					msg += (l)? " + " + to_string(result[i]) : to_string(result[i]);
 				}
 				msg += " = ";
-				logging::INFO("随机数生成 <RollDice>: " + msg + to_string(ans) + Common::GetDescription(gm, false));
+				logging::INFO("随机数生成 <RollDice>: " + msg + to_string(ans) + Utils::GetDescription(gm, false));
 				if (round == 1)
-					Common::SendGroupMessage(gm, MessageChain().Plain(gm.Sender.MemberName + " 掷出了: " + to_string(ans)));
+					Utils::SendGroupMessage(gm, MessageChain().Plain(gm.Sender.MemberName + " 掷出了: " + to_string(ans)));
 				else
-					Common::SendGroupMessage(gm, MessageChain().Plain(gm.Sender.MemberName + " 掷出了: " + msg + to_string(ans)));
+					Utils::SendGroupMessage(gm, MessageChain().Plain(gm.Sender.MemberName + " 掷出了: " + msg + to_string(ans)));
 				return true;
 			}
 		}
 		catch (out_of_range &)
 		{
-			logging::INFO("数字溢出 <RollDice>" + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain("数字太、太大了"));
+			logging::INFO("数字溢出 <RollDice>" + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain("数字太、太大了"));
 			return false;
 		}
 	}
 
-	logging::INFO("格式错误 <RollDice>" + Common::GetDescription(gm, false));
-	Common::SendGroupMessage(gm, MessageChain().Plain("格式错了捏，使用示例 #roll 1D100"));
+	logging::INFO("格式错误 <RollDice>" + Utils::GetDescription(gm, false));
+	Utils::SendGroupMessage(gm, MessageChain().Plain("格式错了捏，使用示例 #roll 1D100"));
 	return false;
 }

@@ -7619,9 +7619,9 @@ inline bool SSLClient::verify_host(X509 *server_cert) const {
   /* Quote from RFC2818 section 3.1 "Server Identity"
 
      If a subjectAltName extension of type dNSName is present, that MUST
-     be used as the identity. Otherwise, the (most specific) Common Name
+     be used as the identity. Otherwise, the (most specific) Utils Name
      field in the Subject field of the certificate MUST be used. Although
-     the use of the Common Name is existing practice, it is deprecated and
+     the use of the Utils Name is existing practice, it is deprecated and
      Certification Authorities are encouraged to use the dNSName instead.
 
      Matching is performed using the matching rules specified by

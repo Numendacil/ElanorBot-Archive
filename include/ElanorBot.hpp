@@ -11,7 +11,7 @@
 #include "State/StateBase.hpp"
 #include "Trigger/TriggerBase.hpp"
 
-#include "utils/log.h"
+#include "third-party/log.h"
 
 class ElanorBot
 {

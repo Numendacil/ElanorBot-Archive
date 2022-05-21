@@ -1,7 +1,7 @@
 #include "Timer.hpp"
-#include "Common.hpp"
-#include "utils/croncpp.h"
-#include "utils/log.h"
+#include "Utils.hpp"
+#include "third-party/croncpp.h"
+#include "third-party/log.h"
 
 using namespace std;
 
@@ -64,7 +64,7 @@ size_t Timer::LaunchLoop(function<void()> func, chrono::milliseconds interval, b
 		if (RandStart)
 		{
 			std::uniform_real_distribution<float> dist(0, 1);
-			auto pre = interval * dist(Common::rng_engine);
+			auto pre = interval * dist(Utils::rng_engine);
 			{
 				unique_lock<mutex> lk(this->mtx);
 				if (cv.wait_for(lk, pre, [this, idx]{ return this->worker[idx].second.stop;}))

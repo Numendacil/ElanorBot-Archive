@@ -6,11 +6,11 @@
 #include <algorithm>
 #include <filesystem>
 #include <mirai.h>
-#include "Common.hpp"
+#include "Utils.hpp"
 #include "ElanorBot.hpp"
 #include "Factory.hpp"
 #include "MessageQueue.hpp"
-#include "utils/log.h"
+#include "third-party/log.h"
 #include "Command/GroupCommandBase.hpp"
 
 
@@ -20,7 +20,7 @@ using namespace Cyan;
 int main()
 {
 	// Call this before everything else
-	Common::Init();
+	Utils::Init();
 
 	const QQ_t Owner = 1942036996_qq;
 
@@ -64,7 +64,7 @@ int main()
 				}
 				
 				uniform_int_distribution<int> rng05(0, 5);
-				int i = rng05(Common::rng_engine);
+				int i = rng05(Utils::rng_engine);
 				if (i)
 				{
 					MiraiBot::SleepSeconds(1);
@@ -115,7 +115,7 @@ int main()
 				}
 				else
 				{
-					logging::INFO("权限不足 <OnGroupMessage>: " + (token.size())? token[0] : string() + Common::GetDescription(gm, false));
+					logging::INFO("权限不足 <OnGroupMessage>: " + ((token.size())? token[0] : string() + Utils::GetDescription(gm, false)));
 					MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("权限不足捏~"));
 				}
 			}

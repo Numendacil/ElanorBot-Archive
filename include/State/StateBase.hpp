@@ -2,7 +2,7 @@
 #define _STATE_BASE_HPP_
 
 #include <string>
-#include "../utils/json.hpp"
+#include "../third-party/json.hpp"
 
 class StateBase
 {

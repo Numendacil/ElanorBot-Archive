@@ -5,8 +5,8 @@
 #include "Factory.hpp"
 #include "State/State.hpp"
 #include "Command/GroupCommandBase.hpp"
-#include "utils/json.hpp"
-#include "utils/log.h"
+#include "third-party/json.hpp"
+#include "third-party/log.h"
 
 using namespace std;
 using namespace Cyan;

@@ -1,9 +1,9 @@
-#include "utils/log.h"
-#include "utils/json.hpp"
-#include "utils/httplib.hpp"
+#include "third-party/log.h"
+#include "third-party/json.hpp"
+#include "third-party/httplib.hpp"
 #include "State/CoolDown.hpp"
 #include "Command/image/Pixiv.hpp"
-#include "Common.hpp"
+#include "Utils.hpp"
 #include "ElanorBot.hpp"
 #include <mirai/messages/messages.hpp>
 #include <mirai/exceptions/exceptions.hpp>
@@ -15,12 +15,12 @@ using json = nlohmann::json;
 bool Pixiv::Parse(const MessageChain& msg, vector<string>& token)
 {
 	string str = msg.GetPlainText();
-	Common::ReplaceMark(str);
+	Utils::ReplaceMark(str);
 	if (str.length() > char_traits<char>::length("#pix"))
 	{
-		if (Common::Tokenize(token, str) < 2)
+		if (Utils::Tokenize(token, str) < 2)
 			return false;
-		Common::ToLower(token[0]);
+		Utils::ToLower(token[0]);
 		if (token[0] == "#pixiv" || token[0] == "#p站" || token[0] == "#pix")
 			return true;
 	}
@@ -39,17 +39,17 @@ bool GetPixivById(const GroupMessage& gm, shared_ptr<ElanorBot> bot, long pid, i
 	{
 		stringstream ss;
 		ss << remaining;
-		logging::INFO("冷却剩余<Pixiv>: " + ss.str() + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
+		logging::INFO("冷却剩余<Pixiv>: " + ss.str() + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
 		return false;
 	}
 	assert(holder);
 
 	httplib_ssl_zlib::Client cli("localhost", 8000);
 	auto result = cli.Get("/pixiv/id/", {{"id", to_string(pid)}, {"page", to_string(page)}}, {{"Accept-Encoding", "gzip"}});
-	if (!Common::CheckHttpResponse(result, "Pixiv"))
+	if (!Utils::CheckHttpResponse(result, "Pixiv"))
 	{
-		Common::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 	json msg = json::parse(result->body);
@@ -57,8 +57,8 @@ bool GetPixivById(const GroupMessage& gm, shared_ptr<ElanorBot> bot, long pid, i
 	assert(msg.contains("info"));
 	if (!msg.contains("image"))
 	{
-		logging::INFO("上传结果<Pixiv>: 未找到图片" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain(msg["info"].get<string>()));
+		logging::INFO("上传结果<Pixiv>: 未找到图片" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain(msg["info"].get<string>()));
 		return true;
 	}
 	json info = json::parse(msg["info"].get<string>());
@@ -90,34 +90,34 @@ bool GetPixivById(const GroupMessage& gm, shared_ptr<ElanorBot> bot, long pid, i
 	}
 	catch (const exception& e)
 	{
-		logging::WARN("Error occured while parsing result <Pixiv>: " +string(e.what()) + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		logging::WARN("Error occured while parsing result <Pixiv>: " +string(e.what()) + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 
-	logging::INFO("上传结果 <Pixiv>" + Common::GetDescription(gm, false));
-	Common::SendGroupMessage(gm, MessageChain().Plain(message).Image({"", "", "", msg["image"]}));
+	logging::INFO("上传结果 <Pixiv>" + Utils::GetDescription(gm, false));
+	Utils::SendGroupMessage(gm, MessageChain().Plain(message).Image({"", "", "", msg["image"]}));
 	return true;
 }
 
 bool Pixiv::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
-	logging::INFO("Calling Pixiv<Pixiv>" + Common::GetDescription(gm));
+	logging::INFO("Calling Pixiv<Pixiv>" + Utils::GetDescription(gm));
 	assert(token.size() > 1);
 	string command = token[1];
-	Common::ToLower(command);
+	Utils::ToLower(command);
 	if (command == "help" || command == "h" || command == "帮助")
 	{
-		logging::INFO("帮助文档<Pixiv>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("usage:\n#pixiv id [pid] (page)"));
+		logging::INFO("帮助文档<Pixiv>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("usage:\n#pixiv id [pid] (page)"));
 		return true;
 	}
 	else if (command == "id")
 	{
 		if (token.size() < 3)
 		{
-			logging::INFO("缺少参数[pid] <Pixiv>" + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain("不发pid看个锤子图"));
+			logging::INFO("缺少参数[pid] <Pixiv>" + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain("不发pid看个锤子图"));
 			return true;
 		}
 		long pid = 0;
@@ -130,8 +130,8 @@ bool Pixiv::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vec
 		}
 		catch (const logic_error& e)
 		{
-			logging::INFO("无效[pid] <Pixiv>: " + token[2] + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain(token[2] + "是个锤子pid"));
+			logging::INFO("无效[pid] <Pixiv>: " + token[2] + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain(token[2] + "是个锤子pid"));
 			return false;
 		}
 		if (token.size() > 3)
@@ -144,15 +144,15 @@ bool Pixiv::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vec
 			}
 			catch (const logic_error &e)
 			{
-				logging::INFO("无效[page] <Pixiv>: " + token[3] + Common::GetDescription(gm, false));
-				Common::SendGroupMessage(gm, MessageChain().Plain(token[3] + "是个锤子页码"));
+				logging::INFO("无效[page] <Pixiv>: " + token[3] + Utils::GetDescription(gm, false));
+				Utils::SendGroupMessage(gm, MessageChain().Plain(token[3] + "是个锤子页码"));
 				return false;
 			}
 		}
 		return GetPixivById(gm, bot, pid, page);
 	}
 
-	logging::INFO("未知指令 <Pixiv>: " + token[1] + Common::GetDescription(gm, false));
-	Common::SendGroupMessage(gm, MessageChain().Plain(token[1] + "是什么指令捏，不认识捏"));
+	logging::INFO("未知指令 <Pixiv>: " + token[1] + Utils::GetDescription(gm, false));
+	Utils::SendGroupMessage(gm, MessageChain().Plain(token[1] + "是什么指令捏，不认识捏"));
 	return false;
 }

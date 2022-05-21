@@ -1,41 +1,71 @@
+#include <exception>
+#include <fstream>
+#include <optional>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
 #include <cctype>
 
-#include "utils/httplib.hpp"
-#include "utils/log.h"
+#include "third-party/httplib.hpp"
+#include "third-party/log.h"
 #include "Command/Command.hpp"
 #include "State/State.hpp"
 #include "Trigger/Trigger.hpp"
 #include "MessageQueue.hpp"
 #include "Factory.hpp"
-#include "Common.hpp"
+#include "Utils.hpp"
 
 using namespace std;
 using namespace Cyan;
 
-namespace Common
+namespace Utils
+{
+	bool BotConfig::FromFile(const string &filepath)
+	{
+		ifstream ifile(filepath);
+		if (ifile.fail())
+		{
+			logging::WARN("Failed to open file <BotConfig>: " + filepath);
+			return false;
+		}
+		try
+		{
+			this->config = json::parse(ifile);
+		}
+		catch (const exception& e)
+		{
+			logging::WARN("Failed to parse file <BotConfig>: " + string(e.what()));
+			return false;
+		}
+		return true;
+	}
+
+	template<typename T>
+	T BotConfig::Get(const json::json_pointer& key, const T& value) const
+	{
+		if (this->config.contains(key))
+			return this->config.at(key).get<T>();
+		else
+			return value;
+	}
+
+	template<typename T>
+	optional<T> BotConfig::Get(const json::json_pointer& key) const
+	{
+		if (this->config.contains(key))
+			return this->config.at(key).get<T>();
+		else
+			return nullopt;
+	}
+}
+
+namespace Utils
 {
 	random_device rd;
 	mt19937 rng_engine(rd());
+	BotConfig Options;
 
-	const string WhiteSpace = " \n\r\t\f\v";
 	const string MediaFilePath = "/home/ubuntu/mirai/media_files/";
-	const vector<pair<const string, const string>> ReplaceList =
-	    {
-		{"﹟", "#"},
-		{"？", "?"},
-		{"＃", "#"},
-		{"！", "!"},
-		{"。", "."},
-		{"，", ","},
-		{"“", "\""},
-		{"”", "\""},
-		{"‘", "\'"},
-		{"’", "\'"},
-		{"；", ";"},
-		{"：", ":"}};
 
 	void Init(void)
 	{
@@ -115,6 +145,20 @@ namespace Common
 
 	void ReplaceMark(string &str)
 	{
+		static const vector<pair<const string, const string>> ReplaceList =
+	    {
+		{"﹟", "#"},
+		{"？", "?"},
+		{"＃", "#"},
+		{"！", "!"},
+		{"。", "."},
+		{"，", ","},
+		{"“", "\""},
+		{"”", "\""},
+		{"‘", "\'"},
+		{"’", "\'"},
+		{"；", ";"},
+		{"：", ":"}};
 		for (const auto &p : ReplaceList)
 		{
 			string temp;

@@ -2,10 +2,10 @@
 #include "State/BililiveList.hpp"
 #include "ElanorBot.hpp"
 #include "MessageQueue.hpp"
-#include "utils/httplib.hpp"
-#include "utils/log.h"
-#include "utils/json.hpp"
-#include "Common.hpp"
+#include "third-party/httplib.hpp"
+#include "third-party/log.h"
+#include "third-party/json.hpp"
+#include "Utils.hpp"
 
 using namespace std;
 using namespace Cyan;
@@ -22,7 +22,7 @@ void BililiveTrigger::Action(shared_ptr<MiraiBot> client, ElanorBot* bot)
 		auto result = cli.Get("/room/v1/Room/get_info", {{"id", to_string(id.second.room_id)}}, 
 					{{"Accept-Encoding", "gzip"},
 					{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
-		if (!Common::CheckHttpResponse(result, "BililiveTrigger: room_info"))
+		if (!Utils::CheckHttpResponse(result, "BililiveTrigger: room_info"))
 			continue;
 
 		json content = json::parse(result->body);
@@ -41,7 +41,7 @@ void BililiveTrigger::Action(shared_ptr<MiraiBot> client, ElanorBot* bot)
 			result = cli.Get("/live_user/v1/Master/info", {{"uid", to_string(id.first)}}, 
 					{{"Accept-Encoding", "gzip"},
 					{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
-			if (!Common::CheckHttpResponse(result, "BililiveTrigger: user_info"))
+			if (!Utils::CheckHttpResponse(result, "BililiveTrigger: user_info"))
 				continue;
 
 			content = json::parse(result->body);

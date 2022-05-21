@@ -1,7 +1,7 @@
-#include "utils/log.h"
+#include "third-party/log.h"
 #include "Command/Answer.hpp"
 #include "State/Activity.hpp"
-#include "Common.hpp"
+#include "Utils.hpp"
 #include "ElanorBot.hpp"
 
 using namespace std;
@@ -10,7 +10,7 @@ using namespace Cyan;
 bool Answer::Parse(const MessageChain& msg, vector<string>& token)
 {
 	string str = msg.GetPlainText();
-	Common::ReplaceMark(str);
+	Utils::ReplaceMark(str);
 	if (str[0] != '.')
 		return false;
 	token.clear();
@@ -26,7 +26,7 @@ bool Answer::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 	if (state->GetActivityName() == "pjsk")
 	{
 		assert(!token.empty());
-		logging::INFO("<Answer: pjsk>: " + token[0] + Common::GetDescription(gm));
+		logging::INFO("<Answer: pjsk>: " + token[0] + Utils::GetDescription(gm));
 		state->AddAnswer({token[0], gm.MessageId()});
 		return true;
 	}

@@ -1,7 +1,7 @@
 #include <mirai/exceptions/exceptions.hpp>
 #include <chrono>
 #include "MessageQueue.hpp"
-#include "utils/log.h"
+#include "third-party/log.h"
 using namespace Cyan;
 using namespace std;
 

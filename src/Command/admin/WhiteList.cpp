@@ -1,8 +1,8 @@
 #include <stdexcept>
 #include <mirai/exceptions/exceptions.hpp>
-#include "utils/log.h"
+#include "third-party/log.h"
 #include "Command/admin/WhiteList.hpp"
-#include "Common.hpp"
+#include "Utils.hpp"
 #include "ElanorBot.hpp"
 
 using namespace std;
@@ -11,11 +11,11 @@ using namespace Cyan;
 bool WhiteList::Parse(const MessageChain& msg, vector<string>& token)
 {
 	string str = msg.GetPlainText();
-	Common::ReplaceMark(str);
+	Utils::ReplaceMark(str);
 	if (str.length() > char_traits<char>::length("#white"))
 	{
-		Common::ToLower(str);
-		if (Common::Tokenize(token, str) < 2)
+		Utils::ToLower(str);
+		if (Utils::Tokenize(token, str) < 2)
 			return false;
 		if (token[0] == "#white" || token[0] == "#白名单" || token[0] == "#whitelist")
 			return true;
@@ -26,20 +26,20 @@ bool WhiteList::Parse(const MessageChain& msg, vector<string>& token)
 bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
 	assert(token.size() > 1);
-	logging::INFO("Calling WhiteList <WhiteList>" + Common::GetDescription(gm));
+	logging::INFO("Calling WhiteList <WhiteList>" + Utils::GetDescription(gm));
 	string command = token[1];
 	if (command == "help" || command == "h" || command == "帮助")
 	{
-		logging::INFO("帮助文档 <WhiteList>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("usage:\n#whitelist {add/delete/exist} [QQ]...\n#whitelist {clear/clean/list}"));
+		logging::INFO("帮助文档 <WhiteList>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("usage:\n#whitelist {add/delete/exist} [QQ]...\n#whitelist {clear/clean/list}"));
 		return true;
 	}
 
 	if (command == "clear")
 	{
 		bot->WhiteListClear();
-		logging::INFO("清除成功 <WhiteList>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("白名单归零了捏"));
+		logging::INFO("清除成功 <WhiteList>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("白名单归零了捏"));
 		return true;
 	}
 
@@ -57,8 +57,8 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 				bot->WhiteListDelete(id);
 			}
 		}
-		logging::INFO("整理成功 <WhiteList>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain("白名单打扫好了捏"));
+		logging::INFO("整理成功 <WhiteList>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain("白名单打扫好了捏"));
 		return true;
 	}
 
@@ -78,8 +78,8 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 				msg += to_string(id.ToInt64()) + " (目前不在群内)\n";
 			}
 		}
-		logging::INFO("输出名单 <WhiteList>" + Common::GetDescription(gm, false));
-		Common::SendGroupMessage(gm, MessageChain().Plain(msg));
+		logging::INFO("输出名单 <WhiteList>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain(msg));
 		return true;
 	}
 
@@ -88,8 +88,8 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		auto AtMsg = gm.MessageChain.GetAll<AtMessage>();
 		if (token.size() + AtMsg.size() < 3)
 		{
-			logging::INFO("缺少参数[QQ] <WhiteList>: " + command + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain("缺少参数[QQ]，是被你吃了嘛"));
+			logging::INFO("缺少参数[QQ] <WhiteList>: " + command + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain("缺少参数[QQ]，是被你吃了嘛"));
 			return false;
 		}
 
@@ -102,8 +102,8 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		}
 		catch (const logic_error& e)
 		{
-			logging::INFO("无效参数[QQ] <WhiteList>: " + token[i] + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain(token[i] + "是个锤子QQ号"));
+			logging::INFO("无效参数[QQ] <WhiteList>: " + token[i] + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain(token[i] + "是个锤子QQ号"));
 			return false;
 		}
 		for (const auto& p : AtMsg)
@@ -116,8 +116,8 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 			{
 				msg += to_string(id.ToInt64()) + ((bot->IsWhiteList(id))? " 在白名单中\n" : " 不在白名单中\n");
 			}
-			logging::INFO("查询成功 <WhiteList>" + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain(msg));
+			logging::INFO("查询成功 <WhiteList>" + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain(msg));
 			return true;
 		}
 
@@ -125,8 +125,8 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		{
 			for (const auto& id : arr)
 				bot->WhiteListAdd(id);
-			logging::INFO("添加成功 <WhiteList>" + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain("白名单更新好了捏"));
+			logging::INFO("添加成功 <WhiteList>" + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain("白名单更新好了捏"));
 			return true;
 		}
 
@@ -134,13 +134,13 @@ bool WhiteList::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		{
 			for (const auto& id : arr)
 				bot->WhiteListDelete(id);
-			logging::INFO("删除成功 <WhiteList>" + Common::GetDescription(gm, false));
-			Common::SendGroupMessage(gm, MessageChain().Plain("白名单更新好了捏"));
+			logging::INFO("删除成功 <WhiteList>" + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, MessageChain().Plain("白名单更新好了捏"));
 			return true;
 		}
 	}
 
-	logging::INFO("未知命令 <WhiteList>: " + command + Common::GetDescription(gm, false));
-	Common::SendGroupMessage(gm, MessageChain().Plain(command + "是什么指令捏，不知道捏"));
+	logging::INFO("未知命令 <WhiteList>: " + command + Utils::GetDescription(gm, false));
+	Utils::SendGroupMessage(gm, MessageChain().Plain(command + "是什么指令捏，不知道捏"));
 	return false;
 }

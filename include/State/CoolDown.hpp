@@ -2,7 +2,7 @@
 #define _COOLDOWN_HPP_
 
 #include "StateBase.hpp"
-#include "utils/date.h"
+#include "third-party/date.h"
 #include <mutex>
 #include <string>
 #include <sstream>

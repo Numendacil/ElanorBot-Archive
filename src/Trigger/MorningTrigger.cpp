@@ -1,7 +1,7 @@
 #include "Trigger/MorningTrigger.hpp"
 #include "ElanorBot.hpp"
 #include "MessageQueue.hpp"
-#include "utils/log.h"
+#include "third-party/log.h"
 
 using namespace std;
 using namespace Cyan;
