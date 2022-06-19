@@ -29,7 +29,7 @@ bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 	//	logging::INFO("有人复读 <Repeat>: " + token[0] + Utils::GetDescription(gm));
 		if (!Repeated)
 		{
-			uniform_int_distribution rng_repeat(1, 3);
+			uniform_int_distribution rng_repeat(1, 6);
 			if (rng_repeat(Utils::rng_engine) == 1)
 			{
 				state->Set(gm.MessageChain, true);

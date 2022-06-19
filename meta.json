@@ -1,493 +1,181 @@
 [
 	{
-		"assetbundleName": "jacket_s_083",
+		"assetbundleName": "jacket_s_106",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 134.896327,
-		"musicId": 83,
-		"title": "Gimme×Gimme",
+		"length": 112.483265,
+		"musicId": 106,
+		"title": "お気に召すまま",
 		"vocal": [
 			{
-				"assetbundleName": "0083_01",
+				"assetbundleName": "vs_0106_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 154
+			},
+			{
+				"assetbundleName": "se_0106_01",
+				"caption": "セカイver.",
+				"characters": [
+					"天馬 司",
+					"鳳 えむ",
+					"草薙 寧々",
+					"神代 類",
+					"鏡音 レン"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 253
+			},
+			{
+				"assetbundleName": "an_0106_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"神代 類"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 255
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_233",
+		"fillerSec": 5.5920000076293945,
+		"hasOriginCover": false,
+		"length": 129.48898,
+		"musicId": 233,
+		"title": "コスモスパイス",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0233_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク",
-					"鏡音 リン"
+					"鏡音 リン",
+					"鏡音 レン"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 77
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_187",
-		"fillerSec": 8.074199676513672,
-		"hasOriginCover": false,
-		"length": 107.755102,
-		"musicId": 187,
-		"title": "ロウワー",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0187_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"flower"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 421
+				"vocalId": 584
 			},
 			{
-				"assetbundleName": "se_0187_01",
-				"caption": "セカイver.",
-				"characters": [
-					"暁山 瑞希",
-					"MEIKO",
-					"宵崎 奏",
-					"朝比奈 まふゆ",
-					"東雲 絵名"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 422
-			},
-			{
-				"assetbundleName": "an_0187_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 絵名"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 432
-			},
-			{
-				"assetbundleName": "an_0187_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"暁山 瑞希"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 433
-			},
-			{
-				"assetbundleName": "an_0187_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 434
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_060",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 100.728163,
-		"musicId": 60,
-		"title": "悔やむと書いてミライ",
-		"vocal": [
-			{
-				"assetbundleName": "0060_01",
-				"caption": "セカイver.",
-				"characters": [
-					"宵崎 奏",
-					"朝比奈 まふゆ",
-					"東雲 絵名",
-					"暁山 瑞希",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 52
-			},
-			{
-				"assetbundleName": "an_0060_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"宵崎 奏"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 115
-			},
-			{
-				"assetbundleName": "an_0060_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"朝比奈 まふゆ"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 116
-			},
-			{
-				"assetbundleName": "an_0060_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 絵名"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 117
-			},
-			{
-				"assetbundleName": "an_0060_04",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"暁山 瑞希"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 118
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_128",
-		"fillerSec": 9.324299812316895,
-		"hasOriginCover": false,
-		"length": 131.082449,
-		"musicId": 128,
-		"title": "Brand New Day",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0128_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 223
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_001",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 123.271837,
-		"musicId": 1,
-		"title": "Tell Your World",
-		"vocal": [
-			{
-				"assetbundleName": "0001_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 1
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_129",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 128.653061,
-		"musicId": 129,
-		"title": "ビターチョコデコレーション",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0129_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 228
-			},
-			{
-				"assetbundleName": "se_0129_01",
+				"assetbundleName": "se_0233_01",
 				"caption": "セカイver.",
 				"characters": [
 					"初音 ミク",
-					"宵崎 奏",
-					"朝比奈 まふゆ",
-					"東雲 絵名",
-					"暁山 瑞希"
+					"天馬 咲希",
+					"天馬 司"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 347
-			},
-			{
-				"assetbundleName": "an_0129_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"朝比奈 まふゆ"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 357
-			},
-			{
-				"assetbundleName": "an_0129_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 絵名"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 358
-			},
-			{
-				"assetbundleName": "an_0129_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"暁山 瑞希"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 359
+				"vocalId": 585
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_002",
-		"fillerSec": 8.98900032043457,
+		"assetbundleName": "jacket_s_115",
+		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 107.023673,
-		"musicId": 2,
-		"title": "ロキ",
+		"length": 136.698776,
+		"musicId": 115,
+		"title": "アンノウン・マザーグース",
 		"vocal": [
 			{
-				"assetbundleName": "0002_01",
+				"assetbundleName": "vs_0115_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"鏡音 リン"
+					"初音 ミク"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 2
+				"vocalId": 165
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_006",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 95.059592,
+		"musicId": 6,
+		"title": "ヒバナ -Reloaded-",
+		"vocal": [
+			{
+				"assetbundleName": "0006_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 7
 			},
 			{
-				"assetbundleName": "0002_02",
+				"assetbundleName": "0006_02",
 				"caption": "セカイver.",
 				"characters": [
 					"初音 ミク",
 					"星乃 一歌"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 3
+				"vocalId": 8
 			},
 			{
-				"assetbundleName": "an_0002_01",
+				"assetbundleName": "an_0006_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"鏡音 レン",
-					"KAITO"
+					"星乃 一歌"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 465
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_188",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 133.459592,
-		"musicId": 188,
-		"title": "心予報",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0188_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 423
+				"vocalId": 80
 			},
 			{
-				"assetbundleName": "se_0188_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 424
-			},
-			{
-				"assetbundleName": "an_0188_01",
+				"assetbundleName": "an_0006_02",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"花里 みのり",
-					"桐谷 遥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 547
-			},
-			{
-				"assetbundleName": "an_0188_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 548
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_061",
-		"fillerSec": 9.005000114440918,
-		"hasOriginCover": false,
-		"length": 139.154286,
-		"musicId": 61,
-		"title": "携帯恋話",
-		"vocal": [
-			{
-				"assetbundleName": "0061_01",
-				"caption": "セカイver.",
-				"characters": [
-					"東雲 絵名",
-					"暁山 瑞希",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 53
-			},
-			{
-				"assetbundleName": "an_0061_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 絵名"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 252
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_116",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 135.131429,
-		"musicId": 116,
-		"title": "アイディスマイル",
-		"vocal": [
-			{
-				"assetbundleName": "se_0116_01",
-				"caption": "セカイver.",
-				"characters": [
-					"暁山 瑞希",
-					"MEIKO",
-					"宵崎 奏",
-					"朝比奈 まふゆ",
-					"東雲 絵名"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 173
-			},
-			{
-				"assetbundleName": "an_0116_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"宵崎 奏"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 264
-			},
-			{
-				"assetbundleName": "an_0116_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"朝比奈 まふゆ"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 265
-			},
-			{
-				"assetbundleName": "an_0116_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 絵名"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 266
-			},
-			{
-				"assetbundleName": "an_0116_04",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"暁山 瑞希"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 267
-			},
-			{
-				"assetbundleName": "vs_0116_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 291
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_184",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 100.702041,
-		"musicId": 184,
-		"title": "Hello,world!",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0184_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 417
-			},
-			{
-				"assetbundleName": "se_0184_01",
-				"caption": "セカイver.",
-				"characters": [
-					"星乃 一歌",
-					"天馬 咲希",
-					"望月 穂波",
-					"日野森 志歩",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 418
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_057",
-		"fillerSec": 9.033300399780273,
-		"hasOriginCover": false,
-		"length": 106.004898,
-		"musicId": 57,
-		"title": "アイドル新鋭隊",
-		"vocal": [
-			{
-				"assetbundleName": "0057_01",
-				"caption": "セカイver.",
-				"characters": [
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 51
-			},
-			{
-				"assetbundleName": "vs_0057_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン",
-					"巡音 ルカ",
 					"MEIKO"
 				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 100
+				"musicVocalType": "another_vocal",
+				"vocalId": 114
+			},
+			{
+				"assetbundleName": "an_0006_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"鏡音 リン"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 597
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_133",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 117.786122,
+		"musicId": 133,
+		"title": "悪魔の踊り方",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0133_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 244
+			},
+			{
+				"assetbundleName": "se_0133_01",
+				"caption": "セカイver.",
+				"characters": [
+					"鏡音 リン",
+					"小豆沢 こはね",
+					"白石 杏",
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 414
 			}
 		]
 	},
@@ -533,158 +221,115 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_087",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_198",
+		"fillerSec": 9.342900276184082,
 		"hasOriginCover": false,
-		"length": 133.485714,
-		"musicId": 87,
-		"title": "恋愛裁判",
+		"musicId": 198,
+		"title": "グッバイ宣言",
 		"vocal": [
 			{
-				"assetbundleName": "0087_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 86
-			},
-			{
-				"assetbundleName": "se_0087_01",
-				"caption": "セカイver.",
-				"characters": [
-					"桃井 愛莉",
-					"初音 ミク",
-					"花里 みのり"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 189
-			},
-			{
-				"assetbundleName": "an_0087_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 190
-			},
-			{
-				"assetbundleName": "an_0087_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"花里 みのり"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 201
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_019",
-		"fillerSec": 9,
-		"hasOriginCover": true,
-		"length": 104.306939,
-		"musicId": 19,
-		"title": "シャルル",
-		"vocal": [
-			{
-				"assetbundleName": "0019_01",
+				"assetbundleName": "vs_0198_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"flower"
 				],
-				"musicVocalType": "original_song",
-				"vocalId": 21
+				"musicVocalType": "virtual_singer",
+				"vocalId": 459
 			},
 			{
-				"assetbundleName": "0019_02",
+				"assetbundleName": "se_0198_01",
 				"caption": "セカイver.",
 				"characters": [
-					"東雲 絵名",
-					"暁山 瑞希"
+					"天馬 司",
+					"鳳 えむ",
+					"草薙 寧々",
+					"神代 類"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 22
+				"vocalId": 460
 			},
 			{
-				"assetbundleName": "an_0019_01",
+				"assetbundleName": "an_0198_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"暁山 瑞希"
+					"草薙 寧々",
+					"神代 類"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 90
-			},
-			{
-				"assetbundleName": "an_0019_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 絵名"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 91
-			},
-			{
-				"assetbundleName": "an_0019_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"鏡音 レン",
-					"KAITO"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 531
+				"vocalId": 634
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_146",
+		"assetbundleName": "jacket_s_105",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 133.172245,
-		"musicId": 146,
-		"title": "リモコン",
+		"length": 112.770612,
+		"musicId": 105,
+		"title": "ワンスアポンアドリーム",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0146_01",
+				"assetbundleName": "vs_0105_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"鏡音 リン",
-					"鏡音 レン"
+					"鏡音 リン"
 				],
 				"musicVocalType": "virtual_singer",
-				"vocalId": 302
+				"vocalId": 153
 			},
 			{
-				"assetbundleName": "se_0146_01",
+				"assetbundleName": "se_0105_01",
 				"caption": "セカイver.",
 				"characters": [
-					"鏡音 リン",
-					"鏡音 レン",
 					"鳳 えむ",
-					"草薙 寧々"
+					"鏡音 レン",
+					"天馬 司",
+					"草薙 寧々",
+					"神代 類"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 303
+				"vocalId": 225
+			},
+			{
+				"assetbundleName": "an_0105_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"鳳 えむ"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 226
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_115",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_232",
+		"fillerSec": 7.086699962615967,
 		"hasOriginCover": false,
-		"length": 136.698776,
-		"musicId": 115,
-		"title": "アンノウン・マザーグース",
+		"length": 156.238367,
+		"musicId": 232,
+		"title": "青色絵具",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0115_01",
+				"assetbundleName": "vs_0232_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"初音 ミク"
+					"初音 ミク",
+					"巡音 ルカ",
+					"MEIKO"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 165
+				"vocalId": 582
+			},
+			{
+				"assetbundleName": "se_0232_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"日野森 志歩",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 583
 			}
 		]
 	},
@@ -805,220 +450,182 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_189",
-		"fillerSec": 8.991700172424316,
-		"hasOriginCover": true,
-		"length": 91.715918,
-		"musicId": 189,
-		"title": "ノマド",
+		"assetbundleName": "jacket_s_188",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 133.459592,
+		"musicId": 188,
+		"title": "心予報",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0189_01",
+				"assetbundleName": "vs_0188_01",
 				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"flower"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 435
-			},
-			{
-				"assetbundleName": "se_0189_01",
-				"caption": "セカイver.",
-				"characters": [
-					"東雲 絵名",
-					"鏡音 リン",
-					"宵崎 奏",
-					"朝比奈 まふゆ",
-					"暁山 瑞希"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 563
-			},
-			{
-				"assetbundleName": "an_0189_02",
-				"caption": "アナザーボーカルver.",
 				"characters": [
 					"初音 ミク"
 				],
+				"musicVocalType": "original_song",
+				"vocalId": 423
+			},
+			{
+				"assetbundleName": "se_0188_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 424
+			},
+			{
+				"assetbundleName": "an_0188_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥"
+				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 565
+				"vocalId": 547
+			},
+			{
+				"assetbundleName": "an_0188_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 548
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_062",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_061",
+		"fillerSec": 9.005000114440918,
 		"hasOriginCover": false,
-		"length": 83.591837,
-		"musicId": 62,
-		"title": "ジャックポットサッドガール",
+		"length": 139.154286,
+		"musicId": 61,
+		"title": "携帯恋話",
 		"vocal": [
 			{
-				"assetbundleName": "0062_01",
+				"assetbundleName": "0061_01",
 				"caption": "セカイver.",
 				"characters": [
-					"宵崎 奏",
-					"朝比奈 まふゆ",
 					"東雲 絵名",
 					"暁山 瑞希",
 					"初音 ミク"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 54
+				"vocalId": 53
 			},
 			{
-				"assetbundleName": "vs_0062_01",
+				"assetbundleName": "an_0061_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 252
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_129",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 128.653061,
+		"musicId": 129,
+		"title": "ビターチョコデコレーション",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0129_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 134
+				"vocalId": 228
 			},
 			{
-				"assetbundleName": "an_0062_01",
+				"assetbundleName": "se_0129_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"宵崎 奏",
+					"朝比奈 まふゆ",
+					"東雲 絵名",
+					"暁山 瑞希"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 347
+			},
+			{
+				"assetbundleName": "an_0129_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
 					"朝比奈 まふゆ"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 135
+				"vocalId": 357
+			},
+			{
+				"assetbundleName": "an_0129_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 358
+			},
+			{
+				"assetbundleName": "an_0129_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"暁山 瑞希"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 359
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_121",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_002",
+		"fillerSec": 8.98900032043457,
 		"hasOriginCover": false,
-		"length": 114.729796,
-		"musicId": 121,
-		"title": "ロミオとシンデレラ",
+		"length": 107.023673,
+		"musicId": 2,
+		"title": "ロキ",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0121_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 200
-			},
-			{
-				"assetbundleName": "se_0121_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 309
-			},
-			{
-				"assetbundleName": "an_0121_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 310
-			},
-			{
-				"assetbundleName": "an_0121_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"日野森 雫"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 311
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_133",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 117.786122,
-		"musicId": 133,
-		"title": "悪魔の踊り方",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0133_01",
+				"assetbundleName": "0002_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"鏡音 リン"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 244
+				"vocalId": 2
 			},
 			{
-				"assetbundleName": "se_0133_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鏡音 リン",
-					"小豆沢 こはね",
-					"白石 杏",
-					"東雲 彰人",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 414
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_006",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 95.059592,
-		"musicId": 6,
-		"title": "ヒバナ -Reloaded-",
-		"vocal": [
-			{
-				"assetbundleName": "0006_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 7
-			},
-			{
-				"assetbundleName": "0006_02",
+				"assetbundleName": "0002_02",
 				"caption": "セカイver.",
 				"characters": [
 					"初音 ミク",
 					"星乃 一歌"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 8
+				"vocalId": 3
 			},
 			{
-				"assetbundleName": "an_0006_01",
+				"assetbundleName": "an_0002_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"星乃 一歌"
+					"鏡音 レン",
+					"KAITO"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 80
-			},
-			{
-				"assetbundleName": "an_0006_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"MEIKO"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 114
-			},
-			{
-				"assetbundleName": "an_0006_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"鏡音 リン"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 597
+				"vocalId": 465
 			}
 		]
 	},
@@ -1088,131 +695,44 @@
 				],
 				"musicVocalType": "sekai",
 				"vocalId": 329
+			},
+			{
+				"assetbundleName": "an_0155_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"星乃 一歌"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 487
+			},
+			{
+				"assetbundleName": "an_0155_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"望月 穂波"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 488
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_102",
+		"assetbundleName": "jacket_s_104",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 133.12,
-		"musicId": 102,
-		"title": "幽霊東京",
+		"length": 117.603265,
+		"musicId": 104,
+		"title": "サンドリヨン 10th Anniversary",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0102_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 150
-			},
-			{
-				"assetbundleName": "se_0102_01",
-				"caption": "セカイver.",
-				"characters": [
-					"東雲 彰人",
-					"青柳 冬弥",
-					"KAITO"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 275
-			},
-			{
-				"assetbundleName": "an_0102_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"青柳 冬弥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 276
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_230",
-		"fillerSec": 7.604700088500977,
-		"hasOriginCover": false,
-		"length": 157.492245,
-		"musicId": 230,
-		"title": "サラマンダー",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0230_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 575
-			},
-			{
-				"assetbundleName": "se_0230_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"東雲 彰人",
-					"東雲 絵名"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 576
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_103",
-		"fillerSec": 8.217399597167969,
-		"hasOriginCover": false,
-		"length": 121.6,
-		"musicId": 103,
-		"title": "ニジイロストーリーズ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0103_01",
+				"assetbundleName": "vs_0104_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク",
-					"鏡音 リン",
-					"鏡音 レン",
-					"巡音 ルカ",
-					"MEIKO",
 					"KAITO"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 151
-			},
-			{
-				"assetbundleName": "se_0103_01",
-				"caption": "セカイver.",
-				"characters": [
-					"草薙 寧々",
-					"神代 類",
-					"MEIKO",
-					"KAITO"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 185
-			},
-			{
-				"assetbundleName": "an_0103_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"草薙 寧々",
-					"神代 類"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 186
-			},
-			{
-				"assetbundleName": "an_0103_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"MEIKO",
-					"KAITO"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 206
+				"vocalId": 152
 			}
 		]
 	},
@@ -1243,195 +763,6 @@
 				],
 				"musicVocalType": "sekai",
 				"vocalId": 581
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_104",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 117.603265,
-		"musicId": 104,
-		"title": "サンドリヨン 10th Anniversary",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0104_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"KAITO"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 152
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_232",
-		"fillerSec": 7.086699962615967,
-		"hasOriginCover": false,
-		"length": 156.238367,
-		"musicId": 232,
-		"title": "青色絵具",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0232_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"巡音 ルカ",
-					"MEIKO"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 582
-			},
-			{
-				"assetbundleName": "se_0232_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"日野森 志歩",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 583
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_105",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 112.770612,
-		"musicId": 105,
-		"title": "ワンスアポンアドリーム",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0105_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 153
-			},
-			{
-				"assetbundleName": "se_0105_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鳳 えむ",
-					"鏡音 レン",
-					"天馬 司",
-					"草薙 寧々",
-					"神代 類"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 225
-			},
-			{
-				"assetbundleName": "an_0105_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"鳳 えむ"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 226
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_233",
-		"fillerSec": 5.5920000076293945,
-		"hasOriginCover": false,
-		"length": 129.48898,
-		"musicId": 233,
-		"title": "コスモスパイス",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0233_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン",
-					"鏡音 レン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 584
-			},
-			{
-				"assetbundleName": "se_0233_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"天馬 咲希",
-					"天馬 司"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 585
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_106",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 112.483265,
-		"musicId": 106,
-		"title": "お気に召すまま",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0106_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 154
-			},
-			{
-				"assetbundleName": "se_0106_01",
-				"caption": "セカイver.",
-				"characters": [
-					"天馬 司",
-					"鳳 えむ",
-					"草薙 寧々",
-					"神代 類",
-					"鏡音 レン"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 253
-			},
-			{
-				"assetbundleName": "an_0106_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"神代 類"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 255
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_234",
-		"fillerSec": 9.000900268554688,
-		"hasOriginCover": false,
-		"length": 127.79102,
-		"musicId": 234,
-		"title": "徳川カップヌードル禁止令",
-		"vocal": [
-			{
-				"assetbundleName": "se_0234_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鏡音 レン",
-					"KAITO",
-					"草薙 寧々",
-					"ネネロボ",
-					"ミクダヨー"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 586
 			}
 		]
 	},
@@ -1484,40 +815,143 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_108",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_234",
+		"fillerSec": 9.000900268554688,
 		"hasOriginCover": false,
-		"length": 140.042449,
-		"musicId": 108,
-		"title": "愛されなくても君がいる",
+		"length": 127.79102,
+		"musicId": 234,
+		"title": "徳川カップヌードル禁止令",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0108_01",
-				"caption": "バーチャル・シンガーver.",
+				"assetbundleName": "se_0234_01",
+				"caption": "セカイver.",
 				"characters": [
-					"初音 ミク"
+					"鏡音 レン",
+					"KAITO",
+					"草薙 寧々",
+					"ネネロボ",
+					"ミクダヨー"
 				],
-				"musicVocalType": "original_song",
-				"vocalId": 156
+				"musicVocalType": "sekai",
+				"vocalId": 586
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_109",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_187",
+		"fillerSec": 8.074199676513672,
 		"hasOriginCover": false,
-		"length": 115.173878,
-		"musicId": 109,
-		"title": "ヒビカセ",
+		"length": 107.755102,
+		"musicId": 187,
+		"title": "ロウワー",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0109_01",
+				"assetbundleName": "vs_0187_01",
 				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"flower"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 421
+			},
+			{
+				"assetbundleName": "se_0187_01",
+				"caption": "セカイver.",
+				"characters": [
+					"暁山 瑞希",
+					"MEIKO",
+					"宵崎 奏",
+					"朝比奈 まふゆ",
+					"東雲 絵名"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 422
+			},
+			{
+				"assetbundleName": "an_0187_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 432
+			},
+			{
+				"assetbundleName": "an_0187_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"暁山 瑞希"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 433
+			},
+			{
+				"assetbundleName": "an_0187_03",
+				"caption": "アナザーボーカルver.",
 				"characters": [
 					"初音 ミク"
 				],
-				"musicVocalType": "original_song",
-				"vocalId": 157
+				"musicVocalType": "another_vocal",
+				"vocalId": 434
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_060",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 100.728163,
+		"musicId": 60,
+		"title": "悔やむと書いてミライ",
+		"vocal": [
+			{
+				"assetbundleName": "0060_01",
+				"caption": "セカイver.",
+				"characters": [
+					"宵崎 奏",
+					"朝比奈 まふゆ",
+					"東雲 絵名",
+					"暁山 瑞希",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 52
+			},
+			{
+				"assetbundleName": "an_0060_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"宵崎 奏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 115
+			},
+			{
+				"assetbundleName": "an_0060_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"朝比奈 まふゆ"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 116
+			},
+			{
+				"assetbundleName": "an_0060_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 117
+			},
+			{
+				"assetbundleName": "an_0060_04",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"暁山 瑞希"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 118
 			}
 		]
 	},
@@ -1795,6 +1229,24 @@
 				],
 				"musicVocalType": "sekai",
 				"vocalId": 516
+			},
+			{
+				"assetbundleName": "vs_0209_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 515
+			},
+			{
+				"assetbundleName": "an_0209_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"日野森 雫"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 517
 			}
 		]
 	},
@@ -1814,6 +1266,25 @@
 				],
 				"musicVocalType": "original_song",
 				"vocalId": 74
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_152",
+		"fillerSec": 8.586199760437012,
+		"hasOriginCover": false,
+		"length": 117.159184,
+		"musicId": 152,
+		"title": "だれかの心臓になれたなら",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0152_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 315
 			}
 		]
 	},
@@ -1907,6 +1378,58 @@
 				],
 				"musicVocalType": "another_vocal",
 				"vocalId": 195
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_185",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 141.818776,
+		"musicId": 185,
+		"title": "しっくおぶはうす！",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0185_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン",
+					"鏡音 レン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 419
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_244",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 121.573878,
+		"musicId": 244,
+		"title": "Awake Now",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0244_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 613
+			},
+			{
+				"assetbundleName": "se_0244_01",
+				"caption": "セカイver.",
+				"characters": [
+					"白石 杏",
+					"初音 ミク",
+					"小豆沢 こはね",
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 628
 			}
 		]
 	},
@@ -2129,35 +1652,6 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_148",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 130.951837,
-		"musicId": 148,
-		"title": "ray",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0148_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 306
-			},
-			{
-				"assetbundleName": "se_0148_01",
-				"caption": "セカイver.",
-				"characters": [
-					"星乃 一歌",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 307
-			}
-		]
-	},
-	{
 		"assetbundleName": "jacket_s_021",
 		"fillerSec": 9,
 		"hasOriginCover": false,
@@ -2197,266 +1691,82 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_207",
-		"fillerSec": 8.545499801635742,
+		"assetbundleName": "jacket_s_148",
+		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 105.482449,
-		"musicId": 207,
-		"title": "Peaky Peaky",
+		"length": 130.951837,
+		"musicId": 148,
+		"title": "ray",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0207_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 509
-			},
-			{
-				"assetbundleName": "se_0207_01",
-				"caption": "セカイver.",
-				"characters": [
-					"日野森 志歩",
-					"星乃 一歌",
-					"KAITO",
-					"天馬 咲希",
-					"望月 穂波"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 510
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_147",
-		"fillerSec": 8.991700172424316,
-		"hasOriginCover": false,
-		"length": 138.292245,
-		"musicId": 147,
-		"title": "からくりピエロ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0147_01",
+				"assetbundleName": "vs_0148_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
 				"musicVocalType": "virtual_singer",
-				"vocalId": 304
+				"vocalId": 306
 			},
 			{
-				"assetbundleName": "se_0147_01",
+				"assetbundleName": "se_0148_01",
 				"caption": "セカイver.",
 				"characters": [
-					"初音 ミク",
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫"
+					"星乃 一歌",
+					"初音 ミク"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 305
-			},
-			{
-				"assetbundleName": "an_0147_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"花里 みのり",
-					"桐谷 遥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 452
-			},
-			{
-				"assetbundleName": "an_0147_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 453
+				"vocalId": 307
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_206",
-		"fillerSec": 8.405900001525879,
+		"assetbundleName": "jacket_s_153",
+		"fillerSec": 8.0625,
 		"hasOriginCover": false,
-		"length": 151.823673,
-		"musicId": 206,
-		"title": "君色マリンスノウ",
+		"length": 155.559184,
+		"musicId": 153,
+		"title": "Miku",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0206_01",
+				"assetbundleName": "vs_0153_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 500
+				"vocalId": 324
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_078",
-		"fillerSec": 9.68179988861084,
+		"assetbundleName": "jacket_s_026",
+		"fillerSec": 7.579999923706055,
 		"hasOriginCover": false,
-		"length": 110.654694,
-		"musicId": 78,
-		"title": "ぼうけんのしょがきえました！",
+		"length": 98.45551,
+		"musicId": 26,
+		"title": "劣等上等",
 		"vocal": [
 			{
-				"assetbundleName": "0078_01",
+				"assetbundleName": "0026_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"鏡音 リン",
 					"鏡音 レン"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 71
+				"vocalId": 27
 			},
 			{
-				"assetbundleName": "se_0078_01",
+				"assetbundleName": "0026_02",
 				"caption": "セカイver.",
 				"characters": [
-					"天馬 司",
-					"鳳 えむ",
 					"鏡音 リン",
-					"鏡音 レン"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 109
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_205",
-		"fillerSec": 8.51449966430664,
-		"hasOriginCover": false,
-		"length": 141.139592,
-		"musicId": 205,
-		"title": "踊",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0205_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン",
-					"鏡音 レン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 496
-			},
-			{
-				"assetbundleName": "se_0205_01",
-				"caption": "セカイver.",
-				"characters": [
+					"鏡音 レン",
 					"小豆沢 こはね",
 					"白石 杏"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 497
-			},
-			{
-				"assetbundleName": "an_0205_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"小豆沢 こはね"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 498
-			},
-			{
-				"assetbundleName": "an_0205_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"白石 杏"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 499
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_169",
-		"fillerSec": 9.012499809265137,
-		"hasOriginCover": false,
-		"length": 159.660408,
-		"musicId": 169,
-		"title": "少女レイ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0169_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 364
-			},
-			{
-				"assetbundleName": "se_0169_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"桐谷 遥",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 472
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_112",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 118.360816,
-		"musicId": 112,
-		"title": "天使のクローバー",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0112_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 160
-			},
-			{
-				"assetbundleName": "se_0112_01",
-				"caption": "セカイver.",
-				"characters": [
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫",
-					"鏡音 リン"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 238
-			},
-			{
-				"assetbundleName": "an_0112_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"花里 みのり"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 239
-			},
-			{
-				"assetbundleName": "an_0112_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 240
+				"vocalId": 28
 			}
 		]
 	},
@@ -2553,6 +1863,940 @@
 				],
 				"musicVocalType": "another_vocal",
 				"vocalId": 352
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_245",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 136.359184,
+		"musicId": 245,
+		"title": "阿吽のビーツ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0245_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"flower"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 614
+			},
+			{
+				"assetbundleName": "se_0245_01",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 615
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_118",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 117.86449,
+		"musicId": 118,
+		"title": "＊ハロー、プラネット。",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0118_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 177
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_151",
+		"fillerSec": 9.335000038146973,
+		"hasOriginCover": false,
+		"length": 104.306939,
+		"musicId": 151,
+		"title": "泡沫未来",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0151_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 314
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_221",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 105.978776,
+		"musicId": 221,
+		"title": "マトリョシカ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0221_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 546
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_094",
+		"fillerSec": 7.714300155639648,
+		"hasOriginCover": false,
+		"length": 113.397551,
+		"musicId": 94,
+		"title": "とても痛い痛がりたい",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0094_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"VY2V3"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 142
+			},
+			{
+				"assetbundleName": "se_0094_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"朝比奈 まふゆ",
+					"東雲 絵名"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 196
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_156",
+		"fillerSec": 8.12399959564209,
+		"hasOriginCover": false,
+		"length": 99.918367,
+		"musicId": 156,
+		"title": "Beat Eater",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0156_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 335
+			},
+			{
+				"assetbundleName": "se_0156_01",
+				"caption": "セカイver.",
+				"characters": [
+					"小豆沢 こはね",
+					"鏡音 レン",
+					"白石 杏",
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 336
+			},
+			{
+				"assetbundleName": "an_0156_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"小豆沢 こはね"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 348
+			},
+			{
+				"assetbundleName": "an_0156_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"白石 杏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 349
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_011",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 94.066939,
+		"musicId": 11,
+		"title": "ビバハピ",
+		"vocal": [
+			{
+				"assetbundleName": "0011_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 13
+			},
+			{
+				"assetbundleName": "0011_02",
+				"caption": "セカイver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 14
+			},
+			{
+				"assetbundleName": "an_0011_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり",
+					"桃井 愛莉"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 82
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_138",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 135.209796,
+		"musicId": 138,
+		"title": "KING",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0138_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 259
+			},
+			{
+				"assetbundleName": "se_0138_01",
+				"caption": "セカイver.",
+				"characters": [
+					"天馬 司",
+					"神代 類"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 287
+			},
+			{
+				"assetbundleName": "an_0138_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"天馬 司"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 288
+			},
+			{
+				"assetbundleName": "an_0138_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"神代 類"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 289
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_085",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 130.795102,
+		"musicId": 85,
+		"title": "Leia - Remind",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0085_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"巡音 ルカ"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 81
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_083",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 134.896327,
+		"musicId": 83,
+		"title": "Gimme×Gimme",
+		"vocal": [
+			{
+				"assetbundleName": "0083_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 77
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_210",
+		"fillerSec": 8.07699966430664,
+		"hasOriginCover": true,
+		"length": 125.257143,
+		"musicId": 210,
+		"title": "雨とペトラ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0210_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"flower"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 518
+			},
+			{
+				"assetbundleName": "se_0210_01",
+				"caption": "セカイver.",
+				"characters": [
+					"鏡音 レン",
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 519
+			},
+			{
+				"assetbundleName": "an_0210_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 520
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_144",
+		"fillerSec": 8.5,
+		"hasOriginCover": false,
+		"length": 124.029388,
+		"musicId": 144,
+		"title": "アイノマテリアル",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0144_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 293
+			},
+			{
+				"assetbundleName": "se_0144_01",
+				"caption": "セカイver.",
+				"characters": [
+					"桐谷 遥",
+					"日野森 雫",
+					"MEIKO",
+					"花里 みのり",
+					"桃井 愛莉"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 294
+			},
+			{
+				"assetbundleName": "an_0144_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 295
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_203",
+		"fillerSec": 8.307700157165527,
+		"hasOriginCover": false,
+		"length": 125.126531,
+		"musicId": 203,
+		"title": "トリコロージュ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0203_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"flower"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 482
+			},
+			{
+				"assetbundleName": "se_0203_01",
+				"caption": "セカイver.",
+				"characters": [
+					"宵崎 奏",
+					"初音 ミク",
+					"朝比奈 まふゆ",
+					"東雲 絵名",
+					"暁山 瑞希"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 483
+			},
+			{
+				"assetbundleName": "an_0203_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 485
+			},
+			{
+				"assetbundleName": "an_0203_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"宵崎 奏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 484
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_076",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 111.908571,
+		"musicId": 76,
+		"title": "セカイ",
+		"vocal": [
+			{
+				"assetbundleName": "0076_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 69
+			},
+			{
+				"assetbundleName": "se_0076_01",
+				"caption": "セカイver.",
+				"characters": [
+					"星乃 一歌",
+					"天馬 司",
+					"宵崎 奏",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 107
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_141",
+		"fillerSec": 8.991600036621094,
+		"hasOriginCover": false,
+		"length": 98.977959,
+		"musicId": 141,
+		"title": "群青讃歌",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0141_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 273
+			},
+			{
+				"assetbundleName": "se_0141_01",
+				"caption": "セカイver.",
+				"characters": [
+					"星乃 一歌",
+					"花里 みのり",
+					"小豆沢 こはね",
+					"天馬 司",
+					"宵崎 奏",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 388
+			},
+			{
+				"assetbundleName": "an_0141_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"星乃 一歌"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 407
+			},
+			{
+				"assetbundleName": "an_0141_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 408
+			},
+			{
+				"assetbundleName": "an_0141_04",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"小豆沢 こはね"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 409
+			},
+			{
+				"assetbundleName": "an_0141_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"天馬 司"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 410
+			},
+			{
+				"assetbundleName": "an_0141_05",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"宵崎 奏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 411
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_116",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 135.131429,
+		"musicId": 116,
+		"title": "アイディスマイル",
+		"vocal": [
+			{
+				"assetbundleName": "se_0116_01",
+				"caption": "セカイver.",
+				"characters": [
+					"暁山 瑞希",
+					"MEIKO",
+					"宵崎 奏",
+					"朝比奈 まふゆ",
+					"東雲 絵名"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 173
+			},
+			{
+				"assetbundleName": "an_0116_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"宵崎 奏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 264
+			},
+			{
+				"assetbundleName": "an_0116_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"朝比奈 まふゆ"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 265
+			},
+			{
+				"assetbundleName": "an_0116_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 266
+			},
+			{
+				"assetbundleName": "an_0116_04",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"暁山 瑞希"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 267
+			},
+			{
+				"assetbundleName": "vs_0116_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 291
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_165",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 127.137959,
+		"musicId": 165,
+		"title": "そうだった！！",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0165_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 360
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_038",
+		"fillerSec": 8.982999801635742,
+		"hasOriginCover": false,
+		"length": 99.709388,
+		"musicId": 38,
+		"title": "ブリキノダンス",
+		"vocal": [
+			{
+				"assetbundleName": "0038_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 35
+			},
+			{
+				"assetbundleName": "0038_02",
+				"caption": "セカイver.",
+				"characters": [
+					"天馬 司",
+					"神代 類",
+					"鏡音 レン"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 36
+			},
+			{
+				"assetbundleName": "an_0038_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"天馬 司"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 92
+			},
+			{
+				"assetbundleName": "an_0038_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"神代 類"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 93
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_112",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 118.360816,
+		"musicId": 112,
+		"title": "天使のクローバー",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0112_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 160
+			},
+			{
+				"assetbundleName": "se_0112_01",
+				"caption": "セカイver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫",
+					"鏡音 リン"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 238
+			},
+			{
+				"assetbundleName": "an_0112_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 239
+			},
+			{
+				"assetbundleName": "an_0112_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 240
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_239",
+		"fillerSec": 8.98330020904541,
+		"hasOriginCover": false,
+		"length": 157.518367,
+		"musicId": 239,
+		"title": "月光",
+		"vocal": [
+			{
+				"assetbundleName": "se_0239_01",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 彰人",
+					"MEIKO",
+					"小豆沢 こはね",
+					"白石 杏",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 602
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_248",
+		"fillerSec": 8.345999717712402,
+		"hasOriginCover": false,
+		"musicId": 248,
+		"title": "バグ",
+		"vocal": [
+			{
+				"assetbundleName": "se_0248_01",
+				"caption": "セカイver.",
+				"characters": [
+					"朝比奈 まふゆ",
+					"鏡音 レン",
+					"宵崎 奏",
+					"東雲 絵名",
+					"暁山 瑞希"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 620
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_121",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 114.729796,
+		"musicId": 121,
+		"title": "ロミオとシンデレラ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0121_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 200
+			},
+			{
+				"assetbundleName": "se_0121_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 309
+			},
+			{
+				"assetbundleName": "an_0121_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 310
+			},
+			{
+				"assetbundleName": "an_0121_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"日野森 雫"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 311
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_102",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 133.12,
+		"musicId": 102,
+		"title": "幽霊東京",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0102_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 150
+			},
+			{
+				"assetbundleName": "se_0102_01",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 彰人",
+					"青柳 冬弥",
+					"KAITO"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 275
+			},
+			{
+				"assetbundleName": "an_0102_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 276
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_176",
+		"fillerSec": 8.454500198364258,
+		"hasOriginCover": false,
+		"length": 140.512653,
+		"musicId": 176,
+		"title": "マシンガンポエムドール",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0176_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 382
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_049",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 143.595102,
+		"musicId": 49,
+		"title": "初音ミクの消失",
+		"vocal": [
+			{
+				"assetbundleName": "0049_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 45
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_177",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 132.466939,
+		"musicId": 177,
+		"title": "右肩の蝶",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0177_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 レン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 385
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_050",
+		"fillerSec": 7.928999900817871,
+		"hasOriginCover": false,
+		"length": 132.649796,
+		"musicId": 50,
+		"title": "Blessing",
+		"vocal": [
+			{
+				"assetbundleName": "0050_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン",
+					"鏡音 レン",
+					"巡音 ルカ",
+					"MEIKO",
+					"KAITO"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 46
 			}
 		]
 	},
@@ -3135,6 +3379,36 @@
 		]
 	},
 	{
+		"assetbundleName": "jacket_s_169",
+		"fillerSec": 9.012499809265137,
+		"hasOriginCover": false,
+		"length": 159.660408,
+		"musicId": 169,
+		"title": "少女レイ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0169_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 364
+			},
+			{
+				"assetbundleName": "se_0169_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"桐谷 遥",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 472
+			}
+		]
+	},
+	{
 		"assetbundleName": "jacket_s_180",
 		"fillerSec": 8.548500061035156,
 		"hasOriginCover": false,
@@ -3245,6 +3519,55 @@
 				],
 				"musicVocalType": "original_song",
 				"vocalId": 99
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_114",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 110.524082,
+		"musicId": 114,
+		"title": "裏表ラバーズ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0114_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 162
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_241",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 150.151837,
+		"musicId": 241,
+		"title": "アサガオの散る頃に",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0241_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 606
+			},
+			{
+				"assetbundleName": "se_0241_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"星乃 一歌",
+					"望月 穂波"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 607
 			}
 		]
 	},
@@ -3392,542 +3715,6 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_010",
-		"fillerSec": 9.006999969482422,
-		"hasOriginCover": false,
-		"length": 133.041633,
-		"musicId": 10,
-		"title": "ハッピーシンセサイザ",
-		"vocal": [
-			{
-				"assetbundleName": "0010_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"巡音 ルカ",
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 11
-			},
-			{
-				"assetbundleName": "0010_02",
-				"caption": "セカイver.",
-				"characters": [
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 12
-			},
-			{
-				"assetbundleName": "vs_0010_02",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"巡音 ルカ",
-					"鏡音 リン",
-					"MEIKO"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 87
-			},
-			{
-				"assetbundleName": "an_0010_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"花里 みのり",
-					"桐谷 遥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 88
-			},
-			{
-				"assetbundleName": "an_0010_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 89
-			},
-			{
-				"assetbundleName": "af_0010_01",
-				"caption": "エイプリルフールver.",
-				"characters": [
-					"日野森 志歩",
-					"日野森 雫",
-					"白石 杏",
-					"宵崎 奏"
-				],
-				"musicVocalType": "april_fool_2022",
-				"vocalId": 571
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_137",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 110.654694,
-		"musicId": 137,
-		"title": "花を唄う",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0137_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 258
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_069",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 124.029388,
-		"musicId": 69,
-		"title": "フラジール",
-		"vocal": [
-			{
-				"assetbundleName": "0069_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 62
-			},
-			{
-				"assetbundleName": "0069_02",
-				"caption": "セカイver.",
-				"characters": [
-					"東雲 彰人",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 75
-			},
-			{
-				"assetbundleName": "an_0069_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 彰人"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 105
-			},
-			{
-				"assetbundleName": "an_0069_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"青柳 冬弥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 106
-			},
-			{
-				"assetbundleName": "vs_0069_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 レン",
-					"KAITO"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 110
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_196",
-		"fillerSec": 7,
-		"hasOriginCover": false,
-		"length": 125.387755,
-		"musicId": 196,
-		"title": "オーダーメイド",
-		"vocal": [
-			{
-				"assetbundleName": "se_0196_01",
-				"caption": "セカイver.",
-				"characters": [
-					"星乃 一歌",
-					"巡音 ルカ",
-					"天馬 咲希",
-					"望月 穂波",
-					"日野森 志歩"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 457
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_011",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 94.066939,
-		"musicId": 11,
-		"title": "ビバハピ",
-		"vocal": [
-			{
-				"assetbundleName": "0011_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 13
-			},
-			{
-				"assetbundleName": "0011_02",
-				"caption": "セカイver.",
-				"characters": [
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 14
-			},
-			{
-				"assetbundleName": "an_0011_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"花里 みのり",
-					"桃井 愛莉"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 82
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_138",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 135.209796,
-		"musicId": 138,
-		"title": "KING",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0138_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 259
-			},
-			{
-				"assetbundleName": "se_0138_01",
-				"caption": "セカイver.",
-				"characters": [
-					"天馬 司",
-					"神代 類"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 287
-			},
-			{
-				"assetbundleName": "an_0138_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"天馬 司"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 288
-			},
-			{
-				"assetbundleName": "an_0138_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"神代 類"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 289
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_096",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 155.533061,
-		"musicId": 96,
-		"title": "from Y to Y",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0096_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 144
-			},
-			{
-				"assetbundleName": "se_0096_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"星乃 一歌",
-					"天馬 咲希",
-					"望月 穂波",
-					"日野森 志歩"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 235
-			},
-			{
-				"assetbundleName": "an_0096_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"星乃 一歌",
-					"望月 穂波"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 236
-			},
-			{
-				"assetbundleName": "an_0096_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"天馬 咲希",
-					"日野森 志歩"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 237
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_223",
-		"fillerSec": 7.333399772644043,
-		"hasOriginCover": false,
-		"length": 151.719184,
-		"musicId": 223,
-		"title": "千年の独奏歌",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0223_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"KAITO"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 553
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_185",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 141.818776,
-		"musicId": 185,
-		"title": "しっくおぶはうす！",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0185_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン",
-					"鏡音 レン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 419
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_067",
-		"fillerSec": 8.996999740600586,
-		"hasOriginCover": false,
-		"length": 104.045714,
-		"musicId": 67,
-		"title": "自傷無色",
-		"vocal": [
-			{
-				"assetbundleName": "0067_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 59
-			},
-			{
-				"assetbundleName": "0067_02",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"宵崎 奏",
-					"朝比奈 まふゆ"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 60
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_194",
-		"fillerSec": 9.54539966583252,
-		"hasOriginCover": false,
-		"length": 141.322449,
-		"musicId": 194,
-		"title": "妄想感傷代償連盟",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0194_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 447
-			},
-			{
-				"assetbundleName": "se_0194_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"宵崎 奏",
-					"東雲 絵名"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 448
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_227",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 128.914286,
-		"musicId": 227,
-		"title": "ONESELF",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0227_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 562
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_100",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 99.787755,
-		"musicId": 100,
-		"title": "ECHO",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0100_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 148
-			},
-			{
-				"assetbundleName": "se_0100_01",
-				"caption": "セカイver.",
-				"characters": [
-					"巡音 ルカ",
-					"小豆沢 こはね",
-					"白石 杏",
-					"東雲 彰人",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 180
-			},
-			{
-				"assetbundleName": "an_0100_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"白石 杏",
-					"東雲 彰人"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 192
-			},
-			{
-				"assetbundleName": "an_0100_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"小豆沢 こはね",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 193
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_094",
-		"fillerSec": 7.714300155639648,
-		"hasOriginCover": false,
-		"length": 113.397551,
-		"musicId": 94,
-		"title": "とても痛い痛がりたい",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0094_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"VY2V3"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 142
-			},
-			{
-				"assetbundleName": "se_0094_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"朝比奈 まふゆ",
-					"東雲 絵名"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 196
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_221",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 105.978776,
-		"musicId": 221,
-		"title": "マトリョシカ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0221_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 546
-			}
-		]
-	},
-	{
 		"assetbundleName": "jacket_s_150",
 		"fillerSec": 9,
 		"hasOriginCover": false,
@@ -3943,256 +3730,6 @@
 				],
 				"musicVocalType": "original_song",
 				"vocalId": 313
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_208",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 121.991837,
-		"musicId": 208,
-		"title": "僕らまだアンダーグラウンド",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0208_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 514
-			},
-			{
-				"assetbundleName": "se_0208_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"星乃 一歌",
-					"日野森 志歩"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 549
-			},
-			{
-				"assetbundleName": "an_0208_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"日野森 志歩"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 551
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_081",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 140.042449,
-		"musicId": 81,
-		"title": "夜咄ディセイブ",
-		"vocal": [
-			{
-				"assetbundleName": "0081_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"IA"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 73
-			},
-			{
-				"assetbundleName": "se_0081_01",
-				"caption": "セカイver.",
-				"characters": [
-					"東雲 彰人",
-					"青柳 冬弥",
-					"鏡音 レン"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 131
-			},
-			{
-				"assetbundleName": "an_0081_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 彰人"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 168
-			},
-			{
-				"assetbundleName": "an_0081_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"青柳 冬弥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 169
-			},
-			{
-				"assetbundleName": "an_0081_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"鏡音 レン"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 290
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_136",
-		"fillerSec": 8.966699600219727,
-		"hasOriginCover": false,
-		"length": 128.0,
-		"musicId": 136,
-		"title": "チルドレンレコード",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0136_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"IA"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 256
-			},
-			{
-				"assetbundleName": "se_0136_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鏡音 レン",
-					"小豆沢 こはね",
-					"白石 杏",
-					"東雲 彰人",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 257
-			},
-			{
-				"assetbundleName": "an_0136_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"小豆沢 こはね",
-					"東雲 彰人"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 383
-			},
-			{
-				"assetbundleName": "an_0136_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"白石 杏",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 384
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_195",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 133.720816,
-		"musicId": 195,
-		"title": "PaⅢ.SENSATION",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0195_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"GUMI",
-					"鏡音 リン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 454
-			},
-			{
-				"assetbundleName": "se_0195_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン",
-					"小豆沢 こはね",
-					"白石 杏"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 455
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_068",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 101.982041,
-		"musicId": 68,
-		"title": "ダンスロボットダンス",
-		"vocal": [
-			{
-				"assetbundleName": "0068_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 61
-			},
-			{
-				"assetbundleName": "se_0068_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鳳 えむ",
-					"草薙 寧々",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 129
-			},
-			{
-				"assetbundleName": "an_0068_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"鳳 えむ"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 130
-			},
-			{
-				"assetbundleName": "vs_0068_02",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン",
-					"巡音 ルカ"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 567
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_186",
-		"fillerSec": 8,
-		"hasOriginCover": false,
-		"length": 182.413061,
-		"musicId": 186,
-		"title": "初音天地開闢神話",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0186_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 420
 			}
 		]
 	},
@@ -4264,152 +3801,34 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_151",
-		"fillerSec": 9.335000038146973,
+		"assetbundleName": "jacket_s_193",
+		"fillerSec": 7.309899806976318,
 		"hasOriginCover": false,
-		"length": 104.306939,
-		"musicId": 151,
-		"title": "泡沫未来",
+		"length": 97.227755,
+		"musicId": 193,
+		"title": "ワールドワイドワンダー",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0151_01",
+				"assetbundleName": "vs_0193_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 314
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_064",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 133.12,
-		"musicId": 64,
-		"title": "ステラ",
-		"vocal": [
+				"musicVocalType": "original_song",
+				"vocalId": 445
+			},
 			{
-				"assetbundleName": "0064_01",
+				"assetbundleName": "se_0193_01",
 				"caption": "セカイver.",
 				"characters": [
-					"星乃 一歌",
-					"天馬 咲希",
-					"望月 穂波",
-					"日野森 志歩",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 56
-			},
-			{
-				"assetbundleName": "an_0064_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"望月 穂波"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 132
-			},
-			{
-				"assetbundleName": "an_0064_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"日野森 志歩"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 133
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_191",
-		"fillerSec": 7.5,
-		"hasOriginCover": false,
-		"length": 94.040816,
-		"musicId": 191,
-		"title": "悪ノ召使",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0191_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 レン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 443
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_152",
-		"fillerSec": 8.586199760437012,
-		"hasOriginCover": false,
-		"length": 117.159184,
-		"musicId": 152,
-		"title": "だれかの心臓になれたなら",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0152_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 315
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_093",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 121.312653,
-		"musicId": 93,
-		"title": "青く駆けろ！",
-		"vocal": [
-			{
-				"assetbundleName": "se_0093_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"星乃 一歌"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 121
-			},
-			{
-				"assetbundleName": "af_0093_01",
-				"caption": "エイプリルフールver.",
-				"characters": [
-					"初音 ミク",
-					"星乃 一歌",
-					"天馬 咲希",
+					"花里 みのり",
+					"KAITO",
+					"桐谷 遥",
 					"桃井 愛莉",
-					"東雲 絵名"
+					"日野森 雫"
 				],
-				"musicVocalType": "april_fool_2022",
-				"vocalId": 570
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_220",
-		"fillerSec": 8.523799896240234,
-		"hasOriginCover": false,
-		"length": 138.13551,
-		"musicId": 220,
-		"title": "ドーナツホール",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0220_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 545
+				"musicVocalType": "sekai",
+				"vocalId": 446
 			}
 		]
 	},
@@ -4444,34 +3863,21 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_193",
-		"fillerSec": 7.309899806976318,
+		"assetbundleName": "jacket_s_222",
+		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 97.227755,
-		"musicId": 193,
-		"title": "ワールドワイドワンダー",
+		"length": 132.04898,
+		"musicId": 222,
+		"title": "ピアノ×フォルテ×スキャンダル",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0193_01",
+				"assetbundleName": "vs_0222_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"初音 ミク"
+					"MEIKO"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 445
-			},
-			{
-				"assetbundleName": "se_0193_01",
-				"caption": "セカイver.",
-				"characters": [
-					"花里 みのり",
-					"KAITO",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 446
+				"vocalId": 552
 			}
 		]
 	},
@@ -4550,40 +3956,70 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_222",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_098",
+		"fillerSec": 9.01669979095459,
 		"hasOriginCover": false,
-		"length": 132.04898,
-		"musicId": 222,
-		"title": "ピアノ×フォルテ×スキャンダル",
+		"length": 107.807347,
+		"musicId": 98,
+		"title": "ロストワンの号哭",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0222_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"MEIKO"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 552
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_192",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 99.813878,
-		"musicId": 192,
-		"title": "去り人達のワルツ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0192_01",
+				"assetbundleName": "vs_0098_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"鏡音 リン"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 444
+				"vocalId": 146
+			},
+			{
+				"assetbundleName": "vs_0098_02",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン",
+					"巡音 ルカ",
+					"MEIKO"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 399
+			},
+			{
+				"assetbundleName": "se_0098_01",
+				"caption": "セカイver.",
+				"characters": [
+					"鏡音 リン",
+					"星乃 一歌",
+					"日野森 志歩"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 400
+			},
+			{
+				"assetbundleName": "an_0098_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"日野森 志歩"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 401
+			},
+			{
+				"assetbundleName": "an_0098_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 402
+			},
+			{
+				"assetbundleName": "an_0098_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"鏡音 レン"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 566
 			}
 		]
 	},
@@ -4627,213 +4063,104 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_156",
-		"fillerSec": 8.12399959564209,
-		"hasOriginCover": false,
-		"length": 99.918367,
-		"musicId": 156,
-		"title": "Beat Eater",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0156_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 335
-			},
-			{
-				"assetbundleName": "se_0156_01",
-				"caption": "セカイver.",
-				"characters": [
-					"小豆沢 こはね",
-					"鏡音 レン",
-					"白石 杏",
-					"東雲 彰人",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 336
-			},
-			{
-				"assetbundleName": "an_0156_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"小豆沢 こはね"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 348
-			},
-			{
-				"assetbundleName": "an_0156_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"白石 杏"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 349
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_085",
+		"assetbundleName": "jacket_s_068",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 130.795102,
-		"musicId": 85,
-		"title": "Leia - Remind",
+		"length": 101.982041,
+		"musicId": 68,
+		"title": "ダンスロボットダンス",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0085_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"巡音 ルカ"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 81
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_153",
-		"fillerSec": 8.0625,
-		"hasOriginCover": false,
-		"length": 155.559184,
-		"musicId": 153,
-		"title": "Miku",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0153_01",
+				"assetbundleName": "0068_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 324
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_026",
-		"fillerSec": 7.579999923706055,
-		"hasOriginCover": false,
-		"length": 98.45551,
-		"musicId": 26,
-		"title": "劣等上等",
-		"vocal": [
-			{
-				"assetbundleName": "0026_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン",
-					"鏡音 レン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 27
+				"vocalId": 61
 			},
 			{
-				"assetbundleName": "0026_02",
+				"assetbundleName": "se_0068_01",
 				"caption": "セカイver.",
 				"characters": [
-					"鏡音 リン",
-					"鏡音 レン",
-					"小豆沢 こはね",
-					"白石 杏"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 28
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_074",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 74.814694,
-		"musicId": 74,
-		"title": "独りんぼエンヴィー",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0074_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
+					"鳳 えむ",
+					"草薙 寧々",
 					"初音 ミク"
 				],
-				"musicVocalType": "original_song",
-				"vocalId": 67
+				"musicVocalType": "sekai",
+				"vocalId": 129
 			},
 			{
-				"assetbundleName": "vs_0074_02",
+				"assetbundleName": "an_0068_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"鳳 えむ"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 130
+			},
+			{
+				"assetbundleName": "vs_0068_02",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク",
-					"巡音 ルカ",
-					"鏡音 リン"
+					"鏡音 リン",
+					"巡音 ルカ"
 				],
 				"musicVocalType": "virtual_singer",
-				"vocalId": 181
-			},
-			{
-				"assetbundleName": "se_0074_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"宵崎 奏",
-					"暁山 瑞希"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 182
-			},
-			{
-				"assetbundleName": "an_0074_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"宵崎 奏"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 183
-			},
-			{
-				"assetbundleName": "an_0074_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"暁山 瑞希"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 184
+				"vocalId": 567
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_015",
+		"assetbundleName": "jacket_s_195",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 106.004898,
-		"musicId": 15,
-		"title": "drop pop candy",
+		"length": 133.720816,
+		"musicId": 195,
+		"title": "PaⅢ.SENSATION",
 		"vocal": [
 			{
-				"assetbundleName": "0015_01",
+				"assetbundleName": "vs_0195_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"鏡音 リン",
-					"巡音 ルカ"
+					"初音 ミク",
+					"GUMI",
+					"鏡音 リン"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 17
+				"vocalId": 454
 			},
 			{
-				"assetbundleName": "0015_02",
+				"assetbundleName": "se_0195_01",
 				"caption": "セカイver.",
 				"characters": [
+					"初音 ミク",
 					"鏡音 リン",
-					"巡音 ルカ",
 					"小豆沢 こはね",
 					"白石 杏"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 18
+				"vocalId": 455
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_186",
+		"fillerSec": 8,
+		"hasOriginCover": false,
+		"length": 182.413061,
+		"musicId": 186,
+		"title": "初音天地開闢神話",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0186_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 420
 			}
 		]
 	},
@@ -4888,224 +4215,1386 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_210",
-		"fillerSec": 8.07699966430664,
-		"hasOriginCover": true,
-		"length": 125.257143,
-		"musicId": 210,
-		"title": "雨とペトラ",
+		"assetbundleName": "jacket_s_015",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 106.004898,
+		"musicId": 15,
+		"title": "drop pop candy",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0210_01",
+				"assetbundleName": "0015_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"flower"
+					"鏡音 リン",
+					"巡音 ルカ"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 518
+				"vocalId": 17
 			},
 			{
-				"assetbundleName": "se_0210_01",
+				"assetbundleName": "0015_02",
+				"caption": "セカイver.",
+				"characters": [
+					"鏡音 リン",
+					"巡音 ルカ",
+					"小豆沢 こはね",
+					"白石 杏"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 18
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_192",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 99.813878,
+		"musicId": 192,
+		"title": "去り人達のワルツ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0192_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 444
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_136",
+		"fillerSec": 8.966699600219727,
+		"hasOriginCover": false,
+		"length": 128.0,
+		"musicId": 136,
+		"title": "チルドレンレコード",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0136_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"IA"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 256
+			},
+			{
+				"assetbundleName": "se_0136_01",
 				"caption": "セカイver.",
 				"characters": [
 					"鏡音 レン",
+					"小豆沢 こはね",
+					"白石 杏",
 					"東雲 彰人",
 					"青柳 冬弥"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 519
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_144",
-		"fillerSec": 8.5,
-		"hasOriginCover": false,
-		"length": 124.029388,
-		"musicId": 144,
-		"title": "アイノマテリアル",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0144_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク",
-					"鏡音 リン"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 293
+				"vocalId": 257
 			},
 			{
-				"assetbundleName": "se_0144_01",
-				"caption": "セカイver.",
-				"characters": [
-					"桐谷 遥",
-					"日野森 雫",
-					"MEIKO",
-					"花里 みのり",
-					"桃井 愛莉"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 294
-			},
-			{
-				"assetbundleName": "an_0144_01",
+				"assetbundleName": "an_0136_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"花里 みのり"
+					"小豆沢 こはね",
+					"東雲 彰人"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 295
+				"vocalId": 383
+			},
+			{
+				"assetbundleName": "an_0136_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"白石 杏",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 384
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_203",
-		"fillerSec": 8.307700157165527,
+		"assetbundleName": "jacket_s_223",
+		"fillerSec": 7.333399772644043,
 		"hasOriginCover": false,
-		"length": 125.126531,
-		"musicId": 203,
-		"title": "トリコロージュ",
+		"length": 151.719184,
+		"musicId": 223,
+		"title": "千年の独奏歌",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0203_01",
+				"assetbundleName": "vs_0223_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
-					"flower"
+					"KAITO"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 482
-			},
-			{
-				"assetbundleName": "se_0203_01",
-				"caption": "セカイver.",
-				"characters": [
-					"宵崎 奏",
-					"初音 ミク",
-					"朝比奈 まふゆ",
-					"東雲 絵名",
-					"暁山 瑞希"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 483
-			},
-			{
-				"assetbundleName": "an_0203_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 485
+				"vocalId": 553
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_076",
+		"assetbundleName": "jacket_s_096",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 111.908571,
-		"musicId": 76,
-		"title": "セカイ",
+		"length": 155.533061,
+		"musicId": 96,
+		"title": "from Y to Y",
 		"vocal": [
 			{
-				"assetbundleName": "0076_01",
+				"assetbundleName": "vs_0096_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 69
+				"vocalId": 144
 			},
 			{
-				"assetbundleName": "se_0076_01",
+				"assetbundleName": "se_0096_01",
 				"caption": "セカイver.",
 				"characters": [
+					"初音 ミク",
 					"星乃 一歌",
-					"天馬 司",
-					"宵崎 奏",
-					"初音 ミク"
+					"天馬 咲希",
+					"望月 穂波",
+					"日野森 志歩"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 107
+				"vocalId": 235
+			},
+			{
+				"assetbundleName": "an_0096_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"星乃 一歌",
+					"望月 穂波"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 236
+			},
+			{
+				"assetbundleName": "an_0096_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"天馬 咲希",
+					"日野森 志歩"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 237
 			}
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_141",
-		"fillerSec": 8.991600036621094,
+		"assetbundleName": "jacket_s_194",
+		"fillerSec": 9.54539966583252,
 		"hasOriginCover": false,
-		"length": 98.977959,
-		"musicId": 141,
-		"title": "群青讃歌",
+		"length": 141.322449,
+		"musicId": 194,
+		"title": "妄想感傷代償連盟",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0141_01",
+				"assetbundleName": "vs_0194_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 447
+			},
+			{
+				"assetbundleName": "se_0194_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"宵崎 奏",
+					"東雲 絵名"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 448
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_067",
+		"fillerSec": 8.996999740600586,
+		"hasOriginCover": false,
+		"length": 104.045714,
+		"musicId": 67,
+		"title": "自傷無色",
+		"vocal": [
+			{
+				"assetbundleName": "0067_01",
 				"caption": "バーチャル・シンガーver.",
 				"characters": [
 					"初音 ミク"
 				],
 				"musicVocalType": "original_song",
-				"vocalId": 273
+				"vocalId": 59
 			},
 			{
-				"assetbundleName": "se_0141_01",
+				"assetbundleName": "0067_02",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"宵崎 奏",
+					"朝比奈 まふゆ"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 60
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_227",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 128.914286,
+		"musicId": 227,
+		"title": "ONESELF",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0227_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 562
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_100",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 99.787755,
+		"musicId": 100,
+		"title": "ECHO",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0100_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 148
+			},
+			{
+				"assetbundleName": "se_0100_01",
+				"caption": "セカイver.",
+				"characters": [
+					"巡音 ルカ",
+					"小豆沢 こはね",
+					"白石 杏",
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 180
+			},
+			{
+				"assetbundleName": "an_0100_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"白石 杏",
+					"東雲 彰人"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 192
+			},
+			{
+				"assetbundleName": "an_0100_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"小豆沢 こはね",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 193
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_093",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 121.312653,
+		"musicId": 93,
+		"title": "青く駆けろ！",
+		"vocal": [
+			{
+				"assetbundleName": "se_0093_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"星乃 一歌"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 121
+			},
+			{
+				"assetbundleName": "af_0093_01",
+				"caption": "エイプリルフールver.",
+				"characters": [
+					"初音 ミク",
+					"星乃 一歌",
+					"天馬 咲希",
+					"桃井 愛莉",
+					"東雲 絵名"
+				],
+				"musicVocalType": "april_fool_2022",
+				"vocalId": 570
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_220",
+		"fillerSec": 8.523799896240234,
+		"hasOriginCover": false,
+		"length": 138.13551,
+		"musicId": 220,
+		"title": "ドーナツホール",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0220_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 545
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_123",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 140.199184,
+		"musicId": 123,
+		"title": "どりーみんチュチュ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0123_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"巡音 ルカ"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 214
+			},
+			{
+				"assetbundleName": "se_0123_01",
+				"caption": "セカイver.",
+				"characters": [
+					"巡音 ルカ",
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 260
+			},
+			{
+				"assetbundleName": "an_0123_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桐谷 遥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 261
+			},
+			{
+				"assetbundleName": "an_0123_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 262
+			},
+			{
+				"assetbundleName": "an_0123_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"日野森 雫"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 263
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_064",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 133.12,
+		"musicId": 64,
+		"title": "ステラ",
+		"vocal": [
+			{
+				"assetbundleName": "0064_01",
 				"caption": "セカイver.",
 				"characters": [
 					"星乃 一歌",
-					"花里 みのり",
-					"小豆沢 こはね",
-					"天馬 司",
-					"宵崎 奏",
+					"天馬 咲希",
+					"望月 穂波",
+					"日野森 志歩",
 					"初音 ミク"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 388
+				"vocalId": 56
 			},
 			{
-				"assetbundleName": "an_0141_01",
+				"assetbundleName": "an_0064_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"星乃 一歌"
+					"望月 穂波"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 407
+				"vocalId": 132
 			},
 			{
-				"assetbundleName": "an_0141_02",
+				"assetbundleName": "an_0064_02",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"花里 みのり"
+					"日野森 志歩"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 408
+				"vocalId": 133
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_191",
+		"fillerSec": 7.5,
+		"hasOriginCover": false,
+		"length": 94.040816,
+		"musicId": 191,
+		"title": "悪ノ召使",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0191_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 レン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 443
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_161",
+		"fillerSec": 8.98330020904541,
+		"hasOriginCover": false,
+		"length": 110.994286,
+		"musicId": 161,
+		"title": "magic number",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0161_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 346
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_137",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 110.654694,
+		"musicId": 137,
+		"title": "花を唄う",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0137_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 258
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_010",
+		"fillerSec": 9.006999969482422,
+		"hasOriginCover": false,
+		"length": 133.041633,
+		"musicId": 10,
+		"title": "ハッピーシンセサイザ",
+		"vocal": [
+			{
+				"assetbundleName": "0010_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"巡音 ルカ",
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 11
 			},
 			{
-				"assetbundleName": "an_0141_04",
+				"assetbundleName": "0010_02",
+				"caption": "セカイver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 12
+			},
+			{
+				"assetbundleName": "vs_0010_02",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"巡音 ルカ",
+					"鏡音 リン",
+					"MEIKO"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 87
+			},
+			{
+				"assetbundleName": "an_0010_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 88
+			},
+			{
+				"assetbundleName": "an_0010_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 89
+			},
+			{
+				"assetbundleName": "af_0010_01",
+				"caption": "エイプリルフールver.",
+				"characters": [
+					"日野森 志歩",
+					"日野森 雫",
+					"白石 杏",
+					"宵崎 奏"
+				],
+				"musicVocalType": "april_fool_2022",
+				"vocalId": 571
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_196",
+		"fillerSec": 7,
+		"hasOriginCover": false,
+		"length": 125.387755,
+		"musicId": 196,
+		"title": "オーダーメイド",
+		"vocal": [
+			{
+				"assetbundleName": "se_0196_01",
+				"caption": "セカイver.",
+				"characters": [
+					"星乃 一歌",
+					"巡音 ルカ",
+					"天馬 咲希",
+					"望月 穂波",
+					"日野森 志歩"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 457
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_069",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 124.029388,
+		"musicId": 69,
+		"title": "フラジール",
+		"vocal": [
+			{
+				"assetbundleName": "0069_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 62
+			},
+			{
+				"assetbundleName": "0069_02",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 75
+			},
+			{
+				"assetbundleName": "an_0069_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 彰人"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 105
+			},
+			{
+				"assetbundleName": "an_0069_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 106
+			},
+			{
+				"assetbundleName": "vs_0069_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 レン",
+					"KAITO"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 110
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_205",
+		"fillerSec": 8.51449966430664,
+		"hasOriginCover": false,
+		"length": 141.139592,
+		"musicId": 205,
+		"title": "踊",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0205_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン",
+					"鏡音 レン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 496
+			},
+			{
+				"assetbundleName": "se_0205_01",
+				"caption": "セカイver.",
+				"characters": [
+					"小豆沢 こはね",
+					"白石 杏"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 497
+			},
+			{
+				"assetbundleName": "an_0205_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
 					"小豆沢 こはね"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 409
+				"vocalId": 498
 			},
 			{
-				"assetbundleName": "an_0141_03",
+				"assetbundleName": "an_0205_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"白石 杏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 499
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_078",
+		"fillerSec": 9.68179988861084,
+		"hasOriginCover": false,
+		"length": 110.654694,
+		"musicId": 78,
+		"title": "ぼうけんのしょがきえました！",
+		"vocal": [
+			{
+				"assetbundleName": "0078_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン",
+					"鏡音 レン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 71
+			},
+			{
+				"assetbundleName": "se_0078_01",
+				"caption": "セカイver.",
+				"characters": [
+					"天馬 司",
+					"鳳 えむ",
+					"鏡音 リン",
+					"鏡音 レン"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 109
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_206",
+		"fillerSec": 8.405900001525879,
+		"hasOriginCover": false,
+		"length": 151.823673,
+		"musicId": 206,
+		"title": "君色マリンスノウ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0206_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 500
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_147",
+		"fillerSec": 8.991700172424316,
+		"hasOriginCover": false,
+		"length": 138.292245,
+		"musicId": 147,
+		"title": "からくりピエロ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0147_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 304
+			},
+			{
+				"assetbundleName": "se_0147_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 305
+			},
+			{
+				"assetbundleName": "an_0147_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 452
+			},
+			{
+				"assetbundleName": "an_0147_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉",
+					"日野森 雫"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 453
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_099",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 123.611429,
+		"musicId": 99,
+		"title": "モア！ジャンプ！モア！",
+		"vocal": [
+			{
+				"assetbundleName": "se_0099_01",
+				"caption": "セカイver.",
+				"characters": [
+					"桃井 愛莉",
+					"初音 ミク",
+					"花里 みのり",
+					"桐谷 遥",
+					"日野森 雫"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 147
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_158",
+		"fillerSec": 8.220000267028809,
+		"hasOriginCover": false,
+		"length": 131.84,
+		"musicId": 158,
+		"title": "ナンセンス文学",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0158_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 342
+			},
+			{
+				"assetbundleName": "se_0158_01",
+				"caption": "セカイver.",
+				"characters": [
+					"鏡音 レン",
+					"天馬 司",
+					"神代 類"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 343
+			},
+			{
+				"assetbundleName": "an_0158_01",
 				"caption": "アナザーボーカルver.",
 				"characters": [
 					"天馬 司"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 410
+				"vocalId": 538
 			},
 			{
-				"assetbundleName": "an_0141_05",
+				"assetbundleName": "an_0158_02",
 				"caption": "アナザーボーカルver.",
 				"characters": [
-					"宵崎 奏"
+					"神代 類"
 				],
 				"musicVocalType": "another_vocal",
-				"vocalId": 411
+				"vocalId": 539
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_167",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 152.084898,
+		"musicId": 167,
+		"title": "オルターエゴ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0167_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 362
+			},
+			{
+				"assetbundleName": "se_0167_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"小豆沢 こはね",
+					"白石 杏",
+					"東雲 彰人",
+					"青柳 冬弥"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 436
+			},
+			{
+				"assetbundleName": "an_0167_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"白石 杏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 437
+			},
+			{
+				"assetbundleName": "an_0167_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 彰人"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 438
+			},
+			{
+				"assetbundleName": "an_0167_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 439
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_081",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 140.042449,
+		"musicId": 81,
+		"title": "夜咄ディセイブ",
+		"vocal": [
+			{
+				"assetbundleName": "0081_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"IA"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 73
+			},
+			{
+				"assetbundleName": "se_0081_01",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 彰人",
+					"青柳 冬弥",
+					"鏡音 レン"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 131
+			},
+			{
+				"assetbundleName": "an_0081_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 彰人"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 168
+			},
+			{
+				"assetbundleName": "an_0081_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"青柳 冬弥"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 169
+			},
+			{
+				"assetbundleName": "an_0081_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"鏡音 レン"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 290
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_208",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 121.991837,
+		"musicId": 208,
+		"title": "僕らまだアンダーグラウンド",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0208_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 514
+			},
+			{
+				"assetbundleName": "se_0208_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"星乃 一歌",
+					"日野森 志歩"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 549
+			},
+			{
+				"assetbundleName": "an_0208_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"日野森 志歩"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 551
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_109",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 115.173878,
+		"musicId": 109,
+		"title": "ヒビカセ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0109_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 157
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_108",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 140.042449,
+		"musicId": 108,
+		"title": "愛されなくても君がいる",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0108_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 156
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_019",
+		"fillerSec": 9,
+		"hasOriginCover": true,
+		"length": 104.306939,
+		"musicId": 19,
+		"title": "シャルル",
+		"vocal": [
+			{
+				"assetbundleName": "0019_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"flower"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 21
+			},
+			{
+				"assetbundleName": "0019_02",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 絵名",
+					"暁山 瑞希"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 22
+			},
+			{
+				"assetbundleName": "an_0019_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"暁山 瑞希"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 90
+			},
+			{
+				"assetbundleName": "an_0019_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 91
+			},
+			{
+				"assetbundleName": "an_0019_03",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"鏡音 レン",
+					"KAITO"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 531
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_146",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 133.172245,
+		"musicId": 146,
+		"title": "リモコン",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0146_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 リン",
+					"鏡音 レン"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 302
+			},
+			{
+				"assetbundleName": "se_0146_01",
+				"caption": "セカイver.",
+				"characters": [
+					"鏡音 リン",
+					"鏡音 レン",
+					"鳳 えむ",
+					"草薙 寧々"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 303
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_087",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 133.485714,
+		"musicId": 87,
+		"title": "恋愛裁判",
+		"vocal": [
+			{
+				"assetbundleName": "0087_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 86
+			},
+			{
+				"assetbundleName": "se_0087_01",
+				"caption": "セカイver.",
+				"characters": [
+					"桃井 愛莉",
+					"初音 ミク",
+					"花里 みのり"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 189
+			},
+			{
+				"assetbundleName": "an_0087_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"桃井 愛莉"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 190
+			},
+			{
+				"assetbundleName": "an_0087_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"花里 みのり"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 201
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_189",
+		"fillerSec": 8.991700172424316,
+		"hasOriginCover": true,
+		"length": 91.715918,
+		"musicId": 189,
+		"title": "ノマド",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0189_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"flower"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 435
+			},
+			{
+				"assetbundleName": "se_0189_01",
+				"caption": "セカイver.",
+				"characters": [
+					"東雲 絵名",
+					"鏡音 リン",
+					"宵崎 奏",
+					"朝比奈 まふゆ",
+					"暁山 瑞希"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 563
+			},
+			{
+				"assetbundleName": "an_0189_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 565
+			},
+			{
+				"assetbundleName": "an_0189_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"東雲 絵名"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 564
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_062",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 83.591837,
+		"musicId": 62,
+		"title": "ジャックポットサッドガール",
+		"vocal": [
+			{
+				"assetbundleName": "0062_01",
+				"caption": "セカイver.",
+				"characters": [
+					"宵崎 奏",
+					"朝比奈 まふゆ",
+					"東雲 絵名",
+					"暁山 瑞希",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 54
+			},
+			{
+				"assetbundleName": "vs_0062_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 134
+			},
+			{
+				"assetbundleName": "an_0062_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"朝比奈 まふゆ"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 135
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_001",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 123.271837,
+		"musicId": 1,
+		"title": "Tell Your World",
+		"vocal": [
+			{
+				"assetbundleName": "0001_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 1
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_128",
+		"fillerSec": 9.324299812316895,
+		"hasOriginCover": false,
+		"length": 131.082449,
+		"musicId": 128,
+		"title": "Brand New Day",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0128_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 223
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_207",
+		"fillerSec": 8.545499801635742,
+		"hasOriginCover": false,
+		"length": 105.482449,
+		"musicId": 207,
+		"title": "Peaky Peaky",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0207_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 509
+			},
+			{
+				"assetbundleName": "se_0207_01",
+				"caption": "セカイver.",
+				"characters": [
+					"日野森 志歩",
+					"星乃 一歌",
+					"KAITO",
+					"天馬 咲希",
+					"望月 穂波"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 510
 			}
 		]
 	},
@@ -5299,6 +5788,53 @@
 		]
 	},
 	{
+		"assetbundleName": "jacket_s_135",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 123.559184,
+		"musicId": 135,
+		"title": "六兆年と一夜物語",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0135_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"IA"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 248
+			},
+			{
+				"assetbundleName": "se_0135_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"星乃 一歌"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 249
+			},
+			{
+				"assetbundleName": "an_0135_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"星乃 一歌"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 250
+			},
+			{
+				"assetbundleName": "an_0135_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 351
+			}
+		]
+	},
+	{
 		"assetbundleName": "jacket_s_008",
 		"fillerSec": 7.571400165557861,
 		"hasOriginCover": false,
@@ -5345,53 +5881,6 @@
 				],
 				"musicVocalType": "another_vocal",
 				"vocalId": 218
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_135",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 123.559184,
-		"musicId": 135,
-		"title": "六兆年と一夜物語",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0135_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"IA"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 248
-			},
-			{
-				"assetbundleName": "se_0135_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"星乃 一歌"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 249
-			},
-			{
-				"assetbundleName": "an_0135_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"星乃 一歌"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 250
-			},
-			{
-				"assetbundleName": "an_0135_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 351
 			}
 		]
 	},
@@ -5481,65 +5970,6 @@
 				],
 				"musicVocalType": "virtual_singer",
 				"vocalId": 215
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_123",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 140.199184,
-		"musicId": 123,
-		"title": "どりーみんチュチュ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0123_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"巡音 ルカ"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 214
-			},
-			{
-				"assetbundleName": "se_0123_01",
-				"caption": "セカイver.",
-				"characters": [
-					"巡音 ルカ",
-					"花里 みのり",
-					"桐谷 遥",
-					"桃井 愛莉",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 260
-			},
-			{
-				"assetbundleName": "an_0123_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桐谷 遥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 261
-			},
-			{
-				"assetbundleName": "an_0123_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"桃井 愛莉"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 262
-			},
-			{
-				"assetbundleName": "an_0123_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"日野森 雫"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 263
 			}
 		]
 	},
@@ -5707,6 +6137,25 @@
 		]
 	},
 	{
+		"assetbundleName": "jacket_s_018",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 128.026122,
+		"musicId": 18,
+		"title": "アスノヨゾラ哨戒班",
+		"vocal": [
+			{
+				"assetbundleName": "0018_02",
+				"caption": "セカイver.",
+				"characters": [
+					"星乃 一歌"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 20
+			}
+		]
+	},
+	{
 		"assetbundleName": "jacket_s_145",
 		"fillerSec": 7.799799919128418,
 		"hasOriginCover": false,
@@ -5762,25 +6211,6 @@
 				],
 				"musicVocalType": "april_fool_2022",
 				"vocalId": 574
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_018",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 128.026122,
-		"musicId": 18,
-		"title": "アスノヨゾラ哨戒班",
-		"vocal": [
-			{
-				"assetbundleName": "0018_02",
-				"caption": "セカイver.",
-				"characters": [
-					"星乃 一歌"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 20
 			}
 		]
 	},
@@ -6052,137 +6482,25 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_165",
-		"fillerSec": 9,
+		"assetbundleName": "jacket_s_159",
+		"fillerSec": 8.368499755859375,
 		"hasOriginCover": false,
-		"length": 127.137959,
-		"musicId": 165,
-		"title": "そうだった！！",
+		"length": 121.626122,
+		"musicId": 159,
+		"title": "STAGE OF SEKAI",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0165_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 360
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_038",
-		"fillerSec": 8.982999801635742,
-		"hasOriginCover": false,
-		"length": 99.709388,
-		"musicId": 38,
-		"title": "ブリキノダンス",
-		"vocal": [
-			{
-				"assetbundleName": "0038_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 35
-			},
-			{
-				"assetbundleName": "0038_02",
+				"assetbundleName": "se_0159_01",
 				"caption": "セカイver.",
 				"characters": [
-					"天馬 司",
-					"神代 類",
-					"鏡音 レン"
+					"望月 穂波",
+					"星乃 一歌",
+					"鏡音 レン",
+					"天馬 咲希",
+					"日野森 志歩"
 				],
 				"musicVocalType": "sekai",
-				"vocalId": 36
-			},
-			{
-				"assetbundleName": "an_0038_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"天馬 司"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 92
-			},
-			{
-				"assetbundleName": "an_0038_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"神代 類"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 93
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_176",
-		"fillerSec": 8.454500198364258,
-		"hasOriginCover": false,
-		"length": 140.512653,
-		"musicId": 176,
-		"title": "マシンガンポエムドール",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0176_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 382
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_049",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 143.595102,
-		"musicId": 49,
-		"title": "初音ミクの消失",
-		"vocal": [
-			{
-				"assetbundleName": "0049_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 45
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_168",
-		"fillerSec": 9.392200469970703,
-		"hasOriginCover": false,
-		"length": 102.556735,
-		"musicId": 168,
-		"title": "ダーリンダンス",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0168_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 363
-			},
-			{
-				"assetbundleName": "se_0168_01",
-				"caption": "セカイver.",
-				"characters": [
-					"初音 ミク",
-					"花里 みのり",
-					"桐谷 遥"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 589
+				"vocalId": 425
 			}
 		]
 	},
@@ -6250,45 +6568,32 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_050",
-		"fillerSec": 7.928999900817871,
+		"assetbundleName": "jacket_s_168",
+		"fillerSec": 9.392200469970703,
 		"hasOriginCover": false,
-		"length": 132.649796,
-		"musicId": 50,
-		"title": "Blessing",
+		"length": 102.556735,
+		"musicId": 168,
+		"title": "ダーリンダンス",
 		"vocal": [
 			{
-				"assetbundleName": "0050_01",
+				"assetbundleName": "vs_0168_01",
 				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 363
+			},
+			{
+				"assetbundleName": "se_0168_01",
+				"caption": "セカイver.",
 				"characters": [
 					"初音 ミク",
-					"鏡音 リン",
-					"鏡音 レン",
-					"巡音 ルカ",
-					"MEIKO",
-					"KAITO"
+					"花里 みのり",
+					"桐谷 遥"
 				],
-				"musicVocalType": "original_song",
-				"vocalId": 46
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_177",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 132.466939,
-		"musicId": 177,
-		"title": "右肩の蝶",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0177_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 レン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 385
+				"musicVocalType": "sekai",
+				"vocalId": 589
 			}
 		]
 	},
@@ -6367,6 +6672,414 @@
 				],
 				"musicVocalType": "another_vocal",
 				"vocalId": 431
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_074",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 74.814694,
+		"musicId": 74,
+		"title": "独りんぼエンヴィー",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0074_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 67
+			},
+			{
+				"assetbundleName": "vs_0074_02",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"巡音 ルカ",
+					"鏡音 リン"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 181
+			},
+			{
+				"assetbundleName": "se_0074_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"宵崎 奏",
+					"暁山 瑞希"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 182
+			},
+			{
+				"assetbundleName": "an_0074_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"宵崎 奏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 183
+			},
+			{
+				"assetbundleName": "an_0074_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"暁山 瑞希"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 184
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_201",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 132.91102,
+		"musicId": 201,
+		"title": "神のまにまに",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0201_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン",
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 501
+			},
+			{
+				"assetbundleName": "se_0201_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"天馬 司",
+					"鳳 えむ",
+					"草薙 寧々",
+					"神代 類"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 502
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_173",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 121.6,
+		"musicId": 173,
+		"title": "流星のパルス",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0173_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"鏡音 レン",
+					"初音 ミク",
+					"鏡音 リン",
+					"巡音 ルカ",
+					"MEIKO",
+					"KAITO"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 377
+			},
+			{
+				"assetbundleName": "se_0173_01",
+				"caption": "セカイver.",
+				"characters": [
+					"星乃 一歌",
+					"MEIKO",
+					"天馬 咲希",
+					"望月 穂波",
+					"日野森 志歩"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 378
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_046",
+		"fillerSec": 8.899999618530273,
+		"hasOriginCover": false,
+		"length": 125.387755,
+		"musicId": 46,
+		"title": "グリーンライツ・セレナーデ",
+		"vocal": [
+			{
+				"assetbundleName": "0046_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 42
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_164",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 160.130612,
+		"musicId": 164,
+		"title": "Don't Fight The Music",
+		"vocal": [
+			{
+				"assetbundleName": "in_0164_01",
+				"caption": "Inst.ver.",
+				"characters": [],
+				"musicVocalType": "instrumental",
+				"vocalId": 355
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_057",
+		"fillerSec": 9.033300399780273,
+		"hasOriginCover": false,
+		"length": 106.004898,
+		"musicId": 57,
+		"title": "アイドル新鋭隊",
+		"vocal": [
+			{
+				"assetbundleName": "0057_01",
+				"caption": "セカイver.",
+				"characters": [
+					"花里 みのり",
+					"桐谷 遥",
+					"桃井 愛莉",
+					"日野森 雫",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 51
+			},
+			{
+				"assetbundleName": "vs_0057_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン",
+					"巡音 ルカ",
+					"MEIKO"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 100
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_184",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 100.702041,
+		"musicId": 184,
+		"title": "Hello,world!",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0184_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "virtual_singer",
+				"vocalId": 417
+			},
+			{
+				"assetbundleName": "se_0184_01",
+				"caption": "セカイver.",
+				"characters": [
+					"星乃 一歌",
+					"天馬 咲希",
+					"望月 穂波",
+					"日野森 志歩",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 418
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_175",
+		"fillerSec": 8.668499946594238,
+		"hasOriginCover": false,
+		"length": 155.193469,
+		"musicId": 175,
+		"title": "拝啓ドッペルゲンガー",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0175_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"GUMI"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 381
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_048",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 170.840816,
+		"musicId": 48,
+		"title": "ワールドイズマイン",
+		"vocal": [
+			{
+				"assetbundleName": "0048_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 44
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_166",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 98.977959,
+		"musicId": 166,
+		"title": "Glory Steady Go!",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0166_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 361
+			},
+			{
+				"assetbundleName": "se_0166_01",
+				"caption": "セカイver.",
+				"characters": [
+					"草薙 寧々",
+					"巡音 ルカ",
+					"天馬 司",
+					"鳳 えむ",
+					"神代 類"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 379
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_113",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 120.920816,
+		"musicId": 113,
+		"title": "ローリンガール",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0113_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 161
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_103",
+		"fillerSec": 8.217399597167969,
+		"hasOriginCover": false,
+		"length": 121.6,
+		"musicId": 103,
+		"title": "ニジイロストーリーズ",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0103_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク",
+					"鏡音 リン",
+					"鏡音 レン",
+					"巡音 ルカ",
+					"MEIKO",
+					"KAITO"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 151
+			},
+			{
+				"assetbundleName": "se_0103_01",
+				"caption": "セカイver.",
+				"characters": [
+					"草薙 寧々",
+					"神代 類",
+					"MEIKO",
+					"KAITO"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 185
+			},
+			{
+				"assetbundleName": "an_0103_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"草薙 寧々",
+					"神代 類"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 186
+			},
+			{
+				"assetbundleName": "an_0103_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"MEIKO",
+					"KAITO"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 206
+			}
+		]
+	},
+	{
+		"assetbundleName": "jacket_s_230",
+		"fillerSec": 7.604700088500977,
+		"hasOriginCover": false,
+		"length": 157.492245,
+		"musicId": 230,
+		"title": "サラマンダー",
+		"vocal": [
+			{
+				"assetbundleName": "vs_0230_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 575
+			},
+			{
+				"assetbundleName": "se_0230_01",
+				"caption": "セカイver.",
+				"characters": [
+					"初音 ミク",
+					"東雲 彰人",
+					"東雲 絵名"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 576
 			}
 		]
 	},
@@ -6475,34 +7188,45 @@
 		]
 	},
 	{
-		"assetbundleName": "jacket_s_167",
+		"assetbundleName": "jacket_s_101",
 		"fillerSec": 9,
 		"hasOriginCover": false,
-		"length": 152.084898,
-		"musicId": 167,
-		"title": "オルターエゴ",
+		"length": 144.039184,
+		"musicId": 101,
+		"title": "RAD DOGS",
 		"vocal": [
 			{
-				"assetbundleName": "vs_0167_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 362
-			},
-			{
-				"assetbundleName": "se_0167_01",
+				"assetbundleName": "se_0101_01",
 				"caption": "セカイver.",
 				"characters": [
-					"初音 ミク",
+					"青柳 冬弥",
+					"東雲 彰人",
 					"小豆沢 こはね",
 					"白石 杏",
+					"初音 ミク"
+				],
+				"musicVocalType": "sekai",
+				"vocalId": 207
+			},
+			{
+				"assetbundleName": "an_0101_01",
+				"caption": "アナザーボーカルver.",
+				"characters": [
 					"東雲 彰人",
 					"青柳 冬弥"
 				],
-				"musicVocalType": "sekai",
-				"vocalId": 436
+				"musicVocalType": "another_vocal",
+				"vocalId": 212
+			},
+			{
+				"assetbundleName": "an_0101_02",
+				"caption": "アナザーボーカルver.",
+				"characters": [
+					"小豆沢 こはね",
+					"白石 杏"
+				],
+				"musicVocalType": "another_vocal",
+				"vocalId": 213
 			}
 		]
 	},
@@ -6553,68 +7277,6 @@
 				],
 				"musicVocalType": "another_vocal",
 				"vocalId": 480
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_101",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 144.039184,
-		"musicId": 101,
-		"title": "RAD DOGS",
-		"vocal": [
-			{
-				"assetbundleName": "se_0101_01",
-				"caption": "セカイver.",
-				"characters": [
-					"青柳 冬弥",
-					"東雲 彰人",
-					"小豆沢 こはね",
-					"白石 杏",
-					"初音 ミク"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 207
-			},
-			{
-				"assetbundleName": "an_0101_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"東雲 彰人",
-					"青柳 冬弥"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 212
-			},
-			{
-				"assetbundleName": "an_0101_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"小豆沢 こはね",
-					"白石 杏"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 213
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_161",
-		"fillerSec": 8.98330020904541,
-		"hasOriginCover": false,
-		"length": 110.994286,
-		"musicId": 161,
-		"title": "magic number",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0161_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 346
 			}
 		]
 	},
@@ -6681,368 +7343,6 @@
 				],
 				"musicVocalType": "another_vocal",
 				"vocalId": 471
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_118",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 117.86449,
-		"musicId": 118,
-		"title": "＊ハロー、プラネット。",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0118_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 177
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_046",
-		"fillerSec": 8.899999618530273,
-		"hasOriginCover": false,
-		"length": 125.387755,
-		"musicId": 46,
-		"title": "グリーンライツ・セレナーデ",
-		"vocal": [
-			{
-				"assetbundleName": "0046_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 42
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_173",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 121.6,
-		"musicId": 173,
-		"title": "流星のパルス",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0173_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 レン",
-					"初音 ミク",
-					"鏡音 リン",
-					"巡音 ルカ",
-					"MEIKO",
-					"KAITO"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 377
-			},
-			{
-				"assetbundleName": "se_0173_01",
-				"caption": "セカイver.",
-				"characters": [
-					"星乃 一歌",
-					"MEIKO",
-					"天馬 咲希",
-					"望月 穂波",
-					"日野森 志歩"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 378
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_164",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 160.130612,
-		"musicId": 164,
-		"title": "Don't Fight The Music",
-		"vocal": [
-			{
-				"assetbundleName": "in_0164_01",
-				"caption": "Inst.ver.",
-				"characters": [],
-				"musicVocalType": "instrumental",
-				"vocalId": 355
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_166",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 98.977959,
-		"musicId": 166,
-		"title": "Glory Steady Go!",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0166_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 361
-			},
-			{
-				"assetbundleName": "se_0166_01",
-				"caption": "セカイver.",
-				"characters": [
-					"草薙 寧々",
-					"巡音 ルカ",
-					"天馬 司",
-					"鳳 えむ",
-					"神代 類"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 379
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_048",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 170.840816,
-		"musicId": 48,
-		"title": "ワールドイズマイン",
-		"vocal": [
-			{
-				"assetbundleName": "0048_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 44
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_175",
-		"fillerSec": 8.668499946594238,
-		"hasOriginCover": false,
-		"length": 155.193469,
-		"musicId": 175,
-		"title": "拝啓ドッペルゲンガー",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0175_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"GUMI"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 381
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_158",
-		"fillerSec": 8.220000267028809,
-		"hasOriginCover": false,
-		"length": 131.84,
-		"musicId": 158,
-		"title": "ナンセンス文学",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0158_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 342
-			},
-			{
-				"assetbundleName": "se_0158_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鏡音 レン",
-					"天馬 司",
-					"神代 類"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 343
-			},
-			{
-				"assetbundleName": "an_0158_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"天馬 司"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 538
-			},
-			{
-				"assetbundleName": "an_0158_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"神代 類"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 539
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_099",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 123.611429,
-		"musicId": 99,
-		"title": "モア！ジャンプ！モア！",
-		"vocal": [
-			{
-				"assetbundleName": "se_0099_01",
-				"caption": "セカイver.",
-				"characters": [
-					"桃井 愛莉",
-					"初音 ミク",
-					"花里 みのり",
-					"桐谷 遥",
-					"日野森 雫"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 147
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_159",
-		"fillerSec": 8.368499755859375,
-		"hasOriginCover": false,
-		"length": 121.626122,
-		"musicId": 159,
-		"title": "STAGE OF SEKAI",
-		"vocal": [
-			{
-				"assetbundleName": "se_0159_01",
-				"caption": "セカイver.",
-				"characters": [
-					"望月 穂波",
-					"星乃 一歌",
-					"鏡音 レン",
-					"天馬 咲希",
-					"日野森 志歩"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 425
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_098",
-		"fillerSec": 9.01669979095459,
-		"hasOriginCover": false,
-		"length": 107.807347,
-		"musicId": 98,
-		"title": "ロストワンの号哭",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0098_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 146
-			},
-			{
-				"assetbundleName": "vs_0098_02",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"鏡音 リン",
-					"巡音 ルカ",
-					"MEIKO"
-				],
-				"musicVocalType": "virtual_singer",
-				"vocalId": 399
-			},
-			{
-				"assetbundleName": "se_0098_01",
-				"caption": "セカイver.",
-				"characters": [
-					"鏡音 リン",
-					"星乃 一歌",
-					"日野森 志歩"
-				],
-				"musicVocalType": "sekai",
-				"vocalId": 400
-			},
-			{
-				"assetbundleName": "an_0098_01",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"日野森 志歩"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 401
-			},
-			{
-				"assetbundleName": "an_0098_02",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 402
-			},
-			{
-				"assetbundleName": "an_0098_03",
-				"caption": "アナザーボーカルver.",
-				"characters": [
-					"鏡音 レン"
-				],
-				"musicVocalType": "another_vocal",
-				"vocalId": 566
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_114",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 110.524082,
-		"musicId": 114,
-		"title": "裏表ラバーズ",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0114_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 162
-			}
-		]
-	},
-	{
-		"assetbundleName": "jacket_s_113",
-		"fillerSec": 9,
-		"hasOriginCover": false,
-		"length": 120.920816,
-		"musicId": 113,
-		"title": "ローリンガール",
-		"vocal": [
-			{
-				"assetbundleName": "vs_0113_01",
-				"caption": "バーチャル・シンガーver.",
-				"characters": [
-					"初音 ミク"
-				],
-				"musicVocalType": "original_song",
-				"vocalId": 161
 			}
 		]
 	}

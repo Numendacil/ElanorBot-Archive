@@ -20,13 +20,13 @@ using namespace Cyan;
 int main()
 {
 	// Call this before everything else
-	Utils::Init();
+	Utils::Init("./bot_config.json");
 
-	const QQ_t Owner = 1942036996_qq;
+	const QQ_t Owner = (QQ_t)Utils::Configs.Get<int64_t>("/OwnerQQ"_json_pointer, 12345);
 
 	unordered_map<GID_t, shared_ptr<ElanorBot>> Bots;
 	shared_ptr<MiraiBot> client = make_shared<MiraiBot>();
-	SessionOptions opts = SessionOptions::FromJsonFile("./config.json");
+	SessionOptions opts = SessionOptions::FromJsonFile("./client_config.json");
 
 	vector<string> list = Factory<GroupCommandBase>::GetKeyList();
 	vector<pair<string, unique_ptr<GroupCommandBase>>> CommandList;
@@ -110,7 +110,14 @@ int main()
 			{
 				if (bot->CheckAuth(gm.Sender, p.first))
 				{
-					(p.second)->Execute(gm, bot, token);
+					try
+					{
+						(p.second)->Execute(gm, bot, token);
+					}
+					catch (const exception& e)
+					{
+						logging::ERROR(e.what());
+					}
 					priority = (p.second)->Priority();
 				}
 				else

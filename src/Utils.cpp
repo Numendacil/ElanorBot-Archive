@@ -39,35 +39,16 @@ namespace Utils
 		}
 		return true;
 	}
-
-	template<typename T>
-	T BotConfig::Get(const json::json_pointer& key, const T& value) const
-	{
-		if (this->config.contains(key))
-			return this->config.at(key).get<T>();
-		else
-			return value;
-	}
-
-	template<typename T>
-	optional<T> BotConfig::Get(const json::json_pointer& key) const
-	{
-		if (this->config.contains(key))
-			return this->config.at(key).get<T>();
-		else
-			return nullopt;
-	}
 }
 
 namespace Utils
 {
 	random_device rd;
 	mt19937 rng_engine(rd());
-	BotConfig Options;
+	BotConfig Configs;
 
-	const string MediaFilePath = "/home/ubuntu/mirai/media_files/";
 
-	void Init(void)
+	void Init(const std::string& config_path)
 	{
 		Factory<GroupCommandBase>::Register<WhiteList>("WhiteList");
 		Factory<GroupCommandBase>::Register<BlackList>("BlackList");
@@ -88,7 +69,9 @@ namespace Utils
 
 		Factory<GroupCommandBase>::Register<pjskUpdate>("pjskUpdate");
 		Factory<GroupCommandBase>::Register<pjskSongGuess>("pjskSongGuess");
+		Factory<GroupCommandBase>::Register<pjskCoverGuess>("pjskCoverGuess");
 		Factory<GroupCommandBase>::Register<pjskChart>("pjskChart");
+		Factory<GroupCommandBase>::Register<pjskMusicInfo>("pjskMusicInfo");
 
 
 
@@ -101,6 +84,8 @@ namespace Utils
 
 		Factory<TriggerBase>::Register<MorningTrigger>("Morning");
 		Factory<TriggerBase>::Register<BililiveTrigger>("Bililive");
+
+		Configs.FromFile(config_path);
 	}
 
 
@@ -146,19 +131,20 @@ namespace Utils
 	void ReplaceMark(string &str)
 	{
 		static const vector<pair<const string, const string>> ReplaceList =
-	    {
-		{"﹟", "#"},
-		{"？", "?"},
-		{"＃", "#"},
-		{"！", "!"},
-		{"。", "."},
-		{"，", ","},
-		{"“", "\""},
-		{"”", "\""},
-		{"‘", "\'"},
-		{"’", "\'"},
-		{"；", ";"},
-		{"：", ":"}};
+		{
+			{"﹟", "#"},
+			{"？", "?"},
+			{"＃", "#"},
+			{"！", "!"},
+			{"。", "."},
+			{"，", ","},
+			{"“", "\""},
+			{"”", "\""},
+			{"‘", "\'"},
+			{"’", "\'"},
+			{"；", ";"},
+			{"：", ":"}
+		};
 		for (const auto &p : ReplaceList)
 		{
 			string temp;

@@ -41,10 +41,12 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 	logging::INFO("Calling UpdateAlias <pjskUpdate: UpdateAlias>" + Utils::GetDescription(gm));
 	try
 	{
-		Client local_cli("http://localhost:8000");
+		const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
+		Client local_cli(url_local);
+		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 		unordered_map<int, json> alias_map;	// For quick lookup
 		{
-			ifstream ifile(Utils::MediaFilePath + "music/pjsk/alias.json");
+			ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
 			json alias = json::parse(ifile);
 			ifile.close();
 
@@ -78,7 +80,7 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 			alias += p.second;
 		}
 		logging::INFO("Writing to alias.json <pjskUpdate: UpdateAlias>");
-		ofstream ofile(Utils::MediaFilePath + "music/pjsk/alias.json");
+		ofstream ofile(MediaFilesPath + "music/pjsk/alias.json");
 		ofile << alias.dump(1, '\t');
 		ofile.close();
 		return true;
@@ -99,9 +101,10 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 	try
 	{
 		unordered_map<int, json> music_index;
+		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 		{
 			logging::INFO("Reading from meta.json <pjskUpdate: UpdateMetadata>");
-			ifstream ifile(Utils::MediaFilePath + "music/pjsk/meta.json");
+			ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
 			json meta_data = json::parse(ifile);
 			ifile.close();
 
@@ -204,7 +207,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 						meta_data += p.second;
 					}
 					logging::INFO("Writing to meta.json <pjskUpdate: UpdateMetadata>");
-					ofstream ofile(Utils::MediaFilePath + "music/pjsk/meta.json");
+					ofstream ofile(MediaFilesPath + "music/pjsk/meta.json");
 					ofile << meta_data.dump(1, '\t');
 					ofile.close();
 					this_thread::sleep_for(chrono::seconds(10));
@@ -264,7 +267,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				meta_data += p.second;
 			}
 			logging::INFO("Writing to meta.json <pjskUpdate: UpdateMetadata>");
-			ofstream ofile(Utils::MediaFilePath + "music/pjsk/meta.json");
+			ofstream ofile(MediaFilesPath + "music/pjsk/meta.json");
 			ofile << meta_data.dump(1, '\t');
 			ofile.close();
 		}
@@ -289,9 +292,10 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 	try
 	{
 		unordered_map<int, json> music_index;
+		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 		{
 			logging::INFO("Reading from meta.json <pjskUpdate: DownloadFiles>");
-			ifstream ifile(Utils::MediaFilePath + "music/pjsk/meta.json");
+			ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
 			json meta_data = json::parse(ifile);
 			ifile.close();
 
@@ -301,7 +305,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 
 		Client resource_cli("https://sekai-res.dnaroma.eu");
 		{
-			const string covers_path = Utils::MediaFilePath + "music/pjsk/cover/";
+			const string covers_path = MediaFilesPath + "images/pjsk/cover/";
 			unordered_set<string> cover_name;
 			for (const auto &entry : filesystem::directory_iterator(covers_path))
 			{
@@ -311,7 +315,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				}
 			}
 
-			const string songs_path = Utils::MediaFilePath + "music/pjsk/songs/";
+			const string songs_path = MediaFilesPath + "music/pjsk/songs/";
 			unordered_set<string> song_name;
 			for (const auto &entry : filesystem::directory_iterator(songs_path))
 			{
@@ -349,7 +353,10 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 						+ "张图片与"
 						+ to_string(missing_songs.size())
 						+ "首歌曲。开始下载所缺资源"));
-
+			
+			uuids::basic_uuid_random_generator rng(Utils::rng_engine);
+			int success_cover_count = 0;
+			int success_song_count = 0;
 			for (const auto& cover : missing_covers)
 			{
 				auto resp = resource_cli.Get(("/file/sekai-assets/music/jacket/" + cover + "_rip/" + cover + ".png").c_str(), 
@@ -358,12 +365,19 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + cover))
 				{
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
+					// Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					// return false;
+					continue;
 				}
 				ofstream file(covers_path + cover + ".png");
 				file << resp->body;
 				file.close();
+				Utils::exec({
+					"convert",
+					"-resize", "360x360>",
+					covers_path + cover + ".png",
+					MediaFilesPath + "images/pjsk/cover_small/" + cover + "_small.png"});
+				success_cover_count += 1;
 			}
 			for (const auto& cover : missing_org_covers)
 			{
@@ -371,17 +385,23 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							{{"Accept-Encoding", "gzip"}, 
 							{"Referer", "https://sekai.best/"},
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
-				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + cover + "_org"))
+				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + cover))
 				{
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
+					// Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					// return false;
+					continue;
 				}
 				ofstream file(covers_path + cover + "_org.png");
 				file << resp->body;
 				file.close();
+				Utils::exec({
+					"convert",
+					"-resize", "360x360>",
+					covers_path + cover + "_org.png",
+					MediaFilesPath + "images/pjsk/cover_small/" + cover + "_org_small.png"});
+				success_cover_count += 1;
 			}
 
-			uuids::basic_uuid_random_generator rng(Utils::rng_engine);
 			for (const auto& song : missing_songs)
 			{
 				auto resp = resource_cli.Get(("/file/sekai-assets/music/long/" + song.first + "_rip/" + song.first + ".mp3").c_str(), 
@@ -390,11 +410,12 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + song.first))
 				{
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
+					// Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					// return false;
+					continue;
 				}
 
-				string tmp = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".mp3";
+				string tmp = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
 				ofstream file(tmp);
 				file << resp->body;
 				file.close();
@@ -412,8 +433,16 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							"-v", "quiet",
 							"-of", "csv=p=0"});
 				music_index.at(song.second)["length"] = stod(result);
+				success_song_count += 1;
 			}
 			logging::INFO("Download finished <pjskUpdate: DownloadFiles>");
+			logging::INFO("Downloaded " + to_string(success_cover_count) + " covers and " + to_string(success_song_count) + "songs <pjskUpdate: DownloadFiles>");
+			Utils::SendGroupMessage(gm, 
+				MessageChain().Plain("成功下载" 
+						+ to_string(success_cover_count)
+						+ "张图片与"
+						+ to_string(success_song_count)
+						+ "首歌曲。"));
 		}
 		{
 			json meta_data;
@@ -422,7 +451,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				meta_data += p.second;
 			}
 			logging::INFO("Writing to meta.json <pjskUpdate: DownloadFiles>");
-			ofstream ofile(Utils::MediaFilePath + "music/pjsk/meta.json");
+			ofstream ofile(MediaFilesPath + "music/pjsk/meta.json");
 			ofile << meta_data.dump(1, '\t');
 			ofile.close();
 		}
@@ -444,11 +473,12 @@ bool ProbeSongLength(const GroupMessage& gm, shared_ptr<ElanorBot> bot, bool for
 	try
 	{
 		logging::INFO("Reading from meta.json <pjskUpdate: ProbeSongLength>");
-		ifstream ifile(Utils::MediaFilePath + "music/pjsk/meta.json");
+		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
+		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
 		json meta_data = json::parse(ifile);
 		ifile.close();
 
-		const string songs_path = Utils::MediaFilePath + "music/pjsk/songs/";
+		const string songs_path = MediaFilesPath + "music/pjsk/songs/";
 		for (auto &p : meta_data.items())
 		{
 			if (!p.value().contains("length") || force)
@@ -467,7 +497,7 @@ bool ProbeSongLength(const GroupMessage& gm, shared_ptr<ElanorBot> bot, bool for
 				p.value()["length"] = stod(result);
 			}
 		}
-		ofstream ofile(Utils::MediaFilePath + "music/pjsk/meta_data.json");
+		ofstream ofile(MediaFilesPath + "music/pjsk/meta_data.json");
 		ofile << meta_data.dump(1, '\t');
 		ofile.close();
 		return true;

@@ -1,6 +1,8 @@
 #include "Command/pjsk/pjskChart.hpp"
 #include "third-party/json.hpp"
 #include "third-party/date.h"
+#include "third-party/httplib.hpp"
+#include "third-party/cppcodec/base64_rfc4648.hpp"
 #include "State/CoolDown.hpp"
 #include "ElanorBot.hpp"
 #include "Utils.hpp"
@@ -9,7 +11,9 @@
 using namespace std;
 using namespace Cyan;
 using namespace date;
+using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
+using base64 = cppcodec::base64_rfc4648;
 
 bool pjskChart::Parse(const MessageChain& msg, vector<string>& token)
 {
@@ -35,9 +39,11 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 	logging::INFO("Calling pjskChart <pjskChart>" + Utils::GetDescription(gm));
 	string target = token[2];
 
-	vector<pair<json, unordered_set<string>>> alias_pair;
+	json music;
 	{
-		ifstream ifile(Utils::MediaFilePath + "music/pjsk/alias.json");
+		vector<pair<json, unordered_set<string>>> alias_pair;
+		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
+		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
 		json alias = json::parse(ifile);
 		ifile.close();
 
@@ -45,15 +51,13 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		{
 			alias_pair.emplace_back(p.value(), p.value()["alias"]);
 		}
-	}
-
-	json music;
-	for (const auto& p : alias_pair)
-	{
-		if (p.second.contains(target))
+		for (const auto &p : alias_pair)
 		{
-			music = p.first;
-			break;
+			if (p.second.contains(target))
+			{
+				music = p.first;
+				break;
+			}
 		}
 	}
 
@@ -63,7 +67,7 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		Utils::SendGroupMessage(gm, MessageChain().Plain(target + "是什么歌捏，不知道捏"));
 		return false;
 	}
-	logging::INFO("获取歌曲谱面 <pjskChart>: " + music["title"].get<string>() + Utils::GetDescription(gm, false));
+	logging::INFO("获取歌曲谱面 <pjskChart>: " + music["title"].get<string>());
 	string difficulty = "master";
 	if (token.size() > 3)
 	{
@@ -97,10 +101,20 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 	char id[10];
 	assert(music["musicId"].get<int>() < 10000);
 	sprintf(id, "%04d", music["musicId"].get<int>());
-	string url = "https://minio.dnaroma.eu/sekai-music-charts/" + string(id) + "/" + difficulty + ".png";
+	Client resource_cli("https://minio.dnaroma.eu");
+	auto resp = resource_cli.Get(("/sekai-music-charts/" + string(id) + "/" + difficulty + ".png").c_str(),
+				     {{"Accept-Encoding", "gzip"},
+				      {"Referer", "https://sekai.best/"},
+				      {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
+	if (!Utils::CheckHttpResponse(resp, "pjskChart: " + string(id) + " " + difficulty))
+	{
+		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		return false;
+	}
+	logging::INFO("图片下载完成 <pjskChart>");
 	Utils::SendGroupMessage(gm, MessageChain().Plain("谱面: " + music["title"].get<string>() 
 							+ "\n难度: " + difficulty
 							+ "\n")
-							.Image({"", url, "", ""}));
+							.Image({"", "", "", base64::encode(resp->body)}));
 	return true;
 }

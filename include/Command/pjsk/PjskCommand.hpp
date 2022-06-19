@@ -3,6 +3,8 @@
 
 #include "pjskUpdate.hpp"
 #include "pjskSongGuess.hpp"
+#include "pjskCoverGuess.hpp"
 #include "pjskChart.hpp"
+#include "pjskMusicInfo.hpp"
 
 #endif

@@ -26,18 +26,30 @@ namespace Utils
 		bool FromFile(const std::string& filepath);
 
 		template<typename T>
-		T Get(const nlohmann::json::json_pointer& key, const T& value) const;
+		T Get(const nlohmann::json::json_pointer& key, const T& value) const
+		{
+			if (this->config.contains(key))
+				return this->config.at(key).get<T>();
+			else
+				return value;
+		}
 		template<typename T>
-		std::optional<T> Get(const nlohmann::json::json_pointer& key) const;
+		std::optional<T> Get(const nlohmann::json::json_pointer& key) const
+		{
+			if (this->config.contains(key))
+				return this->config.at(key).get<T>();
+			else
+				return nullopt;
+		}
 	};
 }
 
 namespace Utils
 {
 	extern std::mt19937 rng_engine;
-	extern const std::string MediaFilePath;
+	extern BotConfig Configs;
 
-	void Init(void);
+	void Init(const std::string& config_path);
 
 	std::string exec(const std::vector<std::string>& cmd);
 

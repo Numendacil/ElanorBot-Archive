@@ -44,8 +44,8 @@ bool GetPixivById(const GroupMessage& gm, shared_ptr<ElanorBot> bot, long pid, i
 		return false;
 	}
 	assert(holder);
-
-	httplib_ssl_zlib::Client cli("localhost", 8000);
+	const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
+	httplib_ssl_zlib::Client cli(url_local);
 	auto result = cli.Get("/pixiv/id/", {{"id", to_string(pid)}, {"page", to_string(page)}}, {{"Accept-Encoding", "gzip"}});
 	if (!Utils::CheckHttpResponse(result, "Pixiv"))
 	{

@@ -23,7 +23,7 @@ bool AtBot::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vec
 	const vector<string> words = {"干嘛", "？"};
 	const int words_count = words.size();
 
-	filesystem::path filepath = Utils::MediaFilePath + "images/at";
+	const filesystem::path filepath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/") + "images/at";
 	vector<string> image;
 	for (const auto & entry : filesystem::directory_iterator(filepath))
 	{

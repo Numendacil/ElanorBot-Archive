@@ -24,14 +24,14 @@ bool pjskSongGuess::Parse(const MessageChain& msg, vector<string>& token)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
-	if (str.length() >= char_traits<char>::length("#pjsk guess"))
+	if (str.length() >= char_traits<char>::length("#pjsk 猜歌"))
 	{
 		Utils::ToLower(str);
 		if (Utils::Tokenize(token, str) < 2)
 			return false;
 		if (token[0] == "#pjsk" || token[0] == "#啤酒烧烤" || token[0] == "#prsk")
-			if (token[1] == "guess" || token[1] == "猜歌")
-			return true;
+			if (token[1] == "猜歌")
+				return true;
 	}
 	return false;
 }
@@ -45,6 +45,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 
 	auto state = bot->GetState<Activity>("Activity");
 	auto holder = state->CheckAndStart("pjsk");
+	const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 	if (!holder)
 	{
 		logging::INFO("有活动正在进行 <pjskSongGuess>" + Utils::GetDescription(gm, false));
@@ -56,7 +57,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 
 	json music, alias;
 	{
-		ifstream ifile(Utils::MediaFilePath + "music/pjsk/meta.json");
+		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
 		json meta_data = json::parse(ifile);
 		ifile.close();
 
@@ -66,7 +67,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		music["vocal"] = music["vocal"][rng2(Utils::rng_engine)];
 	}
 	{
-		ifstream ifile(Utils::MediaFilePath + "music/pjsk/alias.json");
+		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
 		json alias_data = json::parse(ifile);
 		ifile.close();
 
@@ -85,17 +86,29 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	string audio_path, audio_ans_path;
 	{
 		uuids::basic_uuid_random_generator rng(Utils::rng_engine);
-		string music_path = Utils::MediaFilePath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3";
-		string tmp1 = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".mp3";
-		string tmp2 = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".pcm";
-		audio_path = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".slk";
+		string music_path = MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3";
+		string tmp1 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
+		string tmp2 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
+		audio_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
 
-		string tmp3 = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".mp3";
-		string tmp4 = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".pcm";
-		audio_ans_path = Utils::MediaFilePath + "tmp/" + to_string(rng()) + ".slk";
+		string tmp3 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
+		string tmp4 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
+		audio_ans_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
 
-		double length = music["length"].get<double>();
-		const double interval = 1.0;
+		double length;
+		if (music.contains("length"))
+			length = music["length"].get<double>();
+		else
+		{
+			string result = Utils::exec({
+							"ffprobe",
+							"-i", music_path,
+							"-show_entries", "format=duration",
+							"-v", "quiet",
+							"-of", "csv=p=0"});
+			length = stod(result);
+		}
+		const double interval = Utils::Configs.Get<double>("/pjsk/SongGuess/Interval"_json_pointer, 1);
 		const double ans_interval_2 = 4;
 		uniform_real_distribution<double> rng_real(2.0 + ans_interval_2, length - interval - 2.0 - ans_interval_2);
 		double start = rng_real(Utils::rng_engine);
@@ -124,6 +137,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 			"ffmpeg", 
 			"-i", tmp1, 
 			"-f", "s16le",
+			"-af", "adelay=100ms:all=true,apad=pad_dur=200ms",	// Add padding
 			"-ar", "24000",
 			"-ac", "1",
 			"-v", "quiet",
@@ -161,10 +175,10 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_path);
 	Utils::SendGroupMessage(gm, MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_path, ""}));
 
-	string cover = Utils::MediaFilePath + "music/pjsk/cover/" + music["assetbundleName"].get<string>();
+	string cover = MediaFilesPath + "images/pjsk/cover_small/" + music["assetbundleName"].get<string>();
 	if (music["hasOriginCover"].get<bool>() && music["vocal"]["musicVocalType"].get<string>() == "original_song")
 		cover += "_org";
-	cover += ".png";
+	cover += "_small.png";
 	string answer = music["title"].get<string>() + " - " + music["vocal"]["caption"].get<string>();
 	if (music["vocal"]["characters"].size())
 	{

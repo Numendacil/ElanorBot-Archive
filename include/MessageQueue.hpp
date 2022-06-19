@@ -5,6 +5,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <thread>
+#include <chrono>
 #include <mirai/messages/messages.hpp>
 #include <mirai/MiraiBot.hpp>
 
@@ -20,7 +21,7 @@ public:
 		return m;
 	}
 
-	void Start(std::shared_ptr<Cyan::MiraiBot>);
+	void Start(std::shared_ptr<Cyan::MiraiBot>, std::chrono::milliseconds interval = std::chrono::seconds(1), int max_retry = 3);
 	void Stop(void);
 	void Pause(void);
 	void Resume(void);
@@ -35,6 +36,7 @@ private:
 		Cyan::GID_t gid;
 		Cyan::MessageChain msg;
 		Cyan::MessageId_t mid;
+		int count = 0;
 	};
 
 	MessageQueue() {}
@@ -43,6 +45,9 @@ private:
 	std::mutex mtx;
 	std::condition_variable cv;
 	std::thread th;
+
+	std::chrono::milliseconds interval;
+	int max_retry;
 
 	bool start = false;
 	bool running = false;

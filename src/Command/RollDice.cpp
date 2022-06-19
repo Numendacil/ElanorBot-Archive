@@ -67,7 +67,13 @@ bool RollDice::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 			if (j)
 			{
 				int max = stoi(command.substr(i, j));
-				uniform_int_distribution<int> rngroll(0, max);
+				if (max <= 0)
+				{
+					logging::INFO("骰子面数过小 <RollDice>: " + to_string(max) + Utils::GetDescription(gm, false));
+					Utils::SendGroupMessage(gm, MessageChain().Plain("这是什么奇妙骰子捏，没见过捏"));
+					return false;
+				}
+				uniform_int_distribution<int> rngroll(1, max);
 				int ans = 0;
 				string msg = "";
 				for (int l = 0; l < round; ++l)

@@ -75,7 +75,7 @@ bool Petpet::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 			}
 		}
 
-		httplib_ssl_zlib::Client cli("localhost", 8000);
+		httplib_ssl_zlib::Client  cli(Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000"));
 		auto result = cli.Get("/gen/pet/", {{"qq", to_string(target)}}, {{"Accept-Encoding", "gzip"}});
 		if (!Utils::CheckHttpResponse(result, "Petpet"))
 		{

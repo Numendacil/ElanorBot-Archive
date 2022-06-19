@@ -94,7 +94,8 @@ bool Saucenao::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 	}
 	assert(holder);
 
-	httplib_ssl_zlib::Client cli("localhost", 8000);
+	const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
+	httplib_ssl_zlib::Client cli( url_local);
 	auto result = cli.Get("/image/saucenao/", {{"url", url}}, {{"Accept-Encoding", "gzip"}});
 	if (!Utils::CheckHttpResponse(result, "Pixiv"))
 	{
