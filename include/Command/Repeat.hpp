@@ -6,7 +6,7 @@
 class Repeat : public GroupCommandBase
 {
 public:
-	virtual int Priority(void) { return 0; }
+	virtual int Priority(void) { return -1; }
 	virtual bool Parse(const Cyan::MessageChain& msg, std::vector<std::string>& tokens) override;
 	virtual bool Execute(const Cyan::GroupMessage& gm, std::shared_ptr<ElanorBot> bot, const std::vector<std::string>& tokens) override;
 };

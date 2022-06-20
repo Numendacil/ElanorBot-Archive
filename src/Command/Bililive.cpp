@@ -42,61 +42,59 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 		return true;
 	}
 
-	if (command == "list" || command == "add" || command == "del")
+	httplib_ssl_zlib::Client cli("https://api.live.bilibili.com");
+	if (command == "list")
 	{
-		httplib_ssl_zlib::Client cli("https://api.live.bilibili.com");
-		if (command == "list")
+		string message = "直播间列表: ";
+		for (const auto &id : BiliList->GetList())
 		{
-			string message = "直播间列表: ";
-			for (const auto& id : BiliList->GetList())
+			auto result = cli.Get("/live_user/v1/Master/info", {{"uid", to_string(id.first)}},
+					      {{"Accept-Encoding", "gzip"},
+					       {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
+			if (!Utils::CheckHttpResponse(result, "Bililive: user_info"))
 			{
-				auto result = cli.Get("/live_user/v1/Master/info", {{"uid", to_string(id.first)}}, 
-							{{"Accept-Encoding", "gzip"},
-							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
-				if (!Utils::CheckHttpResponse(result, "Bililive: user_info"))
-				{
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
-				}
-
-				json content = json::parse(result->body);
-				if (content["code"].get<int>() != 0)
-				{
-					logging::WARN("Error response from /live_user/v1/Master/info <Bililive>: " + content["msg"].get<string>());
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
-				}
-				message += "\n" + content["data"]["info"]["uname"].get<string>() + " (" + to_string(id.first) + "): ";
-
-
-
-				result = cli.Get("/room/v1/Room/get_info", {{"id", to_string(id.second.room_id)}}, 
-						{{"Accept-Encoding", "gzip"},
-						{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
-				if (!Utils::CheckHttpResponse(result, "Bililive: room_info"))
-				{
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
-				}
-
-				content = json::parse(result->body);
-				if (content["code"].get<int>() != 0)
-				{
-					logging::WARN("Error response from /room/v1/Room/get_info <Bililive>: " + content["msg"].get<string>());
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
-					return false;
-				}
-				if (content["data"]["live_status"].get<int>() == 0)
-					message += "未开播 ⚫";
-				else
-					message += (content["data"]["live_status"].get<int>() == 1)? "直播中 🔴" : "轮播中 🔵";
-				this_thread::sleep_for(chrono::milliseconds(200));
+				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				return false;
 			}
-			logging::INFO("输出直播间列表 <Bililive>" + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain().Plain(message));
-			return true;
-		}
 
+			json content = json::parse(result->body);
+			if (content["code"].get<int>() != 0)
+			{
+				logging::WARN("Error response from /live_user/v1/Master/info <Bililive>: " + content["msg"].get<string>());
+				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				return false;
+			}
+			message += "\n" + content["data"]["info"]["uname"].get<string>() + " (" + to_string(id.first) + "): ";
+
+			result = cli.Get("/room/v1/Room/get_info", {{"id", to_string(id.second.room_id)}},
+					 {{"Accept-Encoding", "gzip"},
+					  {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
+			if (!Utils::CheckHttpResponse(result, "Bililive: room_info"))
+			{
+				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				return false;
+			}
+
+			content = json::parse(result->body);
+			if (content["code"].get<int>() != 0)
+			{
+				logging::WARN("Error response from /room/v1/Room/get_info <Bililive>: " + content["msg"].get<string>());
+				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				return false;
+			}
+			if (content["data"]["live_status"].get<int>() == 0)
+				message += "未开播 ⚫";
+			else
+				message += (content["data"]["live_status"].get<int>() == 1) ? "直播中 🔴" : "轮播中 🔵";
+			this_thread::sleep_for(chrono::milliseconds(200));
+		}
+		logging::INFO("输出直播间列表 <Bililive>" + Utils::GetDescription(gm, false));
+		Utils::SendGroupMessage(gm, MessageChain().Plain(message));
+		return true;
+	}
+
+	if (command == "add" || command == "del")
+	{
 		if (token.size() < 3)
 		{
 			logging::INFO("缺少参数[uid] <Bililive>: " + command + Utils::GetDescription(gm, false));

@@ -11,8 +11,9 @@ using json = nlohmann::json;
 
 int main(void)
 {
-	ifstream ifile("../bot_config.json");
-	json a = json::parse(ifile);
-	cout << a["/pjsk/SongGuess/Interval"_json_pointer].get<double>() << endl;
-	cout << a.dump(1, '\t') << endl;
+	json a;
+	a["content"] = {"a"};
+	a["content"] += "aa";
+	a["content"] += "abc";
+	cout << (a["content"].find("aa") != a["content"].end()) << endl;
 }

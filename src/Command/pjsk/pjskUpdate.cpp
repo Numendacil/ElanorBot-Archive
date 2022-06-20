@@ -71,6 +71,8 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 			content["title"] = alias["title"];
 			content["translate"] = alias["translate"];
 			content["alias"] = alias["alias"];
+			if (find(content["alias"].begin(), content["alias"].end(), content["translate"]) == content["alias"].end())
+				content["alias"] += content["translate"];
 			content["musicId"] = alias["musicId"];
 			alias_map[id] = content;
 		}
@@ -168,6 +170,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 		for (const auto &item : music_info.items())
 		{
 			int id = item.value()["id"].get<int>();
+			id_list.push_back(id);
 			if (!music_index.count(id))
 			{
 				json content;
@@ -195,7 +198,6 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				{
 					content["hasOriginCover"] = true;
 				}
-				id_list.push_back(id);
 				music_index.emplace(id, content);
 
 				if (count++ >= 10)
@@ -272,7 +274,8 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			ofile.close();
 		}
 		logging::INFO("Metadata update complete <pjskUpdate: UpdateMetadata>");
-		UpdateAlias(gm, bot, id_list, false);
+		if (!UpdateAlias(gm, bot, id_list, false))
+			return false;
 		logging::INFO("Alias update complete <pjskUpdate: UpdateMetadata>");
 		return true;
 	}
@@ -529,10 +532,24 @@ bool pjskUpdate::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, cons
 	}
 
 	string command = token[3];
-	// if (command == "alias")
-	// {
-	// 	if (token.size)
-	// }
+	if (command == "alias")
+	{
+		vector<int> id_list;
+		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
+		{
+			logging::INFO("Reading from meta.json <pjskUpdate: UpdateMetadata>");
+			ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+			json meta_data = json::parse(ifile);
+			ifile.close();
+
+			for (const auto &p : meta_data.items())
+				id_list.emplace_back((p.value())["musicId"].get<int>());
+		}
+		if (!UpdateAlias(gm, bot, id_list))
+			return false;
+		Utils::SendGroupMessage(gm, MessageChain().Plain("更新好了捏"));
+		return true;
+	}
 
 
 	logging::INFO("未知命令 <pjskUpdate>: " + command + Utils::GetDescription(gm, false));

@@ -29,7 +29,7 @@ bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 	//	logging::INFO("有人复读 <Repeat>: " + token[0] + Utils::GetDescription(gm));
 		if (!Repeated)
 		{
-			uniform_int_distribution rng_repeat(1, 6);
+			uniform_int_distribution rng_repeat(1, 10);
 			if (rng_repeat(Utils::rng_engine) == 1)
 			{
 				state->Set(gm.MessageChain, true);
@@ -41,7 +41,10 @@ bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 	}
 	else
 	{
-		state->Set(gm.MessageChain, false);
+		if (gm.Sender.QQ == bot->client->GetBotQQ())
+			state->Set(gm.MessageChain, true);
+		else
+			state->Set(gm.MessageChain, false);
 	}
 	return false;
 }

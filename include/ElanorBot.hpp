@@ -123,9 +123,6 @@ public:
 		//	auth = 100;
 			return true;
 
-		if (this->BlackList.contains(member.QQ))
-			return false;
-
 		switch (member.Permission)
 		{
 		case Cyan::GroupPermission::Member:
@@ -139,6 +136,8 @@ public:
 		if (this->WhiteList.contains(member.QQ))
 			auth = 50;
 		
+		if (this->BlackList.contains(member.QQ))
+			auth = -1;
 		return auth >= this->CommandAuth.at(command);
 	}
 

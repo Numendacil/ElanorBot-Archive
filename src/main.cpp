@@ -88,8 +88,8 @@ int main()
 
 	client->On<GroupMessage>([&, client , &CommandList = as_const(CommandList)](GroupMessage gm) 
 	{
-		if (gm.Sender.QQ == client->GetBotQQ())
-			return;
+		// if (gm.Sender.QQ == client->GetBotQQ())
+		// 	return;
 		
 		shared_ptr<ElanorBot> bot;
 		static mutex mtx_bots;

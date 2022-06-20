@@ -49,7 +49,15 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 
 		for (const auto &p : alias.items())
 		{
-			alias_pair.emplace_back(p.value(), p.value()["alias"]);
+			unordered_set<string> s;
+			for (const auto &item : p.value()["alias"].items())
+			{
+				string str = string(item.value());
+				Utils::ToLower(str);
+				Utils::ReplaceMark(str);
+				s.insert(str);
+			}
+			alias_pair.emplace_back(p.value(), s);
 		}
 		for (const auto &p : alias_pair)
 		{
