@@ -109,8 +109,8 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 	char id[10];
 	assert(music["musicId"].get<int>() < 10000);
 	sprintf(id, "%04d", music["musicId"].get<int>());
-	Client resource_cli("https://minio.dnaroma.eu");
-	auto resp = resource_cli.Get(("/sekai-music-charts/" + string(id) + "/" + difficulty + ".png").c_str(),
+	Client resource_cli("https://sekai-music-charts-1258184166.file.myqcloud.com");
+	auto resp = resource_cli.Get(("/" + string(id) + "/" + difficulty + ".png").c_str(),
 				     {{"Accept-Encoding", "gzip"},
 				      {"Referer", "https://sekai.best/"},
 				      {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});

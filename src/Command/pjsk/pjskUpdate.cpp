@@ -71,8 +71,8 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 			content["title"] = alias["title"];
 			content["translate"] = alias["translate"];
 			content["alias"] = alias["alias"];
-			if (find(content["alias"].begin(), content["alias"].end(), content["translate"]) == content["alias"].end())
-				content["alias"] += content["translate"];
+			if (find(content["alias"].begin(), content["alias"].end(), content["translate"].get<string>()) == content["alias"].end())
+				content["alias"] += content["translate"].get<string>();
 			content["musicId"] = alias["musicId"];
 			alias_map[id] = content;
 		}
@@ -116,7 +116,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 
 		logging::INFO("Reading info from sekai.best <pjskUpdate: UpdateMetadata>");
 		Client sekai_cli("https://sekai-world.github.io");
-		Client resource_cli("https://sekai-res.dnaroma.eu");
+		Client resource_cli("https://sekai-assets-1258184166.file.myqcloud.com");
 		auto result_music = sekai_cli.Get("/sekai-master-db-diff/musics.json",
 						{{"Accept-Encoding", "gzip"},
 						{"Referer", "https://sekai.best/"},
@@ -180,7 +180,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				content["fillerSec"] = item.value()["fillerSec"];
 
 				string cover = content["assetbundleName"].get<string>();
-				auto result_cover_org = resource_cli.Head(("/file/sekai-assets/music/jacket/" + cover + "_rip/" + cover + "_org.png").c_str(),
+				auto result_cover_org = resource_cli.Head(("/music/jacket/" + cover + "_rip/" + cover + "_org.png").c_str(),
 									  {{"Accept-Encoding", "gzip"},
 									   {"Referer", "https://sekai.best/"},
 									   {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
@@ -306,7 +306,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				music_index.emplace((p.value())["musicId"].get<int>(), p.value());
 		}
 
-		Client resource_cli("https://sekai-res.dnaroma.eu");
+		Client resource_cli("https://sekai-assets-1258184166.file.myqcloud.com");
 		{
 			const string covers_path = MediaFilesPath + "images/pjsk/cover/";
 			unordered_set<string> cover_name;
@@ -362,7 +362,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			int success_song_count = 0;
 			for (const auto& cover : missing_covers)
 			{
-				auto resp = resource_cli.Get(("/file/sekai-assets/music/jacket/" + cover + "_rip/" + cover + ".png").c_str(), 
+				auto resp = resource_cli.Get(("/music/jacket/" + cover + "_rip/" + cover + ".png").c_str(), 
 							{{"Accept-Encoding", "gzip"}, 
 							{"Referer", "https://sekai.best/"},
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
@@ -384,7 +384,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			}
 			for (const auto& cover : missing_org_covers)
 			{
-				auto resp = resource_cli.Get(("/file/sekai-assets/music/jacket/" + cover + "_rip/" + cover + "_org.png").c_str(), 
+				auto resp = resource_cli.Get(("/music/jacket/" + cover + "_rip/" + cover + "_org.png").c_str(), 
 							{{"Accept-Encoding", "gzip"}, 
 							{"Referer", "https://sekai.best/"},
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
@@ -407,7 +407,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 
 			for (const auto& song : missing_songs)
 			{
-				auto resp = resource_cli.Get(("/file/sekai-assets/music/long/" + song.first + "_rip/" + song.first + ".mp3").c_str(), 
+				auto resp = resource_cli.Get(("/music/long/" + song.first + "_rip/" + song.first + ".mp3").c_str(), 
 							{{"Accept-Encoding", "gzip"}, 
 							{"Referer", "https://sekai.best/"},
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
@@ -531,7 +531,7 @@ bool pjskUpdate::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, cons
 		return true;
 	}
 
-	string command = token[3];
+	string command = token[2];
 	if (command == "alias")
 	{
 		vector<int> id_list;
@@ -543,7 +543,7 @@ bool pjskUpdate::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, cons
 			ifile.close();
 
 			for (const auto &p : meta_data.items())
-				id_list.emplace_back((p.value())["musicId"].get<int>());
+				id_list.push_back((p.value())["musicId"].get<int>());
 		}
 		if (!UpdateAlias(gm, bot, id_list))
 			return false;
