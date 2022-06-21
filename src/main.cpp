@@ -99,6 +99,9 @@ int main()
 				Bots[gm.Sender.Group.GID] = make_shared<ElanorBot>(gm.Sender.Group.GID, Owner, client);
 			bot = Bots[gm.Sender.Group.GID];
 		}
+		
+		if (bot->IsBlackList(gm.Sender.QQ))
+			return;
 
 		int priority = -1;
 		for (const auto& p : CommandList)
@@ -118,13 +121,13 @@ int main()
 					{
 						logging::ERROR(e.what());
 					}
-					priority = (p.second)->Priority();
 				}
 				else
 				{
 					logging::INFO("权限不足 <OnGroupMessage>: " + ((token.size())? token[0] : string() + Utils::GetDescription(gm, false)));
 					MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("权限不足捏~"));
 				}
+				priority = (p.second)->Priority();
 			}
 		}
 	});

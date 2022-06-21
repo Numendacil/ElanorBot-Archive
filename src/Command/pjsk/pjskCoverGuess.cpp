@@ -53,7 +53,7 @@ bool pjskCoverGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, 
 		return false;
 	}
 
-	Utils::SendGroupMessage(gm, MessageChain().Plain("请在30秒内发送曲绘对应的歌曲名称。回答请以句号开头捏"));
+	Utils::SendGroupMessage(gm, MessageChain().Plain("请在规定时间内发送曲绘对应的歌曲名称。回答请以句号开头捏"));
 
 	json music, alias;
 	{
@@ -80,25 +80,20 @@ bool pjskCoverGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, 
 	}
 	logging::INFO("题目为 <pjskCoverGuess>: " + music.dump() + alias.dump());
 
-
-	string cover_path, cover_ans_path;
+	string cover, cover_ans_path;
+	int width, height;
 	{
-		uuids::basic_uuid_random_generator rng(Utils::rng_engine);
-		string cover = music["assetbundleName"].get<string>();
+		cover = music["assetbundleName"].get<string>();
 		if (music["hasOriginCover"].get<bool>())
 		{
 			bernoulli_distribution rng2(0.5);
-			cover += (rng2(Utils::rng_engine))? "" : "_org";
+			cover += (rng2(Utils::rng_engine)) ? "" : "_org";
 		}
 		cover_ans_path = MediaFilesPath + "images/pjsk/cover_small/" + cover + "_small.png";
 		cover = MediaFilesPath + "images/pjsk/cover/" + cover + ".png";
-		cover_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".png";
-		int width, height;
-		const string shape = Utils::exec({
-			"identify",
-			"-format", "%[fx:w] %[fx:h]",
-			cover
-		});
+		const string shape = Utils::exec({"identify",
+						  "-format", "%[fx:w] %[fx:h]",
+						  cover});
 		vector<string> s;
 		if (Utils::Tokenize(s, shape) < 2)
 		{
@@ -111,55 +106,70 @@ bool pjskCoverGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, 
 			width = stoi(s[0]);
 			height = stoi(s[1]);
 		}
-
-		const double ratio = Utils::Configs.Get<double>("/pjsk/CoverGuess/Ratio"_json_pointer, 0.15);
-		int width_target = (int)floor(width * ratio);
-		int height_target = (int)floor(height * ratio);
-		uniform_int_distribution<int> rng_x(5, width - 5 - width_target);
-		uniform_int_distribution<int> rng_y(5, height - 5 - height_target);
-		int x = rng_x(Utils::rng_engine);
-		int y = rng_y(Utils::rng_engine);
-
-		Utils::exec({
-			"convert",
-			"-crop", to_string(width_target) + "x"+ to_string(height_target) + "+" + to_string(x) + "+" + to_string(y),
-			cover,
-			cover_path
-		});
 	}
-	logging::INFO("图片处理完毕 <pjskCoverGuess>: " + cover_path);
-	Utils::SendGroupMessage(gm, MessageChain().Image({"", "", cover_path, ""}));
 
-	string answer = music["title"].get<string>();
-	
+	unordered_set<string> alias_map;
+	for (const auto &item : alias.items())
 	{
-		unordered_set<string> alias_map;
-		for (const auto& item : alias.items())
+		string str = string(item.value());
+		Utils::ToLower(str);
+		Utils::ReplaceMark(str);
+		alias_map.insert(str);
+	}
+
+	const int round = Utils::Configs.Get<int>("/pjsk/CoverGuess/Round"_json_pointer, 2);
+	const double ratio = Utils::Configs.Get<double>("/pjsk/CoverGuess/Ratio"_json_pointer, 0.15);
+	int x, y;
+	{
+		int width_target = (int)floor(width * ratio * ((round - 1) * 0.5f + 1.0f));
+		int height_target = (int)floor(height * ratio * ((round - 1) * 0.5f + 1.0f));
+		uniform_int_distribution<int> rng_x(5 + width_target / 2, width - 5 - width_target / 2);
+		uniform_int_distribution<int> rng_y(5 + width_target / 2, height - 5 - height_target / 2);
+		x = rng_x(Utils::rng_engine);
+		y = rng_y(Utils::rng_engine);
+	}
+	for (int i = 0 ; i < round; ++i)
+	{
+		string cover_path;
 		{
-			string str = string(item.value());
-			Utils::ToLower(str);
-			Utils::ReplaceMark(str);
-			alias_map.insert(str);
+			uuids::basic_uuid_random_generator rng(Utils::rng_engine);
+			cover_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".png";
+
+			
+			int width_target = (int)floor(width * ratio * (i * 0.5f + 1.0f));
+			int height_target = (int)floor(height * ratio * (i * 0.5f + 1.0f));
+
+			Utils::exec({"convert",
+				     "-crop", to_string(width_target) + "x" + to_string(height_target) + "+" + to_string(int(x - width_target / 2)) + "+" + to_string(int(y - width_target / 2)),
+				     cover,
+				     cover_path});
 		}
+		logging::INFO("图片处理完毕 <pjskCoverGuess>: " + cover_path);
+		Utils::SendGroupMessage(gm, MessageChain().Image({"", "", cover_path, ""}));
+
 		const auto tp = chrono::system_clock::now();
+		bool flag = false;
 		while (true)
 		{
 			Activity::AnswerInfo info;
-			if (!state->WaitForAnswerUntil(tp + chrono::seconds(32), info))
+			if (!state->WaitForAnswerUntil(tp + chrono::seconds(21), info))
 				break;
 			Utils::ToLower(info.answer);
 			Utils::ReplaceMark(info.answer);
 			if (alias_map.contains(info.answer))
 			{
-				logging::INFO("回答正确 <pjskCoverGuess>: " + info.answer 
-					+ "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
+				logging::INFO("回答正确 <pjskCoverGuess>: " + info.answer + "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
 				MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("回答正确"), info.message_id);
+				flag = true;
 				break;
 			}
 		}
+		if (flag) break;
 	}
+	
+	string answer = music["title"].get<string>();
 
-	logging::INFO("公布答案 <pjskCoverGuess>: " + music["title"].get<string>()
+	logging::INFO("公布答案 <pjskCoverGuess>: " + answer
 					+ "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
 	Utils::SendGroupMessage(gm, MessageChain()
 				.Plain("正确答案是:   " + answer + "\n")

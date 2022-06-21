@@ -53,7 +53,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		return false;
 	}
 
-	Utils::SendGroupMessage(gm, MessageChain().Plain("请在30秒内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
+	Utils::SendGroupMessage(gm, MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
 
 	json music, alias;
 	{
@@ -83,19 +83,27 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	logging::INFO("题目为 <pjskSongGuess>: " + music.dump() + alias.dump());
 
 
-	string audio_path, audio_ans_path;
+	unordered_set<string> alias_map;
+	for (const auto &item : alias.items())
 	{
+		string str = string(item.value());
+		Utils::ToLower(str);
+		Utils::ReplaceMark(str);
+		alias_map.insert(str);
+	}
+
+
+	string music_path, audio_ans_path;
+	double length, pos;
+	const int round = Utils::Configs.Get<int>("/pjsk/SongGuess/Round"_json_pointer, 2);
+	double interval = Utils::Configs.Get<double>("/pjsk/SongGuess/Interval"_json_pointer, 1);
+	{
+		music_path = MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3";
 		uuids::basic_uuid_random_generator rng(Utils::rng_engine);
-		string music_path = MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3";
 		string tmp1 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
 		string tmp2 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
-		audio_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
-
-		string tmp3 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
-		string tmp4 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
 		audio_ans_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
 
-		double length;
 		if (music.contains("length"))
 			length = music["length"].get<double>();
 		else
@@ -108,15 +116,15 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 							"-of", "csv=p=0"});
 			length = stod(result);
 		}
-		const double interval = Utils::Configs.Get<double>("/pjsk/SongGuess/Interval"_json_pointer, 1);
-		const double ans_interval_2 = 4;
-		uniform_real_distribution<double> rng_real(2.0 + ans_interval_2, length - interval - 2.0 - ans_interval_2);
-		double start = rng_real(Utils::rng_engine);
+		double max_inter_2 = interval * ((round - 1) * 0.8f + 1.0f) / 2.0f;
+		double ans_interval_2 = 4;
+		uniform_real_distribution<double> rng_real(2.0 + ans_interval_2 + max_inter_2, length - max_inter_2 - 2.0 - ans_interval_2);
+		pos = rng_real(Utils::rng_engine);
 
 		Utils::exec({
 			"ffmpeg",
-			"-ss", to_string(start),
-			"-t", to_string(interval),
+			"-ss", to_string(pos - ans_interval_2 - max_inter_2),
+			"-t", to_string((max_inter_2 + ans_interval_2) * 2.0f),
 			"-v", "quiet",
 			"-i", music_path, 
 			"-acodec", "copy", 
@@ -124,20 +132,9 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		});
 
 		Utils::exec({
-			"ffmpeg",
-			"-ss", to_string(start - ans_interval_2),
-			"-t", to_string(interval + 2 * ans_interval_2),
-			"-v", "quiet",
-			"-i", music_path, 
-			"-acodec", "copy", 
-			tmp3
-		});
-
-		Utils::exec({
 			"ffmpeg", 
 			"-i", tmp1, 
 			"-f", "s16le",
-			"-af", "adelay=100ms:all=true,apad=pad_dur=200ms",	// Add padding
 			"-ar", "24000",
 			"-ac", "1",
 			"-v", "quiet",
@@ -146,34 +143,77 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		});
 
 		Utils::exec({
-			"ffmpeg", 
-			"-i", tmp3, 
-			"-f", "s16le",
-			"-ar", "24000",
-			"-ac", "1",
-			"-v", "quiet",
-			"-acodec", "pcm_s16le",
-			tmp4
-		});
-
-		Utils::exec({
 			"./silk2mp3/encoder", 
 			tmp2,
-			audio_path,
-			"-rate", "24000",
-			"-tencent", "-quiet"
-		});
-
-		Utils::exec({
-			"./silk2mp3/encoder", 
-			tmp4,
 			audio_ans_path,
 			"-rate", "24000",
 			"-tencent", "-quiet"
 		});
 	}
-	logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_path);
-	Utils::SendGroupMessage(gm, MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_path, ""}));
+	logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_ans_path);
+	
+	for (int i = 0 ; i < round; ++i)
+	{
+		string audio_path;
+		{
+			uuids::basic_uuid_random_generator rng(Utils::rng_engine);
+			string tmp1 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
+			string tmp2 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
+			audio_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
+
+			
+			double inter_2 = interval * (i * 0.8f + 1.0f) / 2.0f;
+			string apad = "";
+			if (2.0f * inter_2 < 0.9f)
+				apad = ",apad=pad_dur=" + to_string(int(ceil(900 - 200 * inter_2))) + "ms";
+
+			Utils::exec({"ffmpeg",
+				     "-ss", to_string(pos - inter_2),
+				     "-t", to_string(inter_2 * 2),
+				     "-v", "quiet",
+				     "-i", music_path,
+				     "-acodec", "copy",
+				     tmp1});
+
+			Utils::exec({"ffmpeg",
+				     "-i", tmp1,
+				     "-f", "s16le",
+				     "-af", "adelay=100ms:all=true" + apad, // Add padding
+				     "-ar", "24000",
+				     "-ac", "1",
+				     "-v", "quiet",
+				     "-acodec", "pcm_s16le",
+				     tmp2});
+
+
+			Utils::exec({"./silk2mp3/encoder",
+				     tmp2,
+				     audio_path,
+				     "-rate", "24000",
+				     "-tencent", "-quiet"});
+		}
+		logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_path);
+		Utils::SendGroupMessage(gm, MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_path, ""}));
+
+		const auto tp = chrono::system_clock::now();
+		bool flag = false;
+		while (true)
+		{
+			Activity::AnswerInfo info;
+			if (!state->WaitForAnswerUntil(tp + chrono::seconds(21), info))
+				break;
+			Utils::ToLower(info.answer);
+			Utils::ReplaceMark(info.answer);
+			if (alias_map.contains(info.answer))
+			{
+				logging::INFO("回答正确 <pjskSongGuess>: " + info.answer + "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
+				MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("回答正确"), info.message_id);
+				flag = true;
+				break;
+			}
+		}
+		if (flag) break;
+	}
 
 	string cover = MediaFilesPath + "images/pjsk/cover_small/" + music["assetbundleName"].get<string>();
 	if (music["hasOriginCover"].get<bool>() && music["vocal"]["musicVocalType"].get<string>() == "original_song")
@@ -186,33 +226,6 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		for (const auto &p : music["vocal"]["characters"].items())
 		{
 			answer += p.value().get<string>() + "   ";
-		}
-	}
-	
-	{
-		unordered_set<string> alias_map;
-		for (const auto& item : alias.items())
-		{
-			string str = string(item.value());
-			Utils::ToLower(str);
-			Utils::ReplaceMark(str);
-			alias_map.insert(str);
-		}
-		const auto tp = chrono::system_clock::now();
-		while (true)
-		{
-			Activity::AnswerInfo info;
-			if (!state->WaitForAnswerUntil(tp + chrono::seconds(32), info))
-				break;
-			Utils::ToLower(info.answer);
-			Utils::ReplaceMark(info.answer);
-			if (alias_map.contains(info.answer))
-			{
-				logging::INFO("回答正确 <pjskSongGuess>: " + info.answer 
-					+ "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-				MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("回答正确"), info.message_id);
-				break;
-			}
 		}
 	}
 
