@@ -1,7 +1,7 @@
 {
-	"MediaFiles": "/home/ubuntu/mirai/media_files",
+	"MediaFiles": "./media/",
 	"PythonServer": "http://localhost:8000",
-	"OwnerQQ": 1942036996,
+	"OwnerQQ": 11111111,
 	"pjsk": 
 	{
 		"CoverGuess": 
@@ -10,7 +10,7 @@
 		},
 		"SongGuess":
 		{
-			"Interval": 1.0
+			"Interval": 1.5
 		}
 	}
 }

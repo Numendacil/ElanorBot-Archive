@@ -1,0 +1,12 @@
+{
+	"hostname": "127.0.0.1",
+	"port": 10080,
+	"httpReadTimeout": 120,
+	"htppWriteTimeout": 120,
+	"botQQ": 123456789,
+	"verifyKey": "12345",
+	"enableVerify": true,
+	"singleMode": false,
+	"reservedSyncId": "-1",
+	"threadPoolSize": 12
+}

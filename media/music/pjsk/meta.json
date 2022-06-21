@@ -1,0 +1,21 @@
+[
+	{
+		"assetbundleName": "jacket_s_001",
+		"fillerSec": 9,
+		"hasOriginCover": false,
+		"length": 123.271837,
+		"musicId": 1,
+		"title": "Tell Your World",
+		"vocal": [
+			{
+				"assetbundleName": "0001_01",
+				"caption": "バーチャル・シンガーver.",
+				"characters": [
+					"初音 ミク"
+				],
+				"musicVocalType": "original_song",
+				"vocalId": 1
+			}
+		]
+	}
+]

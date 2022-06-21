@@ -1,5 +1,7 @@
 .vscode/
 .vs/
+env/
+__pycache__
 .cache/
 out/
 CMakeSettings.json
@@ -10,3 +12,6 @@ CMakeFiles
 Makefile
 *.cmake
 CMakeCache.txt
+ElanorBot
+*/tmp/*
+!*/tmp/tmp
