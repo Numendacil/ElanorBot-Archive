@@ -1,0 +1,38 @@
+{
+	"CommandAuth": {
+		"Answer": 0,
+		"At": 0,
+		"Auth": 50,
+		"Bililive": 10,
+		"BlackList": 50,
+		"Choyen": 0,
+		"Petpet": 0,
+		"Pixiv": 0,
+		"Recall": 50,
+		"Repeat": 0,
+		"RollDice": 0,
+		"Saucenao": 0,
+		"Trigger": 50,
+		"WhiteList": 100,
+		"pjskChart": 0,
+		"pjskCoverGuess": 0,
+		"pjskMusicInfo": 0,
+		"pjskSongGuess": 0,
+		"pjskUpdate": 50
+	},
+	"States": {
+		"Repeat": {
+			"Message": [
+				{
+					"text": "#pjsk guess",
+					"type": "Plain"
+				}
+			],
+			"Repeated": false
+		}
+	},
+	"Triggers": {
+		"Bililive": false,
+		"Morning": true
+	}
+}

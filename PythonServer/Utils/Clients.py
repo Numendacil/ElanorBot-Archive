@@ -8,6 +8,7 @@ from fastapi import HTTPException, Request, Response
 from datetime import datetime, timedelta
 
 from .pixivpy_async import PixivClient, AppPixivAPI
+from .PicImageSearch import Network
 import logging
 from .. import Config
 
@@ -29,6 +30,7 @@ class Pixiv:
 		self.last_login = datetime.min
 
 	async def GetApi(self) -> AppPixivAPI:
+		# pixiv access token expires every 3600 seconds
 		time_since = datetime.now() - self.last_login
 		if time_since > timedelta(seconds=3000):
 			self.last_login = datetime.now()
@@ -40,17 +42,20 @@ class Pixiv:
 		await self.client.close()
 
 client_pixiv: Optional[Pixiv] = None
+client_image: Optional[Network] = None
 
 async def InitClients() -> None:
 	global client_retry
 	global client_aiohttp
 	global client_proxy
 	global client_pixiv
+	global client_image
 
 	client_retry = RetryClient(retry_options=RandomRetry(attempts=3, min_timeout=1.0, max_timeout=5.0))
 	client_aiohttp = ClientSession()
 	client_proxy = ClientSession(connector=ProxyConnector.from_url(Config.PROXY))
 	client_pixiv = Pixiv(timeout=120, proxy=Config.PROXY)
+	client_image = Network(proxies=Config.PROXY)
 
 
 
@@ -63,6 +68,8 @@ async def CloseClients() -> None:
 		await client_proxy.close()
 	if client_pixiv is not None:
 		await client_pixiv.close()
+	if client_image is not None:
+		await client_image.close()
 
 
 

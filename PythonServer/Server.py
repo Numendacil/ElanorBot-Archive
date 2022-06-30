@@ -3,14 +3,14 @@ from fastapi import FastAPI
 from fastapi.middleware.gzip import GZipMiddleware
 
 
-from .Routers import Generate, Image, Pixiv, Pjsk
+from .Routers import Generate, ImageSearch, Pixiv, Pjsk
 
 
 app = FastAPI()
 app.router.route_class = Clients.RouteErrorHandler
 app.add_middleware(GZipMiddleware, minimum_size=10000)
 app.include_router(Generate.router)
-app.include_router(Image.router)
+app.include_router(ImageSearch.router)
 app.include_router(Pixiv.router)
 app.include_router(Pjsk.router)
 

@@ -5,6 +5,7 @@
 #include <app/ElanorBot.hpp>
 #include <Utils/Utils.hpp>
 
+#include <filesystem>
 
 using namespace std;
 using namespace Cyan;
@@ -89,9 +90,11 @@ bool pjskMusicInfo::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		{
 			if (p.value()["musicId"].get<int>() == id)
 			{
-				length = p.value()["length"].get<double>();
+				if (p.value().contains("length"))
+					length = p.value()["length"].get<double>();
 				cover_path = MediaFilesPath
-						+ "images/pjsk/cover_small/" + p.value()["assetbundleName"].get<string>() + "_small.png";;
+						+ "images/pjsk/cover_small/" + p.value()["assetbundleName"].get<string>() + "_small.png";
+				break;
 			}
 		}
 	}
@@ -105,8 +108,16 @@ bool pjskMusicInfo::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	{
 		msg += " 「" + s + "」";
 	}
-	msg += '\n';
-	Utils::SendGroupMessage(gm, MessageChain().Plain(msg).Image({"", "", cover_path, ""}));
+
+	if (filesystem::exists(cover_path))
+	{
+		msg += '\n';
+		Utils::SendGroupMessage(gm, MessageChain().Plain(msg).Image({"", "", cover_path, ""}));
+	}
+	else
+	{
+		Utils::SendGroupMessage(gm, MessageChain().Plain(msg));
+	}
 	
 	return true;
 }

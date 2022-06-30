@@ -62,9 +62,13 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		ifile.close();
 
 		uniform_int_distribution<int> rng1(0, meta_data.size() - 1);
-		music = meta_data[rng1(Utils::rng_engine)];
-		uniform_int_distribution<int> rng2(0, music["vocal"].size() - 1);
-		music["vocal"] = music["vocal"][rng2(Utils::rng_engine)];
+		do
+		{
+			music = meta_data[rng1(Utils::rng_engine)];
+			uniform_int_distribution<int> rng2(0, music["vocal"].size() - 1);
+			music["vocal"] = music["vocal"][rng2(Utils::rng_engine)];
+		} 
+		while (!filesystem::exists(MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3"));
 	}
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
@@ -165,7 +169,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 			double inter_2 = interval * (i * 0.8f + 1.0f) / 2.0f;
 			string apad = "";
 			if (2.0f * inter_2 < 0.9f)
-				apad = ",apad=pad_dur=" + to_string(int(ceil(900 - 200 * inter_2))) + "ms";
+				apad = ",apad=pad_dur=" + to_string(int(ceil(900 - 2000 * inter_2))) + "ms";
 
 			Utils::exec({"ffmpeg",
 				     "-ss", to_string(pos - inter_2),

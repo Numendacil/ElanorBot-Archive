@@ -1,4 +1,3 @@
-from fnmatch import translate
 import requests, json, urllib.parse
 
 content = []

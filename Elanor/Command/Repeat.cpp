@@ -41,10 +41,7 @@ bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 	}
 	else
 	{
-		if (gm.Sender.QQ == bot->client->GetBotQQ())
-			state->Set(gm.MessageChain, true);
-		else
-			state->Set(gm.MessageChain, false);
+		state->Set(gm.MessageChain, false);
 	}
 	return false;
 }

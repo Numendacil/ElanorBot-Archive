@@ -1,5 +1,5 @@
 
-target_sources(Elanor 
+target_sources(ElanorBot 
 	PRIVATE 
 		Command.hpp
 		GroupCommandBase.hpp

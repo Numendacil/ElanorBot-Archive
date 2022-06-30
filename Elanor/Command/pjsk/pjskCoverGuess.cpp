@@ -62,7 +62,11 @@ bool pjskCoverGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, 
 		ifile.close();
 
 		uniform_int_distribution<int> rng1(0, meta_data.size() - 1);
-		music = meta_data[rng1(Utils::rng_engine)];
+		do
+		{
+			music = meta_data[rng1(Utils::rng_engine)];
+		}
+		while (!filesystem::exists(MediaFilesPath + "images/pjsk/cover/" + music["assetbundleName"].get<string>() + ".png"));
 	}
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");

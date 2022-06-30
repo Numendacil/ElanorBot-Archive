@@ -64,7 +64,7 @@ namespace Utils
 
 		Factory<GroupCommandBase>::Register<Petpet>("Petpet");
 		Factory<GroupCommandBase>::Register<Choyen>("Choyen");
-		Factory<GroupCommandBase>::Register<Saucenao>("Saucenao");
+		Factory<GroupCommandBase>::Register<ImageSearch>("ImageSearch");
 		Factory<GroupCommandBase>::Register<Pixiv>("Pixiv");
 
 		Factory<GroupCommandBase>::Register<pjskUpdate>("pjskUpdate");
@@ -211,6 +211,24 @@ namespace Utils
 			logging::WARN("Error response from server <" + Caller + ">: " + result->body);
 			return false;
 		}
+		return true;
+	}
+
+	bool CheckHttpResponse(const httplib_ssl_zlib::Result& result, const string& Caller, int& code)
+	{
+		if (result.error() != httplib_ssl_zlib::Error::Success || !result)
+		{
+			logging::WARN("Connection to server failed <" + Caller + ">: " + to_string(result.error()));
+			code = -1;
+			return false;
+		}
+		if (result->status != 200)
+		{
+			logging::WARN("Error response from server <" + Caller + ">: " + result->body);
+			code = result->status;
+			return false;
+		}
+		code = 200;
 		return true;
 	}
 

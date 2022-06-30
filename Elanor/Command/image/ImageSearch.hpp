@@ -3,7 +3,7 @@
 
 #include <Command/GroupCommandBase.hpp>
 
-class Saucenao : public GroupCommandBase
+class ImageSearch : public GroupCommandBase
 {
 public:
 	virtual bool Parse(const Cyan::MessageChain& msg, std::vector<std::string>& tokens) override;

@@ -7,29 +7,32 @@ find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 
-add_executable(Elanor)
+add_executable(ElanorBot)
 
 # 设置头文件目录
 include_directories(.)
 # 链接 mirai-cpp
-target_link_libraries(Elanor PRIVATE mirai-cpp)
+target_link_libraries(ElanorBot PRIVATE mirai-cpp)
 
-target_link_libraries(Elanor PRIVATE ZLIB::ZLIB)
+target_link_libraries(ElanorBot PRIVATE ZLIB::ZLIB)
 
-target_link_libraries(Elanor PRIVATE OpenSSL::SSL)
+target_link_libraries(ElanorBot PRIVATE OpenSSL::SSL)
 
-target_link_libraries(Elanor PRIVATE OpenSSL::Crypto)
+target_link_libraries(ElanorBot PRIVATE OpenSSL::Crypto)
 
-# target_link_libraries(Elanor PRIVATE -fsanitize=address -static-libasan)
+# target_link_libraries(ElanorBot PRIVATE -fsanitize=address -static-libasan)
+
+# target_compile_options(ElanorBot PRIVATE -fsanitize=address)
+# target_link_options(ElanorBot PRIVATE -fsanitize=address)
 
 # 使用 mirai-cpp 静态库
-target_compile_definitions(Elanor PRIVATE MIRAICPP_STATICLIB)
+target_compile_definitions(ElanorBot PRIVATE MIRAICPP_STATICLIB)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	# 链接 pthread
-	target_link_libraries(Elanor PRIVATE pthread)
+	target_link_libraries(ElanorBot PRIVATE pthread)
 	# 静态链接 libgcc 和 libstdc++
-	target_link_libraries(Elanor PRIVATE -static-libgcc -static-libstdc++)
+	target_link_libraries(ElanorBot PRIVATE -static-libgcc -static-libstdc++)
 endif()
 
 add_subdirectory(app)

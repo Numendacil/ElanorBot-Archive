@@ -1,5 +1,5 @@
 
-target_sources(Elanor 
+target_sources(ElanorBot 
 	PRIVATE 
 		ImageCommand.hpp
 		Choyen.hpp
@@ -8,6 +8,6 @@ target_sources(Elanor
 		Petpet.cpp
 		Pixiv.hpp
 		Pixiv.cpp
-		Saucenao.hpp
-		Saucenao.cpp
+		ImageSearch.hpp
+		ImageSearch.cpp
 	)

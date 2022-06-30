@@ -1,5 +1,5 @@
 
-target_sources(Elanor 
+target_sources(ElanorBot 
 	PRIVATE 
 		PjskCommand.hpp
 		pjskChart.hpp
