@@ -135,7 +135,7 @@ async def SearchSauce(url: str = Query(..., min_length=1)):
 		
 		elif result.index_id in [41]:	# Twitter
 			response.info += f"标题: {result.title}\n"
-			response.info += f"作者: {result.author} (id: {result.origin['data'].get('twitter_user_id')})\n"
+			response.info += f"作者: @{result.origin['data'].get('twitter_user_handle')} (id: {result.origin['data'].get('twitter_user_id')})\n"
 			response.info += f"网址: {result.url}\n"
 
 		elif result.index_id in [9, 12, 25, 26, 29]:	# Booru
@@ -221,6 +221,10 @@ async def SearchAscii2d(url: str = Query(..., min_length=1)):
 	return response
 	
 	
+
+@router.get("/trace-moe/", response_model=ImageResult, response_model_exclude_none=True)
+async def SearchTraceMoe(url: str = Query(..., min_length=1)):
+	pass
 
 async def Test():
 	await Clients.InitClients()
