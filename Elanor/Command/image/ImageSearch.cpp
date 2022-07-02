@@ -29,7 +29,7 @@ bool ImageSearch::Parse(const MessageChain& msg, vector<string>& token)
 bool ImageSearch::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
 {
 	logging::INFO("Calling ImageSearch <ImageSearch>" + Utils::GetDescription(gm));
-	enum IMG_SERVER {SAUCENAO, ASCII2D};
+	enum IMG_SERVER {SAUCENAO, ASCII2D, TRACEMOE};
 	IMG_SERVER server = SAUCENAO;
 	if (token.size() > 1)
 	{
@@ -48,6 +48,11 @@ bool ImageSearch::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, con
 		else if (token[1] == "ascii2d" || token[1] == "ascii")
 		{
 			server = ASCII2D;
+		}
+
+		else if (token[1] == "trace" || token[1] == "moe" || token[1] == "tracemoe")
+		{
+			server = TRACEMOE;
 		}
 
 		else
@@ -113,6 +118,10 @@ bool ImageSearch::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, con
 	case ASCII2D:
 		cooldown = 60s;
 		path = "ascii2d/";
+		break;
+	case TRACEMOE:
+		cooldown = 60s;
+		path = "trace-moe/";
 		break;
 
 	default:	// You should never be here

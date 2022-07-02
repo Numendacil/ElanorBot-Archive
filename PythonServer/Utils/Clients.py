@@ -43,6 +43,7 @@ class Pixiv:
 
 client_pixiv: Optional[Pixiv] = None
 client_image: Optional[Network] = None
+client_image_proxy: Optional[Network] = None
 
 async def InitClients() -> None:
 	global client_retry
@@ -50,12 +51,14 @@ async def InitClients() -> None:
 	global client_proxy
 	global client_pixiv
 	global client_image
+	global client_image_proxy
 
 	client_retry = RetryClient(retry_options=RandomRetry(attempts=3, min_timeout=1.0, max_timeout=5.0))
 	client_aiohttp = ClientSession()
 	client_proxy = ClientSession(connector=ProxyConnector.from_url(Config.PROXY))
 	client_pixiv = Pixiv(timeout=120, proxy=Config.PROXY)
-	client_image = Network(proxies=Config.PROXY)
+	client_image = Network()
+	client_image_proxy = Network(proxies=Config.PROXY)
 
 
 
@@ -70,6 +73,8 @@ async def CloseClients() -> None:
 		await client_pixiv.close()
 	if client_image is not None:
 		await client_image.close()
+	if client_image_proxy is not None:
+		await client_image_proxy.close()
 
 
 
