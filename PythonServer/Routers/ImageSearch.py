@@ -7,7 +7,7 @@ from typing import Optional
 
 from io import BytesIO
 from PIL import Image, ImageFilter
-import base64, logging, time
+import base64, logging
 
 
 

@@ -1,2 +1,2 @@
-Flask==2.1.1
-flask_sock==0.5.2
+Flask>=1.1.1
+flask_sock>=0.5.2
