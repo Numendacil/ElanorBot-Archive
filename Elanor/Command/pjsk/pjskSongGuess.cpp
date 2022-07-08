@@ -100,7 +100,8 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	string music_path, audio_ans_path;
 	double length, pos;
 	const int round = Utils::Configs.Get<int>("/pjsk/SongGuess/Round"_json_pointer, 2);
-	double interval = Utils::Configs.Get<double>("/pjsk/SongGuess/Interval"_json_pointer, 1);
+	const double interval = Utils::Configs.Get<double>("/pjsk/SongGuess/Interval"_json_pointer, 1.0);
+	const double incr = Utils::Configs.Get<double>("/pjsk/SongGuess/IncrRate"_json_pointer, 0.8);
 	{
 		music_path = MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3";
 		uuids::basic_uuid_random_generator rng(Utils::rng_engine);
@@ -120,7 +121,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 							"-of", "csv=p=0"});
 			length = stod(result);
 		}
-		double max_inter_2 = interval * ((round - 1) * 0.8f + 1.0f) / 2.0f;
+		double max_inter_2 = interval * ((round - 1) * 0.8 + 1.0) / 2.0;
 		double ans_interval_2 = 4;
 		uniform_real_distribution<double> rng_real(2.0 + ans_interval_2 + max_inter_2, length - max_inter_2 - 2.0 - ans_interval_2);
 		pos = rng_real(Utils::rng_engine);
@@ -128,7 +129,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 		Utils::exec({
 			"ffmpeg",
 			"-ss", to_string(pos - ans_interval_2 - max_inter_2),
-			"-t", to_string((max_inter_2 + ans_interval_2) * 2.0f),
+			"-t", to_string((max_inter_2 + ans_interval_2) * 2.0),
 			"-v", "quiet",
 			"-i", music_path, 
 			"-acodec", "copy", 
@@ -166,9 +167,9 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 			audio_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
 
 			
-			double inter_2 = interval * (i * 0.8f + 1.0f) / 2.0f;
+			double inter_2 = interval * (i * incr + 1.0) / 2.0;
 			string apad = "";
-			if (2.0f * inter_2 < 0.9f)
+			if (2.0 * inter_2 < 0.9)
 				apad = ",apad=pad_dur=" + to_string(int(ceil(900 - 2000 * inter_2))) + "ms";
 
 			Utils::exec({"ffmpeg",

@@ -123,10 +123,11 @@ bool pjskCoverGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, 
 
 	const int round = Utils::Configs.Get<int>("/pjsk/CoverGuess/Round"_json_pointer, 2);
 	const double ratio = Utils::Configs.Get<double>("/pjsk/CoverGuess/Ratio"_json_pointer, 0.15);
+	const double incr = Utils::Configs.Get<double>("/pjsk/CoverGuess/IncrRate"_json_pointer, 0.8);
 	int x, y;
 	{
-		int width_target = (int)floor(width * ratio * ((round - 1) * 0.5f + 1.0f));
-		int height_target = (int)floor(height * ratio * ((round - 1) * 0.5f + 1.0f));
+		int width_target = (int)floor(width * ratio * ((round - 1) * 0.5 + 1.0));
+		int height_target = (int)floor(height * ratio * ((round - 1) * 0.5 + 1.0));
 		uniform_int_distribution<int> rng_x(5 + width_target / 2, width - 5 - width_target / 2);
 		uniform_int_distribution<int> rng_y(5 + width_target / 2, height - 5 - height_target / 2);
 		x = rng_x(Utils::rng_engine);
@@ -140,8 +141,8 @@ bool pjskCoverGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, 
 			cover_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".png";
 
 			
-			int width_target = (int)floor(width * ratio * (i * 0.5f + 1.0f));
-			int height_target = (int)floor(height * ratio * (i * 0.5f + 1.0f));
+			int width_target = (int)floor(width * ratio * (i * incr + 1.0));
+			int height_target = (int)floor(height * ratio * (i * incr + 1.0));
 
 			Utils::exec({"convert",
 				     "-crop", to_string(width_target) + "x" + to_string(height_target) + "+" + to_string(int(x - width_target / 2)) + "+" + to_string(int(y - width_target / 2)),

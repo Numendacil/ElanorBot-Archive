@@ -71,7 +71,7 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 			content["title"] = alias["title"];
 			content["translate"] = alias["translate"];
 			content["alias"] = alias["alias"];
-			if (find(content["alias"].begin(), content["alias"].end(), content["translate"].get<string>()) == content["alias"].end())
+			if (!content["translate"].empty() && find(content["alias"].begin(), content["alias"].end(), content["translate"].get<string>()) == content["alias"].end())
 				content["alias"] += content["translate"].get<string>();
 			content["musicId"] = alias["musicId"];
 			alias_map[id] = content;
