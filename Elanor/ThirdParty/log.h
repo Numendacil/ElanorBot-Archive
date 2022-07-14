@@ -8,7 +8,8 @@
 #include <mutex>
 #include <unordered_map>
 #include <memory>
-#include <third-party/date.h>
+
+#include "date.h"
 
 namespace logging
 {

@@ -1,5 +1,8 @@
 #include "Client.hpp"
-#include "mirai/defs/QQType.hpp"
+
+#include <mirai/defs/QQType.hpp>
+#include <ThirdParty/log.h>
+
 #include <chrono>
 #include <mirai.h>
 #include <memory>
@@ -15,6 +18,16 @@ Client::Client()
 	this->max_retry = 3;
 	this->client = make_unique<Cyan::MiraiBot>();
 }
+Client::~Client()
+{
+	if (this->Connected)
+	{
+		this->Connected = false;
+		if (this->th.joinable())
+			this->th.join();
+		this->client->Disconnect();
+	}
+}
 
 void Client::MsgQueue()
 {
@@ -22,7 +35,7 @@ void Client::MsgQueue()
 	{
 		Message msg;
 		{
-			unique_lock<mutex> lk(this->mtx);
+			unique_lock<mutex> lk(this->q_mtx);
 			this->cv.wait(lk, [this]() -> bool
 			{ 
 				if (!this->Connected)
@@ -50,15 +63,15 @@ void Client::MsgQueue()
 				this->client->SendMessage(msg.gid, msg.qqid, msg.msg, msg.mid);
 				break;
 			default:
-				;	// logging::ERROR("waht");
+				logging::ERROR("waht");
 			}
 		}
 		catch(runtime_error& e)
 		{
-			// logging::WARN(string("MsgQueue: ") + e.what());
+			logging::WARN(string("MsgQueue: ") + e.what());
 			if (msg.count < this->max_retry)
 			{
-				unique_lock<mutex> lk(this->mtx);
+				unique_lock<mutex> lk(this->q_mtx);
 				msg.count++;
 				this->message.push(move(msg));
 			}
@@ -68,19 +81,19 @@ void Client::MsgQueue()
 
 void Client::Send(const Cyan::GID_t& gid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
 {
-	unique_lock<mutex> lk(this->mtx);
+	unique_lock<mutex> lk(this->q_mtx);
 	this->message.emplace(gid, 0, msg, mid, Message::GROUP);
 }
 
 void Client::Send(const Cyan::QQ_t& qqid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
 {
-	unique_lock<mutex> lk(this->mtx);
+	unique_lock<mutex> lk(this->q_mtx);
 	this->message.emplace(0, qqid, msg, mid, Message::FRIEND);
 }
 
 void Client::Send(const Cyan::GID_t& gid, const Cyan::QQ_t& qqid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
 {
-	unique_lock<mutex> lk(this->mtx);
+	unique_lock<mutex> lk(this->q_mtx);
 	this->message.emplace(gid, qqid, msg, mid, Message::TEMP);
 }
 
@@ -116,9 +129,4 @@ void Client::Disconnect()
 	if (this->th.joinable())
 		this->th.join();
 	this->client->Disconnect();
-}
-
-Cyan::MiraiBot& Client::GetMiraiBot()
-{
-	return *this->client.get();
 }

@@ -22,8 +22,9 @@ class Client
 protected:
 	std::unique_ptr<Cyan::MiraiBot> client;
 	
-	std::mutex mtx;
-	std::condition_variable cv;
+	mutable std::mutex q_mtx;
+	mutable std::mutex client_mtx;
+	mutable std::condition_variable cv;
 	std::thread th;
 
 	bool Connected;
@@ -48,6 +49,8 @@ protected:
 
 public:
 	Client(const Client&) = delete;
+	~Client();
+
 	static Client& GetClient()
 	{
 		static Client client;
@@ -61,7 +64,12 @@ public:
 	void Disconnect();
 	bool isConnected() { return this->Connected; }
 
-	Cyan::MiraiBot& GetMiraiBot();
+	template<typename F, typename... Args>
+	auto Call(F&& f, Args&&... args)
+	{
+		std::lock_guard<std::mutex> lk(this->client_mtx);
+		return std::invoke(f, this->client, args...);
+	}
 
 	void Send(const Cyan::GID_t&, const Cyan::MessageChain&, Cyan::MessageId_t = 0);
 	void Send(const Cyan::QQ_t&, const Cyan::MessageChain&, Cyan::MessageId_t = 0);

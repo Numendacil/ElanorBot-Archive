@@ -1,4 +1,7 @@
-add_library(Client STATIC)
+
+add_library(Client STATIC
+		Client.hpp
+		Client.cpp)
 
 target_link_libraries(Client PUBLIC mirai-cpp)
 
