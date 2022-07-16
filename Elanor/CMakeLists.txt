@@ -38,7 +38,7 @@ endif()
 
 add_subdirectory(Client)
 add_subdirectory(Group)
-# add_subdirectory(Command)
+add_subdirectory(Command)
 add_subdirectory(State)
 # add_subdirectory(Trigger)
 add_subdirectory(ThirdParty)

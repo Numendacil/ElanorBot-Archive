@@ -1,4 +1,3 @@
-#include <Command/pjsk/pjskChart.hpp>
 #include <ThirdParty/json.hpp>
 #include <ThirdParty/date.h>
 #include <ThirdParty/httplib.hpp>
@@ -8,12 +7,15 @@
 #include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
 
+#include "pjskChart.hpp"
 
 using namespace std;
 using namespace date;
-using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
 using base64 = cppcodec::base64_rfc4648;
+
+namespace GroupCommand
+{
 
 bool pjskChart::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
@@ -37,6 +39,7 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Group& group, const vector
 {
 	assert(tokens.size() > 2);
 	logging::INFO("Calling pjskChart <pjskChart>" + Utils::GetDescription(gm));
+	Client& client = Client::GetClient();
 	string target = tokens[2];
 
 	json music;
@@ -72,7 +75,7 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Group& group, const vector
 	if (music.is_null())
 	{
 		logging::INFO("未知歌曲 <pjskChart>: " + target + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
 		return false;
 	}
 	logging::INFO("获取歌曲谱面 <pjskChart>: " + music["title"].get<string>());
@@ -87,12 +90,12 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Group& group, const vector
 		else
 		{
 			logging::INFO("未知难度 <pjskChart>: " + tokens[3] + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(tokens[3] + "是什么难度捏，不知道捏"));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[3] + "是什么难度捏，不知道捏"));
 			return false;
 		}
 	}
 
-	auto cd = bot->GetState<CoolDown>("CoolDown");
+	auto cd = group.GetState<State::CoolDown>("CoolDown");
 	chrono::seconds remaining;
 	auto holder = cd->GetRemaining("pjskChart", 20s, remaining);
 
@@ -101,7 +104,7 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Group& group, const vector
 		stringstream ss;
 		ss << remaining;
 		logging::INFO("冷却剩余 <pjskChart>: " + ss.str() + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
 		return false;
 	}
 	assert(holder);
@@ -109,20 +112,22 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Group& group, const vector
 	char id[10];
 	assert(music["musicId"].get<int>() < 10000);
 	sprintf(id, "%04d", music["musicId"].get<int>());
-	Client resource_cli("https://sekai-music-charts-1258184166.file.myqcloud.com");
+	httplib_ssl_zlib::Client resource_cli("https://sekai-music-charts-1258184166.file.myqcloud.com");
 	auto resp = resource_cli.Get(("/" + string(id) + "/" + difficulty + ".png").c_str(),
 				     {{"Accept-Encoding", "gzip"},
 				      {"Referer", "https://sekai.best/"},
 				      {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 	if (!Utils::CheckHttpResponse(resp, "pjskChart: " + string(id) + " " + difficulty))
 	{
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 	logging::INFO("图片下载完成 <pjskChart>");
-	Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("谱面: " + music["title"].get<string>() 
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("谱面: " + music["title"].get<string>() 
 							+ "\n难度: " + difficulty
 							+ "\n")
-							.Image({"", "", "", base64::encode(resp->body)}));
+							.Image({.Base64 = base64::encode(resp->body)}));
 	return true;
+}
+
 }

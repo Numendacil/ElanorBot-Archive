@@ -162,7 +162,7 @@ bool Bililive::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<
 			logging::INFO("成功添加用户 <Bililive>: " + name + "(" + to_string(uid) + ")" + Utils::GetDescription(gm, false));
 			client.Send(gm.Sender.Group.GID, Cyan::MessageChain()
 						.Plain("成功添加用户" + name + "(" + to_string(uid) + ")\n")
-						.Image({"", pic, "", ""}));
+						.Image({.Url = pic}));
 			return true;
 		}
 
@@ -180,7 +180,7 @@ bool Bililive::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<
 			logging::INFO("成功删除用户 <Bililive>: " + name + "(" + to_string(uid) + ")" + Utils::GetDescription(gm, false));
 			client.Send(gm.Sender.Group.GID, Cyan::MessageChain()
 						.Plain("成功删除用户" + name + "(" + to_string(uid) + ")\n")
-						.Image({"", pic, "", ""}));
+						.Image({.Url = pic}));
 			return true;
 		}
 	}

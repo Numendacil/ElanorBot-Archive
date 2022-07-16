@@ -32,6 +32,8 @@ bool Choyen::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<st
 {
 	logging::INFO("Calling Choyen <Choyen>" + Utils::GetDescription(gm));
 	assert(tokens.size() > 1);
+	Client& client = Client::GetClient();
+
 	if (tokens.size() == 2)
 	{
 		if (tokens[1] == "help" || tokens[1] == "h" || tokens[1] == "帮助")
@@ -74,7 +76,7 @@ bool Choyen::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<st
 
 	assert(msg.contains("result"));
 	logging::INFO("上传图片 <Choyen>" + Utils::GetDescription(gm, false));
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Image({"", "", "", msg["result"]}));
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Image({.Base64 = msg["result"]}));
 	return true;
 }
 

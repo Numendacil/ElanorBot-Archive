@@ -1,18 +1,19 @@
-#include <Command/pjsk/pjskMusicInfo.hpp>
 #include <ThirdParty/json.hpp>
 #include <ThirdParty/date.h>
 #include <State/CoolDown.hpp>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
-
 #include <filesystem>
+
+#include "pjskMusicInfo.hpp"
 
 using namespace std;
 using namespace date;
 using json = nlohmann::json;
 
-
+namespace GroupCommand
+{
 
 bool pjskMusicInfo::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
@@ -36,6 +37,7 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 {
 	assert(tokens.size() > 2);
 	logging::INFO("Calling pjskMusicInfo <pjskMusicInfo>" + Utils::GetDescription(gm));
+	Client& client = Client::GetClient();
 	string target = tokens[2];
 	const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 
@@ -71,7 +73,7 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 	if (music.is_null())
 	{
 		logging::INFO("未知歌曲 <pjskMusicInfo>: " + target + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
 		return false;
 	}
 	int id = music["musicId"].get<int>();
@@ -112,12 +114,14 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 	if (filesystem::exists(cover_path))
 	{
 		msg += '\n';
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(msg).Image({"", "", cover_path, ""}));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg).Image({.Path = cover_path}));
 	}
 	else
 	{
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(msg));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg));
 	}
 	
 	return true;
+}
+
 }

@@ -41,7 +41,7 @@ bool AtBot::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<str
 	if (idx >= words_count)
 	{
 		logging::INFO("回复 <AtBot>: " + image[idx - words_count] + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Image({"", "", image[idx - words_count], ""}));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Image({.Path = image[idx - words_count]}));
 	}
 	else
 	{

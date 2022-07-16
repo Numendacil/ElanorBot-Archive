@@ -1,4 +1,3 @@
-#include <Command/pjsk/pjskSongGuess.hpp>
 #include <State/Activity.hpp>
 #include <ThirdParty/log.h>
 #include <ThirdParty/uuid.h>
@@ -6,8 +5,6 @@
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
-#include <Utils/MessageQueue.hpp>
-#include <mirai/messages/messages.hpp>
 #include <fstream>
 #include <sstream>
 #include <chrono>
@@ -15,10 +12,15 @@
 #include <unordered_set>
 #include <filesystem>
 
+#include <mirai.h>
+
+#include "pjskSongGuess.hpp"
+
 using namespace std;
-using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
 
+namespace GroupCommand
+{
 
 bool pjskSongGuess::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
@@ -42,18 +44,19 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling pjskSongGuess <pjskSongGuess>" + Utils::GetDescription(gm));
+	Client& client = Client::GetClient();
 
-	auto state = bot->GetState<Activity>("Activity");
+	auto state = group.GetState<State::Activity>("Activity");
 	auto holder = state->CheckAndStart("pjsk");
 	const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 	if (!holder)
 	{
 		logging::INFO("有活动正在进行 <pjskSongGuess>" + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("有活动正在进行中捏"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("有活动正在进行中捏"));
 		return false;
 	}
 
-	Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
 
 	json music, alias;
 	{
@@ -198,13 +201,13 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 				     "-tencent", "-quiet"});
 		}
 		logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_path);
-		Utils::SendGroupMessage(gm, Cyan::MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_path, ""}));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Add<Cyan::VoiceMessage>(Cyan::MiraiVoice{.Path = audio_path}));
 
 		const auto tp = chrono::system_clock::now();
 		bool flag = false;
 		while (true)
 		{
-			Activity::AnswerInfo info;
+			State::Activity::AnswerInfo info;
 			if (!state->WaitForAnswerUntil(tp + chrono::seconds(21), info))
 				break;
 			Utils::ToLower(info.answer);
@@ -212,7 +215,7 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 			if (alias_map.contains(info.answer))
 			{
 				logging::INFO("回答正确 <pjskSongGuess>: " + info.answer + "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-				MessageQueue::GetInstance().Push(gm.Sender.Group.GID, Cyan::MessageChain().Plain("回答正确"), info.message_id);
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("回答正确"), info.message_id);
 				flag = true;
 				break;
 			}
@@ -236,10 +239,12 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Group& group, const ve
 
 	logging::INFO("公布答案 <pjskSongGuess>: " + music["title"].get<string>()
 					+ "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-	Utils::SendGroupMessage(gm, Cyan::MessageChain()
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain()
 				.Plain("正确答案是: \n" + answer + "\n")
-				.Image({"", "", cover, ""}));
-	Utils::SendGroupMessage(gm, Cyan::MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_ans_path, ""}));
+				.Image({.Path = cover}));
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Add<Cyan::VoiceMessage>(Cyan::MiraiVoice{.Path = audio_ans_path}));
 
 	return true;
+}
+
 }
