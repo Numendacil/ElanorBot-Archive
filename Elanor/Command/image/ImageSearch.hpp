@@ -1,13 +1,18 @@
-#ifndef _SAUCENAO_HPP_
-#define _SAUCENAO_HPP_
+#ifndef _IMAGE_SEARCH_HPP_
+#define _IMAGE_SEARCH_HPP_
 
 #include <Command/GroupCommandBase.hpp>
+
+namespace GroupCommand
+{
 
 class ImageSearch : public GroupCommandBase
 {
 public:
 	virtual bool Parse(const Cyan::MessageChain& msg, std::vector<std::string>& tokens) override;
-	virtual bool Execute(const Cyan::GroupMessage& gm, std::shared_ptr<ElanorBot> bot, const std::vector<std::string>& tokens) override;
+	virtual bool Execute(const Cyan::GroupMessage& gm, Group& group, const std::vector<std::string>& tokens) override;
 };
+
+}
 
 #endif

@@ -1,9 +1,10 @@
 #include <Command/pjsk/pjskSongGuess.hpp>
 #include <State/Activity.hpp>
-#include <third-party/log.h>
-#include <third-party/uuid.h>
-#include <third-party/json.hpp>
-#include <app/ElanorBot.hpp>
+#include <ThirdParty/log.h>
+#include <ThirdParty/uuid.h>
+#include <ThirdParty/json.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
 #include <Utils/MessageQueue.hpp>
 #include <mirai/messages/messages.hpp>
@@ -15,22 +16,21 @@
 #include <filesystem>
 
 using namespace std;
-using namespace Cyan;
 using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
 
 
-bool pjskSongGuess::Parse(const MessageChain& msg, vector<string>& token)
+bool pjskSongGuess::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
 	if (str.length() >= char_traits<char>::length("#pjsk 猜歌"))
 	{
 		Utils::ToLower(str);
-		if (Utils::Tokenize(token, str) < 2)
+		if (Utils::Tokenize(tokens, str) < 2)
 			return false;
-		if (token[0] == "#pjsk" || token[0] == "#啤酒烧烤" || token[0] == "#prsk")
-			if (token[1] == "猜歌")
+		if (tokens[0] == "#pjsk" || tokens[0] == "#啤酒烧烤" || tokens[0] == "#prsk")
+			if (tokens[1] == "猜歌")
 				return true;
 	}
 	return false;
@@ -38,9 +38,9 @@ bool pjskSongGuess::Parse(const MessageChain& msg, vector<string>& token)
 
 
 
-bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
 {
-	assert(token.size() > 1);
+	assert(tokens.size() > 1);
 	logging::INFO("Calling pjskSongGuess <pjskSongGuess>" + Utils::GetDescription(gm));
 
 	auto state = bot->GetState<Activity>("Activity");
@@ -49,11 +49,11 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	if (!holder)
 	{
 		logging::INFO("有活动正在进行 <pjskSongGuess>" + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("有活动正在进行中捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("有活动正在进行中捏"));
 		return false;
 	}
 
-	Utils::SendGroupMessage(gm, MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
+	Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
 
 	json music, alias;
 	{
@@ -198,7 +198,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 				     "-tencent", "-quiet"});
 		}
 		logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_path);
-		Utils::SendGroupMessage(gm, MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_path, ""}));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_path, ""}));
 
 		const auto tp = chrono::system_clock::now();
 		bool flag = false;
@@ -212,7 +212,7 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 			if (alias_map.contains(info.answer))
 			{
 				logging::INFO("回答正确 <pjskSongGuess>: " + info.answer + "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-				MessageQueue::GetInstance().Push(gm.Sender.Group.GID, MessageChain().Plain("回答正确"), info.message_id);
+				MessageQueue::GetInstance().Push(gm.Sender.Group.GID, Cyan::MessageChain().Plain("回答正确"), info.message_id);
 				flag = true;
 				break;
 			}
@@ -236,10 +236,10 @@ bool pjskSongGuess::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 
 	logging::INFO("公布答案 <pjskSongGuess>: " + music["title"].get<string>()
 					+ "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-	Utils::SendGroupMessage(gm, MessageChain()
+	Utils::SendGroupMessage(gm, Cyan::MessageChain()
 				.Plain("正确答案是: \n" + answer + "\n")
 				.Image({"", "", cover, ""}));
-	Utils::SendGroupMessage(gm, MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_ans_path, ""}));
+	Utils::SendGroupMessage(gm, Cyan::MessageChain().Add<VoiceMessage>(MiraiVoice{"", "", audio_ans_path, ""}));
 
 	return true;
 }

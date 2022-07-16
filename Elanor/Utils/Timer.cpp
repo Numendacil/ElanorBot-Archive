@@ -1,7 +1,7 @@
 #include <Utils/Timer.hpp>
 #include <Utils/Utils.hpp>
-#include <third-party/croncpp.h>
-#include <third-party/log.h>
+#include <ThirdParty/croncpp.h>
+#include <ThirdParty/log.h>
 
 using namespace std;
 

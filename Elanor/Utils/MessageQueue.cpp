@@ -1,7 +1,7 @@
 #include <mirai/exceptions/exceptions.hpp>
 #include <Utils/MessageQueue.hpp>
-#include <third-party/log.h>
-using namespace Cyan;
+#include <ThirdParty/log.h>
+;
 using namespace std;
 
 void MessageQueue::recv(shared_ptr<MiraiBot> bot)

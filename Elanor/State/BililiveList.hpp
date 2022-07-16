@@ -6,6 +6,9 @@
 #include <vector>
 #include <mutex>
 
+namespace State
+{
+
 class BililiveList : public StateBase
 {
 public:
@@ -54,28 +57,11 @@ public:
 		return std::vector<std::pair<long, info>>(this->user_list.begin(), this->user_list.end());
 	}
 
-	virtual nlohmann::json Serialize() override
-	{ 
-		nlohmann::json content;
-		for (const auto& u : this->user_list)
-		{
-			nlohmann::json member;
-			member["uid"] = u.first;
-			member["room_id"] = u.second.room_id;
-			member["broadcasted"] = u.second.broadcasted;
-			content += member;
-		}
-		return content;
-	}
-
-	virtual void Deserialize(const nlohmann::json& content) override
-	{
-		for (const auto& p : content.items())
-		{
-			nlohmann::json member = p.value();
-			this->user_list.emplace(member["uid"].get<long>(), info{member["room_id"].get<long>(), member["broadcasted"].get<bool>()});
-		}
-	}
+	virtual nlohmann::json Serialize() override;
+	virtual void Deserialize(const nlohmann::json& content) override;
 };
+
+
+}
 
 #endif

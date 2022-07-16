@@ -1,34 +1,40 @@
-#include <third-party/log.h>
-#include <Command/Answer.hpp>
+#include <ThirdParty/log.h>
 #include <State/Activity.hpp>
 #include <Utils/Utils.hpp>
-#include <app/ElanorBot.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
+
+#include "Answer.hpp"
 
 using namespace std;
-using namespace Cyan;
 
-bool Answer::Parse(const MessageChain& msg, vector<string>& token)
+namespace GroupCommand
+{
+
+bool Answer::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
 	if (str[0] != '.')
 		return false;
-	token.clear();
-	token.push_back(str.substr(1));
+	tokens.clear();
+	tokens.push_back(str.substr(1));
 	return true;
 }
 
-bool Answer::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool Answer::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
 {
-	auto state = bot->GetState<Activity>("Activity");
+	auto state = group.GetState<State::Activity>("Activity");
 	if (!state->HasActivity())
 		return false;
 	if (state->GetActivityName() == "pjsk")
 	{
-		assert(!token.empty());
-		logging::INFO("<Answer: pjsk>: " + token[0] + Utils::GetDescription(gm));
-		state->AddAnswer({token[0], gm.MessageId()});
+		assert(!tokens.empty());
+		logging::INFO("<Answer: pjsk>: " + tokens[0] + Utils::GetDescription(gm));
+		state->AddAnswer({tokens[0], gm.MessageId()});
 		return true;
 	}
 	return false;
+}
+
 }

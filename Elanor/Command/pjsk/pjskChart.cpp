@@ -1,31 +1,31 @@
 #include <Command/pjsk/pjskChart.hpp>
-#include <third-party/json.hpp>
-#include <third-party/date.h>
-#include <third-party/httplib.hpp>
-#include <third-party/cppcodec/base64_rfc4648.hpp>
+#include <ThirdParty/json.hpp>
+#include <ThirdParty/date.h>
+#include <ThirdParty/httplib.hpp>
+#include <ThirdParty/cppcodec/base64_rfc4648.hpp>
 #include <State/CoolDown.hpp>
-#include <app/ElanorBot.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
 
 
 using namespace std;
-using namespace Cyan;
 using namespace date;
 using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
 using base64 = cppcodec::base64_rfc4648;
 
-bool pjskChart::Parse(const MessageChain& msg, vector<string>& token)
+bool pjskChart::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
 	if (str.length() >= char_traits<char>::length("#pjsk chart"))
 	{
 		Utils::ToLower(str);
-		if (Utils::Tokenize(token, str) < 3)
+		if (Utils::Tokenize(tokens, str) < 3)
 			return false;
-		if (token[0] == "#pjsk" || token[0] == "#啤酒烧烤" || token[0] == "#prsk")
-			if (token[1] == "chart" || token[1] == "谱面")
+		if (tokens[0] == "#pjsk" || tokens[0] == "#啤酒烧烤" || tokens[0] == "#prsk")
+			if (tokens[1] == "chart" || tokens[1] == "谱面")
 			return true;
 	}
 	return false;
@@ -33,11 +33,11 @@ bool pjskChart::Parse(const MessageChain& msg, vector<string>& token)
 
 
 
-bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool pjskChart::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
 {
-	assert(token.size() > 2);
+	assert(tokens.size() > 2);
 	logging::INFO("Calling pjskChart <pjskChart>" + Utils::GetDescription(gm));
-	string target = token[2];
+	string target = tokens[2];
 
 	json music;
 	{
@@ -72,22 +72,22 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 	if (music.is_null())
 	{
 		logging::INFO("未知歌曲 <pjskChart>: " + target + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain(target + "是什么歌捏，不知道捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
 		return false;
 	}
 	logging::INFO("获取歌曲谱面 <pjskChart>: " + music["title"].get<string>());
 	string difficulty = "master";
-	if (token.size() > 3)
+	if (tokens.size() > 3)
 	{
-		if (token[3] == "easy" || token[3] == "ez" || token[3] == "简单")		difficulty = "easy";
-		else if (token[3] == "normal" || token[3] == "nm" || token[3] == "一般")	difficulty = "normal";
-		else if (token[3] == "hard" || token[3] == "hd" || token[3] == "困难")		difficulty = "hard";
-		else if (token[3] == "expert" || token[3] == "ex" || token[3] == "专家")	difficulty = "expert";
-		else if (token[3] == "master" || token[3] == "ma" || token[3] == "大师")	difficulty = "master";
+		if (tokens[3] == "easy" || tokens[3] == "ez" || tokens[3] == "简单")		difficulty = "easy";
+		else if (tokens[3] == "normal" || tokens[3] == "nm" || tokens[3] == "一般")	difficulty = "normal";
+		else if (tokens[3] == "hard" || tokens[3] == "hd" || tokens[3] == "困难")		difficulty = "hard";
+		else if (tokens[3] == "expert" || tokens[3] == "ex" || tokens[3] == "专家")	difficulty = "expert";
+		else if (tokens[3] == "master" || tokens[3] == "ma" || tokens[3] == "大师")	difficulty = "master";
 		else
 		{
-			logging::INFO("未知难度 <pjskChart>: " + token[3] + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain().Plain(token[3] + "是什么难度捏，不知道捏"));
+			logging::INFO("未知难度 <pjskChart>: " + tokens[3] + Utils::GetDescription(gm, false));
+			Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(tokens[3] + "是什么难度捏，不知道捏"));
 			return false;
 		}
 	}
@@ -101,7 +101,7 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 		stringstream ss;
 		ss << remaining;
 		logging::INFO("冷却剩余 <pjskChart>: " + ss.str() + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
 		return false;
 	}
 	assert(holder);
@@ -116,11 +116,11 @@ bool pjskChart::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const
 				      {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 	if (!Utils::CheckHttpResponse(resp, "pjskChart: " + string(id) + " " + difficulty))
 	{
-		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 	logging::INFO("图片下载完成 <pjskChart>");
-	Utils::SendGroupMessage(gm, MessageChain().Plain("谱面: " + music["title"].get<string>() 
+	Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("谱面: " + music["title"].get<string>() 
 							+ "\n难度: " + difficulty
 							+ "\n")
 							.Image({"", "", "", base64::encode(resp->body)}));

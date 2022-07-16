@@ -2,13 +2,13 @@
 #include <State/BililiveList.hpp>
 #include <app/ElanorBot.hpp>
 #include <Utils/MessageQueue.hpp>
-#include <third-party/httplib.hpp>
-#include <third-party/log.h>
-#include <third-party/json.hpp>
+#include <ThirdParty/httplib.hpp>
+#include <ThirdParty/log.h>
+#include <ThirdParty/json.hpp>
 #include <Utils/Utils.hpp>
 
 using namespace std;
-using namespace Cyan;
+;
 using json = nlohmann::json;
 
 void BililiveTrigger::Action(shared_ptr<MiraiBot> client, ElanorBot* bot)

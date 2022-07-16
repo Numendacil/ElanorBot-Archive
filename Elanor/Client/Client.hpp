@@ -10,6 +10,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <utility>
 
 namespace Cyan
 {
@@ -68,7 +69,7 @@ public:
 	auto Call(F&& f, Args&&... args)
 	{
 		std::lock_guard<std::mutex> lk(this->client_mtx);
-		return std::invoke(f, this->client, args...);
+		return std::invoke(std::forward<F>(f), this->client, std::forward<Args>(args)...);
 	}
 
 	void Send(const Cyan::GID_t&, const Cyan::MessageChain&, Cyan::MessageId_t = 0);

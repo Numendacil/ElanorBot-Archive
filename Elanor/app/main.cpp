@@ -11,7 +11,7 @@
 #include <Utils/Factory.hpp>
 #include <Utils/MessageQueue.hpp>
 
-#include <third-party/log.h>
+#include <ThirdParty/log.h>
 
 #include <Command/GroupCommandBase.hpp>
 
@@ -19,7 +19,7 @@
 
 
 using namespace std;
-using namespace Cyan;
+;
 
 int main()
 {

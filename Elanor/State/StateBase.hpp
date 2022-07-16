@@ -2,7 +2,10 @@
 #define _STATE_BASE_HPP_
 
 #include <string>
-#include <third-party/json.hpp>
+#include <ThirdParty/json.hpp>
+
+namespace State
+{
 
 class StateBase
 {
@@ -13,5 +16,7 @@ public:
 
 	virtual ~StateBase() = default;
 };
+
+}
 
 #endif

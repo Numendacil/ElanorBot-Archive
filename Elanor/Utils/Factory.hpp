@@ -8,34 +8,39 @@
 #include <type_traits>
 #include <cassert>
 
+namespace Utils
+{
+
 template <class Base>
 class Factory
 {
 public:
-	static std::unique_ptr<Base> Make(const std::string& s)
+	std::unique_ptr<Base> Make(const std::string& s) const
 	{
-		return (data().at(s))();
+		return (this->factory_map.at(s))();
 	}
 
-	static bool Exist(const std::string& s)
+	bool Exist(const std::string& s) const
 	{
-		return data().count(s);
+		return this->factory_map.count(s);
 	}
 
-	static std::vector<std::string> GetKeyList()
+	std::vector<std::string> GetKeyList() const
 	{
 		std::vector<std::string> v;
-		for (const auto& p : data())
+		v.reserve(this->factory_map.size());
+		for (const auto& p : this->factory_map)
 			v.push_back(p.first);
 		return v;
 	}
 
 	template <class T> 
-	static bool Register(const std::string& s)
+	bool Register(const std::string& s)
 	{
 		static_assert(std::is_base_of<Base, T>::value);
-		assert(!Exist(s));
-		data()[s] = []() -> std::unique_ptr<Base>
+		if (this->Exist(s))
+			return false;
+		this->factory_map[s] = []() -> std::unique_ptr<Base>
 		{
 			return std::make_unique<T>();
 		};
@@ -43,14 +48,9 @@ public:
 	}
 
 private:
-	Factory() = default;	// No instance allowed
-
-	static std::unordered_map<std::string, std::unique_ptr<Base>(*)()>& data()
-	{
-		static std::unordered_map<std::string, std::unique_ptr<Base>(*)()> factory_map;
-		return factory_map;
-	}
-
+	std::unordered_map<std::string, std::unique_ptr<Base>(*)()> factory_map;
 };
 
+
+}
 #endif

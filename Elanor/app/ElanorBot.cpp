@@ -10,11 +10,11 @@
 
 #include <Command/GroupCommandBase.hpp>
 
-#include <third-party/json.hpp>
-#include <third-party/log.h>
+#include <ThirdParty/json.hpp>
+#include <ThirdParty/log.h>
 
 using namespace std;
-using namespace Cyan;
+;
 using json = nlohmann::json;
 
 ElanorBot::ElanorBot(GID_t group_id, QQ_t owner_id, shared_ptr<MiraiBot> client) : gid(group_id), suid(owner_id)
@@ -24,7 +24,7 @@ ElanorBot::ElanorBot(GID_t group_id, QQ_t owner_id, shared_ptr<MiraiBot> client)
 	for (const auto& s : list)
 	{
 		auto ptr = Factory<GroupCommandBase>::Make(s);
-		this->CommandAuth[s] = ptr->AuthRequirement();
+		this->CommandAuth[s] = ptr->Permission();
 	}
 
 	list = Factory<StateBase>::GetKeyList();

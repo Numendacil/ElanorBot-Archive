@@ -1,10 +1,10 @@
 #include <Trigger/MorningTrigger.hpp>
 #include <app/ElanorBot.hpp>
 #include <Utils/MessageQueue.hpp>
-#include <third-party/log.h>
+#include <ThirdParty/log.h>
 
 using namespace std;
-using namespace Cyan;
+;
 
 void MorningTrigger::Action(shared_ptr<MiraiBot> client, ElanorBot* bot)
 {

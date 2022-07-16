@@ -1,9 +1,10 @@
 #include <Command/pjsk/pjskUpdate.hpp>
-#include <third-party/log.h>
-#include <third-party/httplib.hpp>
-#include <third-party/uuid.h>
-#include <third-party/json.hpp>
-#include <app/ElanorBot.hpp>
+#include <ThirdParty/log.h>
+#include <ThirdParty/httplib.hpp>
+#include <ThirdParty/uuid.h>
+#include <ThirdParty/json.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
 #include <fstream>
 #include <sstream>
@@ -13,22 +14,21 @@
 
 
 using namespace std;
-using namespace Cyan;
 using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
 
 
-bool pjskUpdate::Parse(const MessageChain& msg, vector<string>& token)
+bool pjskUpdate::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
 	if (str.length() >= char_traits<char>::length("#pjsk update"))
 	{
 		Utils::ToLower(str);
-		if (Utils::Tokenize(token, str) < 2)
+		if (Utils::Tokenize(tokens, str) < 2)
 			return false;
-		if (token[0] == "#pjsk" || token[0] == "#啤酒烧烤" || token[0] == "#prsk")
-			if (token[1] == "update" || token[1] == "更新")
+		if (tokens[0] == "#pjsk" || tokens[0] == "#啤酒烧烤" || tokens[0] == "#prsk")
+			if (tokens[1] == "update" || tokens[1] == "更新")
 			return true;
 	}
 	return false;
@@ -63,7 +63,7 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 			auto result_alias = local_cli.Get(("/pjsk/songinfo/" + to_string(id)).c_str());
 			if (!Utils::CheckHttpResponse(result_alias, "pjskUpdate: UpdateAlias"))
 			{
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 				return false;
 			}
 
@@ -90,7 +90,7 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 	catch(const exception& e)
 	{
 		logging::WARN("Exception occured <pjskUpdate: UpdateAlias>: " + string(e.what()));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 }
@@ -138,7 +138,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			|| !Utils::CheckHttpResponse(result_game_characters, "pjskUpdate: gameCharacters.json") 
 			|| !Utils::CheckHttpResponse(result_game_characters, "pjskUpdate: outsideCharacters.json"))
 		{
-			Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 		logging::INFO("Downloading json complete <pjskUpdate: UpdateMetadata>");
@@ -187,7 +187,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				if (result_cover_org.error() != httplib_ssl_zlib::Error::Success || !result_cover_org)
 				{
 					logging::WARN("Connection to server failed <pjskUpdate: cover_org>: " + to_string(result_cover_org.error()));
-					Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 					return false;
 				}
 				if (result_cover_org->status != 200)
@@ -282,7 +282,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 	catch(const exception& e)
 	{
 		logging::WARN("Exception occured <pjskUpdate: UpdateMetadata>: " + string(e.what()));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 }
@@ -351,7 +351,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			}
 			logging::INFO("Missing " + to_string(missing_covers.size() + missing_org_covers.size()) + " covers and " + to_string(missing_songs.size()) + "songs <pjskUpdate: DownloadFiles>");
 			Utils::SendGroupMessage(gm, 
-				MessageChain().Plain("收集信息完毕，共需要更新" 
+			.MessageChain().Plain("收集信息完毕，共需要更新" 
 						+ to_string(missing_covers.size() + missing_org_covers.size())
 						+ "张图片与"
 						+ to_string(missing_songs.size())
@@ -368,7 +368,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + cover))
 				{
-					// Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					// Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 					// return false;
 					continue;
 				}
@@ -390,7 +390,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + cover))
 				{
-					// Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					// Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 					// return false;
 					continue;
 				}
@@ -413,7 +413,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 							{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 				if (!Utils::CheckHttpResponse(resp, "pjskUpdate: " + song.first))
 				{
-					// Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+					// Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 					// return false;
 					continue;
 				}
@@ -441,7 +441,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			logging::INFO("Download finished <pjskUpdate: DownloadFiles>");
 			logging::INFO("Downloaded " + to_string(success_cover_count) + " covers and " + to_string(success_song_count) + "songs <pjskUpdate: DownloadFiles>");
 			Utils::SendGroupMessage(gm, 
-				MessageChain().Plain("成功下载" 
+			.MessageChain().Plain("成功下载" 
 						+ to_string(success_cover_count)
 						+ "张图片与"
 						+ to_string(success_song_count)
@@ -463,7 +463,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 	catch(const exception& e)
 	{
 		logging::WARN("Exception occured <pjskUpdate: DownloadFiles>: " + string(e.what()));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 }
@@ -508,7 +508,7 @@ bool ProbeSongLength(const GroupMessage& gm, shared_ptr<ElanorBot> bot, bool for
 	catch(const exception& e)
 	{
 		logging::WARN("Exception occured <pjskUpdate: ProbeSongLength>: " + string(e.what()));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 }
@@ -516,22 +516,22 @@ bool ProbeSongLength(const GroupMessage& gm, shared_ptr<ElanorBot> bot, bool for
 
 
 
-bool pjskUpdate::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
 {
-	assert(token.size() > 1);
+	assert(tokens.size() > 1);
 	logging::INFO("Calling pjskUpdate <pjskUpdate>" + Utils::GetDescription(gm));
 	
-	if (token.size() == 2)
+	if (tokens.size() == 2)
 	{
 		if (!UpdateMetadata(gm, bot))
 			return false;
 		if (!DownloadFiles(gm, bot))
 			return false;
-		Utils::SendGroupMessage(gm, MessageChain().Plain("更新好了捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("更新好了捏"));
 		return true;
 	}
 
-	string command = token[2];
+	string command = tokens[2];
 	if (command == "alias")
 	{
 		vector<int> id_list;
@@ -547,12 +547,12 @@ bool pjskUpdate::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, cons
 		}
 		if (!UpdateAlias(gm, bot, id_list))
 			return false;
-		Utils::SendGroupMessage(gm, MessageChain().Plain("更新好了捏"));
+		Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain("更新好了捏"));
 		return true;
 	}
 
 
 	logging::INFO("未知命令 <pjskUpdate>: " + command + Utils::GetDescription(gm, false));
-	Utils::SendGroupMessage(gm, MessageChain().Plain(command + "是什么指令捏，不知道捏"));
+	Utils::SendGroupMessage(gm, Cyan::MessageChain().Plain(command + "是什么指令捏，不知道捏"));
 	return false;
 }

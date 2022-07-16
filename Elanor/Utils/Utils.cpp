@@ -6,8 +6,8 @@
 #include <algorithm>
 #include <cctype>
 
-#include <third-party/httplib.hpp>
-#include <third-party/log.h>
+#include <ThirdParty/httplib.hpp>
+#include <ThirdParty/log.h>
 #include <Command/Command.hpp>
 #include <State/State.hpp>
 #include <Trigger/Trigger.hpp>
@@ -16,7 +16,7 @@
 #include <Utils/Utils.hpp>
 
 using namespace std;
-using namespace Cyan;
+;
 
 namespace Utils
 {
