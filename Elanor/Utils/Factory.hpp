@@ -8,6 +8,9 @@
 #include <type_traits>
 #include <cassert>
 
+// Unused, but just in case
+
+
 namespace Utils
 {
 
@@ -51,6 +54,6 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<Base>(*)()> factory_map;
 };
 
-
 }
+
 #endif

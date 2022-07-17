@@ -22,7 +22,7 @@ bool Answer::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return true;
 }
 
-bool Answer::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Answer::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	auto state = group.GetState<State::Activity>("Activity");
 	if (!state->HasActivity())

@@ -31,11 +31,11 @@ bool Pixiv::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool GetPixivById(const Cyan::GroupMessage& gm, Group& group, long pid, int page)
+bool GetPixivById(const Cyan::GroupMessage& gm, Bot::Group& group, long pid, int page)
 {
 	using namespace date;
 	using namespace std::chrono;
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	auto cd = group.GetState<State::CoolDown>("CoolDown");
 	chrono::seconds remaining;
 	auto holder = cd->GetRemaining("Pixiv", 20s, remaining);
@@ -105,11 +105,11 @@ bool GetPixivById(const Cyan::GroupMessage& gm, Group& group, long pid, int page
 	return true;
 }
 
-bool Pixiv::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling Pixiv<Pixiv>" + Utils::GetDescription(gm));
 	assert(tokens.size() > 1);
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	string command = tokens[1];
 	Utils::ToLower(command);
 	if (command == "help" || command == "h" || command == "帮助")

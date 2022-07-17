@@ -26,11 +26,11 @@ bool SetTrigger::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool SetTrigger::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool SetTrigger::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling SetTrigger <SetTrigger>" + Utils::GetDescription(gm));
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	string command = tokens[1];
 	Utils::ToLower(command);
 

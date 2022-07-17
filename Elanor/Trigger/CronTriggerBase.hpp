@@ -5,47 +5,54 @@
 #include <Utils/Timer.hpp>
 #include <Trigger/TriggerBase.hpp>
 
-
+namespace Trigger
+{
 
 class CronTriggerBase : public TriggerBase
 {
 protected:
 	mutable std::mutex mtx;
 
-	virtual void Action(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot) = 0;
+	virtual void Action() = 0;
 	size_t timer_id;
 
 	virtual std::string GetCron() { return "0 0 8 * * *"; }
 
 public:
-	virtual void trigger_on(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot) override
+	virtual void TriggerOn() override
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		if (this->is_running)
 			return;
 		this->is_running = true;
-		this->timer_id = Timer::GetInstance().LaunchAt(
-			[this, client, bot]
+		this->timer_id = Utils::Timer::GetInstance().LaunchAt(
+			[this]
 			{
-				this->Action(client, bot);
+				this->Action();
 			},
 			this->GetCron());
 	}
 
-	virtual void trigger_off(void) override
+	virtual void TriggerOff(void) override
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		if (!this->is_running)
 			return;
 		this->is_running = false;
-		Timer::GetInstance().Stop(this->timer_id);
+		Utils::Timer::GetInstance().Stop(this->timer_id);
 	}
 
 	~CronTriggerBase()
 	{
+		std::lock_guard<std::mutex> lk(this->mtx);
 		if (this->is_running)
-			this->trigger_off();
+		{
+			this->is_running = false;
+			Utils::Timer::GetInstance().Stop(this->timer_id);
+		}
 	}
 };
+
+}
 
 #endif

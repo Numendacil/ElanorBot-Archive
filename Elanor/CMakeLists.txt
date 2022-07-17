@@ -1,8 +1,3 @@
-# 不要构建 mirai-cpp 自带的 examples
-set(MIRAI_CPP_BUILD_EXAMPLES OFF CACHE BOOL "Build examples" FORCE)
-# 添加子模块 mirai-cpp
-add_subdirectory(mirai-cpp)
-
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 
@@ -36,10 +31,11 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	target_link_libraries(ElanorBot PRIVATE -static-libgcc -static-libstdc++)
 endif()
 
+add_subdirectory(App)
 add_subdirectory(Client)
 add_subdirectory(Group)
 add_subdirectory(Command)
 add_subdirectory(State)
-# add_subdirectory(Trigger)
+add_subdirectory(Trigger)
 add_subdirectory(ThirdParty)
-# add_subdirectory(Utils)
+add_subdirectory(Utils)

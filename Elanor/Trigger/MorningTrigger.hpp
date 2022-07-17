@@ -3,14 +3,19 @@
 
 #include <Trigger/CronTriggerBase.hpp>
 
+namespace Trigger
+{
+
 class MorningTrigger : public CronTriggerBase
 {
 protected:
-	virtual void Action(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot) override;
+	virtual void Action() override;
 
 	virtual bool TriggerOnStart() override { return true; }
 
 	virtual std::string GetCron() override { return "0 0 7 * * *"; }
 };
+
+}
 
 #endif

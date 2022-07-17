@@ -14,7 +14,7 @@
 
 #include <mirai.h>
 
-#include "pjskCoverGuess.hpp"s
+#include "pjskCoverGuess.hpp"
 
 using namespace std;
 using namespace httplib_ssl_zlib;
@@ -41,11 +41,11 @@ bool pjskCoverGuess::Parse(const Cyan::MessageChain& msg, vector<string>& tokens
 
 
 
-bool pjskCoverGuess::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool pjskCoverGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling pjskCoverGuess <pjskCoverGuess>" + Utils::GetDescription(gm));
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 
 	auto state = group.GetState<State::Activity>("Activity");
 	auto holder = state->CheckAndStart("pjsk");

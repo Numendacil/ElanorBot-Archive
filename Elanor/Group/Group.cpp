@@ -1,41 +1,48 @@
 #include <exception>
 #include <filesystem>
 #include <fstream>
-
-#include <Utils/Timer.hpp>
-
-#include "Group.hpp"
-#include "State/AccessCtrlList.hpp"
-#include "State/Activity.hpp"
-#include "State/CommandPerm.hpp"
-#include "State/CoolDown.hpp"
-#include "State/TriggerStatus.hpp"
-
 #include <State/State.hpp>
 
 #include <ThirdParty/json.hpp>
 #include <ThirdParty/log.h>
 
+#include <Utils/Timer.hpp>
+#include <memory>
+
+#include "Group.hpp"
+
+
 using namespace std;
 using json = nlohmann::json;
+
+namespace Bot
+{
+
+unordered_map<string, unique_ptr<State::StateBase>> RegisterStates()
+{
+	unordered_map<string, unique_ptr<State::StateBase>> v;
+
+	#define REGISTER(_class_, _name_) v[_name_] = make_unique<_class_>();
+
+	REGISTER(State::AccessCtrlList, "AccessCtrlList")
+	REGISTER(State::Activity, "Activity")
+	REGISTER(State::BililiveList, "BililiveList")
+	REGISTER(State::CommandPerm, "CommandPerm")
+	REGISTER(State::CoolDown, "CoolDown")
+	REGISTER(State::LastMessage, "LastMessage")
+	REGISTER(State::TriggerStatus, "TriggerStatus")
+
+	#undef REGISTER
+	
+	return v;
+}
+
 
 Group::Group(Cyan::GID_t group_id, Cyan::QQ_t owner_id,
 	const std::vector<std::pair<std::string, int>>& command_list,
 	const std::vector<std::pair<std::string, bool>>& trigger_list) 
-	: gid(group_id), suid(owner_id)
+	: gid(group_id), suid(owner_id), States(RegisterStates())
 {
-	#define REGISTER(_class_, _name_) this->States[ #_name_ ] = make_unique<_class_>()
-	
-	REGISTER(State::AccessCtrlList, AccessCtrlList);
-	REGISTER(State::Activity, Activity);
-	REGISTER(State::BililiveList, BililiveList);
-	REGISTER(State::CommandPerm, CommandPerm);
-	REGISTER(State::CoolDown, CoolDown);
-	REGISTER(State::LastMessage, LastMessage);
-	REGISTER(State::TriggerStatus, TriggerStatus);
-
-	#undef REGISTER
-
 	auto command = this->GetState<State::CommandPerm>("CommandPerm");
 	for (const auto& p : command_list)
 		command->AddCommand(p.first, p.second);
@@ -46,7 +53,7 @@ Group::Group(Cyan::GID_t group_id, Cyan::QQ_t owner_id,
 
 	this->FromFile();
 	
-	Timer::GetInstance().LaunchLoop([this]{ this->ToFile(); }, chrono::hours(1), true);
+	Utils::Timer::GetInstance().LaunchLoop([this]{ this->ToFile(); }, chrono::hours(1), true);
 }
 
 void Group::ToFile(void)
@@ -115,7 +122,9 @@ void Group::FromFile(void)
 			assert(content["States"].type() == json::value_t::object);
 			for (const auto& p : content["States"].items())
 				if (this->States.count(p.key()))
-					this->States[p.key()]->Deserialize(p.value());
+					this->States.at(p.key())->Deserialize(p.value());
 		}
 	}
+}
+
 }

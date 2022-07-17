@@ -21,7 +21,7 @@ bool Repeat::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return true;
 }
 
-bool Repeat::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Repeat::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	Cyan::MessageChain LastMsg;
 	bool Repeated;
@@ -37,7 +37,7 @@ bool Repeat::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<st
 			if (rng_repeat(Utils::rng_engine) == 1)
 			{
 				state->Set(gm.MessageChain, true);
-				Client::GetClient().Send(gm.Sender.Group.GID, gm.MessageChain);
+				Bot::Client::GetClient().Send(gm.Sender.Group.GID, gm.MessageChain);
 				logging::INFO("bot复读成功 <Repeat>" + Utils::GetDescription(gm, false));
 				return true;
 			}

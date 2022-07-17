@@ -1,4 +1,3 @@
-#include <Command/pjsk/pjskUpdate.hpp>
 #include <ThirdParty/log.h>
 #include <ThirdParty/httplib.hpp>
 #include <ThirdParty/uuid.h>
@@ -12,11 +11,13 @@
 #include <unordered_set>
 #include <filesystem>
 
+#include "pjskUpdate.hpp"
 
 using namespace std;
-using namespace httplib_ssl_zlib;
 using json = nlohmann::json;
 
+namespace GroupCommand
+{
 
 bool pjskUpdate::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
@@ -36,13 +37,14 @@ bool pjskUpdate::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 
 
 
-bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> musicId, bool force = true)
+bool UpdateAlias(const Cyan::GroupMessage& gm, Bot::Group& group, vector<int> musicId, bool force = true)
 {
 	logging::INFO("Calling UpdateAlias <pjskUpdate: UpdateAlias>" + Utils::GetDescription(gm));
+	Bot::Client& client = Bot::Client::GetClient();
 	try
 	{
 		const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
-		Client local_cli(url_local);
+		httplib_ssl_zlib::Client local_cli(url_local);
 		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 		unordered_map<int, json> alias_map;	// For quick lookup
 		{
@@ -98,9 +100,10 @@ bool UpdateAlias(const GroupMessage& gm, shared_ptr<ElanorBot> bot, vector<int> 
 
 
 
-bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
+bool UpdateMetadata(const Cyan::GroupMessage& gm, Bot::Group& group)
 {
 	logging::INFO("Calling UpdateMetadata <pjskUpdate: UpdateMetadata>" + Utils::GetDescription(gm));
+	Bot::Client& client = Bot::Client::GetClient();
 	try
 	{
 		unordered_map<int, json> music_index;
@@ -116,8 +119,8 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 		}
 
 		logging::INFO("Reading info from sekai.best <pjskUpdate: UpdateMetadata>");
-		Client sekai_cli("https://sekai-world.github.io");
-		Client resource_cli("https://sekai-assets-1258184166.file.myqcloud.com");
+		httplib_ssl_zlib::Client sekai_cli("https://sekai-world.github.io");
+		httplib_ssl_zlib::Client resource_cli("https://sekai-assets-1258184166.file.myqcloud.com");
 		auto result_music = sekai_cli.Get("/sekai-master-db-diff/musics.json",
 						{{"Accept-Encoding", "gzip"},
 						{"Referer", "https://sekai.best/"},
@@ -275,7 +278,7 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			ofile.close();
 		}
 		logging::INFO("Metadata update complete <pjskUpdate: UpdateMetadata>");
-		if (!UpdateAlias(gm, bot, id_list, false))
+		if (!UpdateAlias(gm, group, id_list, false))
 			return false;
 		logging::INFO("Alias update complete <pjskUpdate: UpdateMetadata>");
 		return true;
@@ -290,9 +293,10 @@ bool UpdateMetadata(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 
 
 
-bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
+bool DownloadFiles(const Cyan::GroupMessage& gm, Bot::Group& group)
 {
 	logging::INFO("Calling DownloadFiles <pjskUpdate: DownloadFiles>" + Utils::GetDescription(gm));
+	Bot::Client& client = Bot::Client::GetClient();
 	try
 	{
 		unordered_map<int, json> music_index;
@@ -307,7 +311,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				music_index.emplace((p.value())["musicId"].get<int>(), p.value());
 		}
 
-		Client resource_cli("https://sekai-assets-1258184166.file.myqcloud.com");
+		httplib_ssl_zlib::Client resource_cli("https://sekai-assets-1258184166.file.myqcloud.com");
 		{
 			const string covers_path = MediaFilesPath + "images/pjsk/cover/";
 			unordered_set<string> cover_name;
@@ -351,8 +355,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 				}
 			}
 			logging::INFO("Missing " + to_string(missing_covers.size() + missing_org_covers.size()) + " covers and " + to_string(missing_songs.size()) + "songs <pjskUpdate: DownloadFiles>");
-			client.Send(gm.Sender.Group.GID, 
-			.MessageChain().Plain("收集信息完毕，共需要更新" 
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("收集信息完毕，共需要更新" 
 						+ to_string(missing_covers.size() + missing_org_covers.size())
 						+ "张图片与"
 						+ to_string(missing_songs.size())
@@ -441,8 +444,7 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 			}
 			logging::INFO("Download finished <pjskUpdate: DownloadFiles>");
 			logging::INFO("Downloaded " + to_string(success_cover_count) + " covers and " + to_string(success_song_count) + "songs <pjskUpdate: DownloadFiles>");
-			client.Send(gm.Sender.Group.GID, 
-			.MessageChain().Plain("成功下载" 
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("成功下载" 
 						+ to_string(success_cover_count)
 						+ "张图片与"
 						+ to_string(success_song_count)
@@ -471,9 +473,10 @@ bool DownloadFiles(const GroupMessage& gm, shared_ptr<ElanorBot> bot)
 
 
 
-bool ProbeSongLength(const GroupMessage& gm, shared_ptr<ElanorBot> bot, bool force = true)
+bool ProbeSongLength(const Cyan::GroupMessage& gm, Bot::Group& group, bool force = true)
 {
 	logging::INFO("Calling ProbeSongLength <pjskUpdate: ProbeSongLength>" + Utils::GetDescription(gm));
+	Bot::Client& client = Bot::Client::GetClient();
 	try
 	{
 		logging::INFO("Reading from meta.json <pjskUpdate: ProbeSongLength>");
@@ -517,16 +520,17 @@ bool ProbeSongLength(const GroupMessage& gm, shared_ptr<ElanorBot> bot, bool for
 
 
 
-bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling pjskUpdate <pjskUpdate>" + Utils::GetDescription(gm));
+	Bot::Client& client = Bot::Client::GetClient();
 	
 	if (tokens.size() == 2)
 	{
-		if (!UpdateMetadata(gm, bot))
+		if (!UpdateMetadata(gm, group))
 			return false;
-		if (!DownloadFiles(gm, bot))
+		if (!DownloadFiles(gm, group))
 			return false;
 		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("更新好了捏"));
 		return true;
@@ -546,7 +550,7 @@ bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Group& group, const vecto
 			for (const auto &p : meta_data.items())
 				id_list.push_back((p.value())["musicId"].get<int>());
 		}
-		if (!UpdateAlias(gm, bot, id_list))
+		if (!UpdateAlias(gm, group, id_list))
 			return false;
 		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("更新好了捏"));
 		return true;
@@ -556,4 +560,6 @@ bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Group& group, const vecto
 	logging::INFO("未知命令 <pjskUpdate>: " + command + Utils::GetDescription(gm, false));
 	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(command + "是什么指令捏，不知道捏"));
 	return false;
+}
+
 }

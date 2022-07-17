@@ -28,11 +28,11 @@ bool Choyen::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool Choyen::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Choyen::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling Choyen <Choyen>" + Utils::GetDescription(gm));
 	assert(tokens.size() > 1);
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 
 	if (tokens.size() == 2)
 	{

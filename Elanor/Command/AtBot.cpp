@@ -18,12 +18,12 @@ bool AtBot::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return true;
 }
 
-bool AtBot::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool AtBot::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	if (!gm.AtMe())
 		return false;
 
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 
 	logging::INFO("有人@bot <AtBot>" + Utils::GetDescription(gm));
 	const vector<string> words = {"干嘛", "？"};

@@ -28,11 +28,11 @@ bool WhiteList::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool WhiteList::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool WhiteList::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling WhiteList <WhiteList>" + Utils::GetDescription(gm));
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	string command = tokens[1];
 	if (command == "help" || command == "h" || command == "帮助")
 	{

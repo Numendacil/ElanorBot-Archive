@@ -5,6 +5,9 @@
 
 using namespace std;
 
+namespace Utils
+{
+
 size_t Timer::GetWorker(void)
 {
 	this->id_count++;
@@ -143,4 +146,6 @@ size_t Timer::LaunchAt(function<void()> func, const string& cron_str, int num)
 		}
 	});
 	return this->worker[idx].second.id;
+}
+
 }

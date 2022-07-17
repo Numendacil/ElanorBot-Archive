@@ -25,12 +25,12 @@ bool RollDice::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool RollDice::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool RollDice::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	int i = 0;
 	int j = 0;
 	int result[10];
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	assert(tokens.size() > 1);
 	logging::INFO("Calling RollDice <RollDice>" + Utils::GetDescription(gm));
 	string command = tokens[1];

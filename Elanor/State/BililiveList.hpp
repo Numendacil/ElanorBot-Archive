@@ -51,6 +51,12 @@ public:
 		return this->user_list.count(uid);
 	}
 
+	const info& GetInfo(long uid) const
+	{
+		std::lock_guard<std::mutex> lk(this->mtx);
+		return this->user_list.at(uid);
+	}
+
 	std::vector<std::pair<long, info>> GetList(void) const
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);

@@ -27,11 +27,11 @@ bool CommandAuth::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling Auth <CommandAuth>" + Utils::GetDescription(gm));
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	string command = tokens[1];
 	Utils::ToLower(command);
 

@@ -30,10 +30,10 @@ bool ImageSearch::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling ImageSearch <ImageSearch>" + Utils::GetDescription(gm));
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	enum {SAUCENAO, ASCII2D, TRACEMOE} server = SAUCENAO;
 	if (tokens.size() > 1)
 	{

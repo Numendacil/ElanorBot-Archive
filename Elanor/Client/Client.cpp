@@ -11,6 +11,9 @@
 
 using namespace std;
 
+namespace Bot
+{
+
 Client::Client()
 {
 	this->Connected = false;
@@ -23,6 +26,7 @@ Client::~Client()
 	if (this->Connected)
 	{
 		this->Connected = false;
+		this->cv.notify_all();
 		if (this->th.joinable())
 			this->th.join();
 		this->client->Disconnect();
@@ -82,27 +86,22 @@ void Client::MsgQueue()
 void Client::Send(const Cyan::GID_t& gid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
 {
 	unique_lock<mutex> lk(this->q_mtx);
-	this->message.emplace(gid, 0, msg, mid, Message::GROUP);
+	this->message.emplace(gid, (Cyan::QQ_t)0, msg, mid, Message::GROUP, 0);
+	this->cv.notify_all();
 }
 
 void Client::Send(const Cyan::QQ_t& qqid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
 {
 	unique_lock<mutex> lk(this->q_mtx);
-	this->message.emplace(0, qqid, msg, mid, Message::FRIEND);
+	this->message.emplace((Cyan::GID_t)0, qqid, msg, mid, Message::FRIEND, 0);
+	this->cv.notify_all();
 }
 
 void Client::Send(const Cyan::GID_t& gid, const Cyan::QQ_t& qqid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
 {
 	unique_lock<mutex> lk(this->q_mtx);
-	this->message.emplace(gid, qqid, msg, mid, Message::TEMP);
-}
-
-
-
-template <typename T>
-Cyan::MiraiBot& Client::On(const std::function<void(T)>& ep)
-{
-	return this->client->On<T>(ep);
+	this->message.emplace(gid, qqid, msg, mid, Message::TEMP, 0);
+	this->cv.notify_all();
 }
 
 void Client::Connect(const Cyan::SessionOptions &opts)
@@ -115,6 +114,7 @@ void Client::Connect(const Cyan::SessionOptions &opts)
 void Client::Reconnect()
 {
 	this->Connected = false;
+	this->cv.notify_all();
 	if (this->th.joinable())
 		this->th.join();
 	
@@ -126,7 +126,10 @@ void Client::Reconnect()
 void Client::Disconnect()
 {
 	this->Connected = false;
+	this->cv.notify_all();
 	if (this->th.joinable())
 		this->th.join();
 	this->client->Disconnect();
+}
+
 }

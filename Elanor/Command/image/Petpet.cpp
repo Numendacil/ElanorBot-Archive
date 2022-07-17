@@ -29,10 +29,10 @@ bool Petpet::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool Petpet::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Petpet::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling Petpet <Petpet>" + Utils::GetDescription(gm));
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	int64_t target = -1;
 	if (tokens.size() > 1)
 	{

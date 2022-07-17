@@ -14,6 +14,9 @@
 #include <utility>
 #include <vector>
 
+namespace Bot
+{
+
 class Group
 {
 
@@ -21,7 +24,7 @@ protected:
 	mutable std::mutex mtx;
 	mutable std::mutex mtx_file;
 
-	std::unordered_map<std::string, std::unique_ptr<State::StateBase>> States;
+	const std::unordered_map<std::string, std::unique_ptr<State::StateBase>> States;
 public:
 	Group(Cyan::GID_t group_id, Cyan::QQ_t owner_id, 
 		const std::vector<std::pair<std::string, int>>& command_list,
@@ -48,5 +51,7 @@ public:
 		this->ToFile(); 
 	}
 };
+
+}
 
 #endif

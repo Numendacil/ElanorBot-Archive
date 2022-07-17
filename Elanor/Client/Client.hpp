@@ -11,12 +11,10 @@
 #include <queue>
 #include <thread>
 #include <utility>
+#include <mirai.h>
 
-namespace Cyan
+namespace Bot
 {
-	class MiraiBot;
-	class SessionOptions;
-}
 
 class Client
 {
@@ -59,7 +57,10 @@ public:
 	}
 
 	template <typename T>
-	Cyan::MiraiBot& On(const std::function<void(T)>& ep);
+	Cyan::MiraiBot& On(const std::function<void(T)>& ep)
+	{
+		return this->client->On<T>(ep);
+	}
 	void Connect(const Cyan::SessionOptions& opts);
 	void Reconnect();
 	void Disconnect();
@@ -77,5 +78,7 @@ public:
 	void Send(const Cyan::GID_t&, const Cyan::QQ_t&, const Cyan::MessageChain&, Cyan::MessageId_t = 0);
 
 };
+
+}
 
 #endif

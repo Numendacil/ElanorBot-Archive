@@ -28,9 +28,9 @@ bool Recall::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool Recall::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Recall::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 	logging::INFO("Calling Recall <Recall>" + Utils::GetDescription(gm));
 	if (tokens.size() > 1)
 	{

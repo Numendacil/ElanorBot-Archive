@@ -11,12 +11,10 @@
 #include <Command/Command.hpp>
 #include <State/State.hpp>
 #include <Trigger/Trigger.hpp>
-#include <Utils/MessageQueue.hpp>
 #include <Utils/Factory.hpp>
 #include <Utils/Utils.hpp>
 
 using namespace std;
-;
 
 namespace Utils
 {
@@ -46,48 +44,6 @@ namespace Utils
 	random_device rd;
 	mt19937 rng_engine(rd());
 	BotConfig Configs;
-
-
-	void Init(const std::string& config_path)
-	{
-		Factory<GroupCommandBase>::Register<WhiteList>("WhiteList");
-		Factory<GroupCommandBase>::Register<BlackList>("BlackList");
-		Factory<GroupCommandBase>::Register<SetAuth>("Auth");
-		Factory<GroupCommandBase>::Register<SetTrigger>("Trigger");
-
-		Factory<GroupCommandBase>::Register<RollDice>("RollDice");
-		Factory<GroupCommandBase>::Register<Repeat>("Repeat");
-		Factory<GroupCommandBase>::Register<Recall>("Recall");
-		Factory<GroupCommandBase>::Register<AtBot>("At");
-		Factory<GroupCommandBase>::Register<Bililive>("Bililive");
-		Factory<GroupCommandBase>::Register<Answer>("Answer");
-
-		Factory<GroupCommandBase>::Register<Petpet>("Petpet");
-		Factory<GroupCommandBase>::Register<Choyen>("Choyen");
-		Factory<GroupCommandBase>::Register<ImageSearch>("ImageSearch");
-		Factory<GroupCommandBase>::Register<Pixiv>("Pixiv");
-
-		Factory<GroupCommandBase>::Register<pjskUpdate>("pjskUpdate");
-		Factory<GroupCommandBase>::Register<pjskSongGuess>("pjskSongGuess");
-		Factory<GroupCommandBase>::Register<pjskCoverGuess>("pjskCoverGuess");
-		Factory<GroupCommandBase>::Register<pjskChart>("pjskChart");
-		Factory<GroupCommandBase>::Register<pjskMusicInfo>("pjskMusicInfo");
-
-
-
-		Factory<StateBase>::Register<LastMessage>("Repeat");
-		Factory<StateBase>::Register<CoolDown>("CoolDown");
-		Factory<StateBase>::Register<BililiveList>("BililiveList");
-		Factory<StateBase>::Register<Activity>("Activity");
-
-
-
-		Factory<TriggerBase>::Register<MorningTrigger>("Morning");
-		Factory<TriggerBase>::Register<BililiveTrigger>("Bililive");
-
-		Configs.FromFile(config_path);
-	}
-
 
 	string exec(const vector<string>& cmd)
 	{
@@ -232,26 +188,16 @@ namespace Utils
 		return true;
 	}
 
-	string GetDescription(const GroupMessage &gm, bool from)
+	string GetDescription(const Cyan::GroupMessage &gm, bool from)
 	{
 		string member = gm.Sender.MemberName + "(" + to_string(gm.Sender.QQ.ToInt64()) + ")";
 		string group = gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")";
 		return ((from) ? "\t<- [" : "\t-> [") + member + ", " + group + "]";
 	}
 
-	string GetDescription(const FriendMessage &fm, bool from)
+	string GetDescription(const Cyan::FriendMessage &fm, bool from)
 	{
 		string profile = fm.Sender.NickName + "(" + to_string(fm.Sender.QQ.ToInt64()) + ")";
 		return ((from) ? "\t<- [" : "\t-> [") + profile + "]";
-	}
-
-	void SendGroupMessage(const GroupMessage &gm, const MessageChain &msg)
-	{
-		MessageQueue::GetInstance().Push(gm.Sender.Group.GID, msg);
-	}
-
-	void QuoteGroupMessage(const GroupMessage &gm, const MessageChain &msg)
-	{
-		MessageQueue::GetInstance().Push(gm.Sender.Group.GID, msg, gm.MessageId());
 	}
 }

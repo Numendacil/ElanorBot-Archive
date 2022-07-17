@@ -29,14 +29,14 @@ bool Bililive::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool Bililive::Execute(const Cyan::GroupMessage& gm, Group& group, const vector<string>& tokens) 
+bool Bililive::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling Bililive <Bililive>" + Utils::GetDescription(gm));
 	auto BiliList = group.GetState<State::BililiveList>("BililiveList");
 	string command = tokens[1];
 	Utils::ToLower(command);
-	Client& client = Client::GetClient();
+	Bot::Client& client = Bot::Client::GetClient();
 
 
 	if (command == "help" || command == "h" || command == "帮助")

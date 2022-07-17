@@ -44,7 +44,8 @@ public:
 	void AddCommand(const std::string& command, int perm)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
-		this->Permission[command] = std::make_pair(perm, perm);
+		this->Permission[command].first = perm;
+		this->Permission[command].second = perm;
 	}
 
 	std::vector<std::string> GetCommandList() const;
