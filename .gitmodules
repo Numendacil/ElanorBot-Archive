@@ -1,3 +1,6 @@
 [submodule "mirai-cpp"]
 	path = mirai-cpp
 	url = ../mirai-cpp.git
+[submodule "Elanor/Client/mirai-cpp"]
+	path = Elanor/Client/mirai-cpp
+	url = github:Numendacil/mirai-cpp

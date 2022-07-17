@@ -2,7 +2,7 @@
 #define _UTILS_HPP_
 
 #include <mirai/third-party/nlohmann/json.hpp>
-#include <third-party/json.hpp>
+#include <ThirdParty/json.hpp>
 #include <random>
 #include <optional>
 #include <mirai/defs/MessageChain.hpp>

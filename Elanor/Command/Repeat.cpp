@@ -1,39 +1,43 @@
-#include <third-party/log.h>
-#include <Command/Repeat.hpp>
+#include <ThirdParty/log.h>
 #include <Utils/Utils.hpp>
-#include <app/ElanorBot.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
 #include <State/LastMessage.hpp>
 
-using namespace std;
-using namespace Cyan;
+#include "Repeat.hpp"
 
-bool Repeat::Parse(const MessageChain& msg, vector<string>& token)
+using namespace std;
+
+namespace GroupCommand
+{
+
+bool Repeat::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.ToString();
 	if (str.empty() || str == "[]")
 		return false;
-	token.clear();
-	token.push_back(str);
+	tokens.clear();
+	tokens.push_back(str);
 	return true;
 }
 
-bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool Repeat::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
-	MessageChain LastMsg;
+	Cyan::MessageChain LastMsg;
 	bool Repeated;
-	auto state = bot->GetState<LastMessage>("Repeat");
+	auto state = group.GetState<State::LastMessage>("LastMessage");
 	state->Get(LastMsg, Repeated);
 
-	if (token[0] == LastMsg.ToString())
+	if (tokens[0] == LastMsg.ToString())
 	{
-	//	logging::INFO("有人复读 <Repeat>: " + token[0] + Utils::GetDescription(gm));
+	//	logging::INFO("有人复读 <Repeat>: " + tokens[0] + Utils::GetDescription(gm));
 		if (!Repeated)
 		{
 			uniform_int_distribution rng_repeat(1, 10);
 			if (rng_repeat(Utils::rng_engine) == 1)
 			{
 				state->Set(gm.MessageChain, true);
-				Utils::SendGroupMessage(gm, gm.MessageChain);
+				Bot::Client::GetClient().Send(gm.Sender.Group.GID, gm.MessageChain);
 				logging::INFO("bot复读成功 <Repeat>" + Utils::GetDescription(gm, false));
 				return true;
 			}
@@ -44,4 +48,6 @@ bool Repeat::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const ve
 		state->Set(gm.MessageChain, false);
 	}
 	return false;
+}
+
 }

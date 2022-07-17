@@ -2,24 +2,37 @@
 #define _TRIGGER_BASE_HPP_
 
 #include <string>
-#include <mirai/MiraiBot.hpp>
+#include <memory>
+#include <unordered_map>
 
-class ElanorBot;
+#include <mirai/defs/defs.hpp>
+
+namespace Bot
+{
+
+class GroupList;
+
+}
+
+namespace Trigger
+{
 
 class TriggerBase
 {
 protected:
 	bool is_running;
 
+	std::weak_ptr<Bot::GroupList> groups;
+
 public:
 	TriggerBase() : is_running(false) {}
 	virtual bool TriggerOnStart() { return false; }
-	virtual void trigger_on(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot)
+	virtual void TriggerOn()
 	{
 		this->is_running = true;
 	}
 
-	virtual void trigger_off()
+	virtual void TriggerOff()
 	{
 		this->is_running = false;
 	}
@@ -33,6 +46,13 @@ public:
 	{ 
 		this->is_running = false;
 	}
+
+	void SetGroups(const std::shared_ptr<Bot::GroupList>& glist)
+	{
+		this->groups = glist;
+	}
 };
+
+}
 
 #endif

@@ -1,30 +1,31 @@
-#include <Command/pjsk/pjskMusicInfo.hpp>
-#include <third-party/json.hpp>
-#include <third-party/date.h>
+#include <ThirdParty/json.hpp>
+#include <ThirdParty/date.h>
 #include <State/CoolDown.hpp>
-#include <app/ElanorBot.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
-
 #include <filesystem>
 
+#include "pjskMusicInfo.hpp"
+
 using namespace std;
-using namespace Cyan;
 using namespace date;
 using json = nlohmann::json;
 
+namespace GroupCommand
+{
 
-
-bool pjskMusicInfo::Parse(const MessageChain& msg, vector<string>& token)
+bool pjskMusicInfo::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
 	if (str.length() >= char_traits<char>::length("#pjsk info"))
 	{
 		Utils::ToLower(str);
-		if (Utils::Tokenize(token, str) < 3)
+		if (Utils::Tokenize(tokens, str) < 3)
 			return false;
-		if (token[0] == "#pjsk" || token[0] == "#啤酒烧烤" || token[0] == "#prsk")
-			if (token[1] == "info" || token[1] == "歌曲信息")
+		if (tokens[0] == "#pjsk" || tokens[0] == "#啤酒烧烤" || tokens[0] == "#prsk")
+			if (tokens[1] == "info" || tokens[1] == "歌曲信息")
 			return true;
 	}
 	return false;
@@ -32,11 +33,12 @@ bool pjskMusicInfo::Parse(const MessageChain& msg, vector<string>& token)
 
 
 
-bool pjskMusicInfo::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
-	assert(token.size() > 2);
+	assert(tokens.size() > 2);
 	logging::INFO("Calling pjskMusicInfo <pjskMusicInfo>" + Utils::GetDescription(gm));
-	string target = token[2];
+	Bot::Client& client = Bot::Client::GetClient();
+	string target = tokens[2];
 	const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 
 	json music;
@@ -71,7 +73,7 @@ bool pjskMusicInfo::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	if (music.is_null())
 	{
 		logging::INFO("未知歌曲 <pjskMusicInfo>: " + target + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain(target + "是什么歌捏，不知道捏"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
 		return false;
 	}
 	int id = music["musicId"].get<int>();
@@ -112,12 +114,14 @@ bool pjskMusicInfo::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, c
 	if (filesystem::exists(cover_path))
 	{
 		msg += '\n';
-		Utils::SendGroupMessage(gm, MessageChain().Plain(msg).Image({"", "", cover_path, ""}));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg).Image({.Path = cover_path}));
 	}
 	else
 	{
-		Utils::SendGroupMessage(gm, MessageChain().Plain(msg));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg));
 	}
 	
 	return true;
+}
+
 }

@@ -3,13 +3,18 @@
 
 #include <Trigger/LoopTriggerBase.hpp>
 
+namespace Trigger
+{
+
 class BililiveTrigger : public LoopTriggerBase
 {
 protected:
-	virtual void Action(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot) override;
+	virtual void Action() override;
 
 	virtual std::chrono::milliseconds LoopInterval() override { return std::chrono::minutes(5); }
-	virtual bool RandStart() { return true; }
+	virtual bool RandStart() override { return true; }
 };
+
+}
 
 #endif

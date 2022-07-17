@@ -4,8 +4,8 @@ target_sources(ElanorBot
 		AdminCommand.hpp
 		BlackList.hpp
 		BlackList.cpp
-		SetAuth.hpp
-		SetAuth.cpp
+		CommandAuth.hpp
+		CommandAuth.cpp
 		SetTrigger.hpp
 		SetTrigger.cpp
 		WhiteList.hpp

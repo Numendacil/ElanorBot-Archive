@@ -9,6 +9,9 @@
 #include <utility>
 #include <functional>
 
+namespace Utils
+{
+
 class Timer
 {
 public:
@@ -74,5 +77,7 @@ private:
 	std::condition_variable cv;
 	size_t id_count = 0;
 };
+
+}
 
 #endif

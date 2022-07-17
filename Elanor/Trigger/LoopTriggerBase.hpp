@@ -6,49 +6,56 @@
 #include <Utils/Timer.hpp>
 #include <Trigger/TriggerBase.hpp>
 
-
+namespace Trigger
+{
 
 class LoopTriggerBase : public TriggerBase
 {
 protected:
 	mutable std::mutex mtx;
 
-	virtual void Action(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot) = 0;
+	virtual void Action() = 0;
 	size_t timer_id;
 
 	virtual std::chrono::milliseconds LoopInterval() { return std::chrono::hours(1); }
 	virtual bool RandStart() { return false; }
 
 public:
-	virtual void trigger_on(std::shared_ptr<Cyan::MiraiBot> client, ElanorBot* bot) override
+	virtual void TriggerOn() override
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		if (this->is_running)
 			return;
 		this->is_running = true;
-		this->timer_id = Timer::GetInstance().LaunchLoop(
-			[this, client, bot]
+		this->timer_id = Utils::Timer::GetInstance().LaunchLoop(
+			[this]
 			{
-				this->Action(client, bot);
+				this->Action();
 			},
 			this->LoopInterval(),
 			this->RandStart());
 	}
 
-	virtual void trigger_off(void) override
+	virtual void TriggerOff() override
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		if (!this->is_running)
 			return;
 		this->is_running = false;
-		Timer::GetInstance().Stop(this->timer_id);
+		Utils::Timer::GetInstance().Stop(this->timer_id);
 	}
 
 	~LoopTriggerBase()
 	{
+		std::lock_guard<std::mutex> lk(this->mtx);
 		if (this->is_running)
-			this->trigger_off();
+		{
+			this->is_running = false;
+			Utils::Timer::GetInstance().Stop(this->timer_id);
+		}
 	}
 };
+
+}
 
 #endif

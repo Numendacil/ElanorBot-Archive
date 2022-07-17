@@ -1,44 +1,48 @@
-#include <Command/Bililive.hpp>
-#include <State/BililiveList.hpp>
 #include <Utils/Utils.hpp>
-#include <third-party/log.h>
-#include <third-party/httplib.hpp>
-#include <third-party/json.hpp>
-#include <app/ElanorBot.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
+#include <State/BililiveList.hpp>
+#include <ThirdParty/log.h>
+#include <ThirdParty/httplib.hpp>
+#include <ThirdParty/json.hpp>
+
+#include "Bililive.hpp"
 
 using namespace std;
-using namespace Cyan;
 using json = nlohmann::json;
 
+namespace GroupCommand
+{
 
-bool Bililive::Parse(const MessageChain& msg, vector<string>& token)
+bool Bililive::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 {
 	string str = msg.GetPlainText();
 	Utils::ReplaceMark(str);
 	if (str.length() > char_traits<char>::length("#live"))
 	{
-		if (Utils::Tokenize(token, str) < 2)
+		if (Utils::Tokenize(tokens, str) < 2)
 			return false;
-		Utils::ToLower(token[0]);
-		if (token[0] == "#live" || token[0] == "#直播")
+		Utils::ToLower(tokens[0]);
+		if (tokens[0] == "#live" || tokens[0] == "#直播")
 			return true;
 	}
 	return false;
 }
 
-bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool Bililive::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
-	assert(token.size() > 1);
+	assert(tokens.size() > 1);
 	logging::INFO("Calling Bililive <Bililive>" + Utils::GetDescription(gm));
-	auto BiliList = bot->GetState<BililiveList>("BililiveList");
-	string command = token[1];
+	auto BiliList = group.GetState<State::BililiveList>("BililiveList");
+	string command = tokens[1];
 	Utils::ToLower(command);
+	Bot::Client& client = Bot::Client::GetClient();
 
 
 	if (command == "help" || command == "h" || command == "帮助")
 	{
 		logging::INFO("帮助文档 <Bililive>" + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain("usage:\n#live add [uid]\n#live del [uid]\n#live list"));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("usage:\n#live add [uid]\n#live del [uid]\n#live list"));
 		return true;
 	}
 
@@ -53,7 +57,7 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 					       {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 			if (!Utils::CheckHttpResponse(result, "Bililive: user_info"))
 			{
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 				return false;
 			}
 
@@ -61,7 +65,7 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 			if (content["code"].get<int>() != 0)
 			{
 				logging::WARN("Error response from /live_user/v1/Master/info <Bililive>: " + content["msg"].get<string>());
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 				return false;
 			}
 			message += "\n" + content["data"]["info"]["uname"].get<string>() + " (" + to_string(id.first) + "): ";
@@ -71,7 +75,7 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 					  {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 			if (!Utils::CheckHttpResponse(result, "Bililive: room_info"))
 			{
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 				return false;
 			}
 
@@ -79,7 +83,7 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 			if (content["code"].get<int>() != 0)
 			{
 				logging::WARN("Error response from /room/v1/Room/get_info <Bililive>: " + content["msg"].get<string>());
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 				return false;
 			}
 			if (content["data"]["live_status"].get<int>() == 0)
@@ -89,28 +93,28 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 			this_thread::sleep_for(chrono::milliseconds(200));
 		}
 		logging::INFO("输出直播间列表 <Bililive>" + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain(message));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(message));
 		return true;
 	}
 
 	if (command == "add" || command == "del")
 	{
-		if (token.size() < 3)
+		if (tokens.size() < 3)
 		{
 			logging::INFO("缺少参数[uid] <Bililive>: " + command + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain().Plain("缺少参数[uid]，是被你吃了嘛"));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("缺少参数[uid]，是被你吃了嘛"));
 			return false;
 		}
 
 		long uid;
 		try
 		{
-			uid = stol(token[2]);
+			uid = stol(tokens[2]);
 		}
 		catch (const logic_error& e)
 		{
-			logging::INFO("无效参数[uid] <Bililive>: " + token[2] + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain().Plain(token[2] + "是个锤子uid"));
+			logging::INFO("无效参数[uid] <Bililive>: " + tokens[2] + Utils::GetDescription(gm, false));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[2] + "是个锤子uid"));
 			return false;
 		}
 
@@ -119,7 +123,7 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 				{"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 		if (!Utils::CheckHttpResponse(result, "Bililive: user_info"))
 		{
-			Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 
@@ -127,19 +131,19 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 		if (content["code"].get<int>() != 0)
 		{
 			logging::WARN("Error response from /live_user/v1/Master/info' <Bililive>: " + content["msg"].get<string>());
-			Utils::SendGroupMessage(gm, MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 		if (content["data"]["info"]["uname"].get<string>().empty())
 		{
-			logging::INFO("用户不存在 <Bililive>: " + token[2] + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain().Plain("该用户不存在捏"));
+			logging::INFO("用户不存在 <Bililive>: " + tokens[2] + Utils::GetDescription(gm, false));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该用户不存在捏"));
 			return false;
 		}
 		if (content["data"]["room_id"].get<long>() == 0)
 		{
-			logging::INFO("直播间不存在 <Bililive>: " + token[2] + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain().Plain("该用户貌似暂未开通直播功能捏"));
+			logging::INFO("直播间不存在 <Bililive>: " + tokens[2] + Utils::GetDescription(gm, false));
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该用户貌似暂未开通直播功能捏"));
 			return false;
 		}
 
@@ -147,8 +151,8 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 		{
 			if (BiliList->Exist(uid))
 			{
-				logging::INFO("用户已存在 <Bililive>: " + token[2] + Utils::GetDescription(gm, false));
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该用户已经在名单里了捏"));
+				logging::INFO("用户已存在 <Bililive>: " + tokens[2] + Utils::GetDescription(gm, false));
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该用户已经在名单里了捏"));
 				return false;
 			}
 			long room_id = content["data"]["room_id"].get<long>();
@@ -156,9 +160,9 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 			string name = content["data"]["info"]["uname"].get<string>();
 			BiliList->Insert(uid, room_id);
 			logging::INFO("成功添加用户 <Bililive>: " + name + "(" + to_string(uid) + ")" + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain()
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain()
 						.Plain("成功添加用户" + name + "(" + to_string(uid) + ")\n")
-						.Image({"", pic, "", ""}));
+						.Image({.Url = pic}));
 			return true;
 		}
 
@@ -166,23 +170,25 @@ bool Bililive::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const 
 		{
 			if (!BiliList->Exist(uid))
 			{
-				logging::INFO("用户不存在 <Bililive>: " + token[2] + Utils::GetDescription(gm, false));
-				Utils::SendGroupMessage(gm, MessageChain().Plain("该用户还不在名单里捏"));
+				logging::INFO("用户不存在 <Bililive>: " + tokens[2] + Utils::GetDescription(gm, false));
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该用户还不在名单里捏"));
 				return false;
 			}
 			string pic = content["data"]["info"]["face"].get<string>();
 			string name = content["data"]["info"]["uname"].get<string>();
 			BiliList->Erase(uid);
 			logging::INFO("成功删除用户 <Bililive>: " + name + "(" + to_string(uid) + ")" + Utils::GetDescription(gm, false));
-			Utils::SendGroupMessage(gm, MessageChain()
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain()
 						.Plain("成功删除用户" + name + "(" + to_string(uid) + ")\n")
-						.Image({"", pic, "", ""}));
+						.Image({.Url = pic}));
 			return true;
 		}
 	}
 	
 
-	logging::INFO("未知命令 <Bililive>: " + token[1] + Utils::GetDescription(gm, false));
-	Utils::SendGroupMessage(gm, MessageChain().Plain(token[1] + "是什么指令捏，不知道捏"));
+	logging::INFO("未知命令 <Bililive>: " + tokens[1] + Utils::GetDescription(gm, false));
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[1] + "是什么指令捏，不知道捏"));
 	return false;
+}
+
 }

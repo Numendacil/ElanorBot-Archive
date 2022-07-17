@@ -1,23 +1,29 @@
 #include <filesystem>
-#include <third-party/log.h>
-#include <Command/AtBot.hpp>
+#include <ThirdParty/log.h>
 #include <Utils/Utils.hpp>
-#include <app/ElanorBot.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
+
+#include "AtBot.hpp"
 
 using namespace std;
-using namespace Cyan;
 
-bool AtBot::Parse(const MessageChain& msg, vector<string>& token)
+namespace GroupCommand
 {
-	if (msg.GetAll<AtMessage>().empty())
+
+bool AtBot::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+{
+	if (msg.GetAll<Cyan::AtMessage>().empty())
 		return false;
 	return true;
 }
 
-bool AtBot::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vector<string>& token)
+bool AtBot::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	if (!gm.AtMe())
 		return false;
+
+	Bot::Client& client = Bot::Client::GetClient();
 
 	logging::INFO("有人@bot <AtBot>" + Utils::GetDescription(gm));
 	const vector<string> words = {"干嘛", "？"};
@@ -35,12 +41,14 @@ bool AtBot::Execute(const GroupMessage& gm, shared_ptr<ElanorBot> bot, const vec
 	if (idx >= words_count)
 	{
 		logging::INFO("回复 <AtBot>: " + image[idx - words_count] + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Image({"", "", image[idx - words_count], ""}));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Image({.Path = image[idx - words_count]}));
 	}
 	else
 	{
 		logging::INFO("回复 <AtBot>: " + words[idx] + Utils::GetDescription(gm, false));
-		Utils::SendGroupMessage(gm, MessageChain().Plain(words[idx]));
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(words[idx]));
 	}
 	return true;
+}
+
 }
