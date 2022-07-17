@@ -71,7 +71,7 @@ bool Petpet::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vect
 
 	if (target != -1)
 	{
-		if (target == client.Call(&Cyan::MiraiBot::GetBotQQ).ToInt64());
+		if (target == client.Call(&Cyan::MiraiBot::GetBotQQ).ToInt64())
 		{
 			uniform_int_distribution<int> rngroll(0, 4);
 			if (!rngroll(Utils::rng_engine))

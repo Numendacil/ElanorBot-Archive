@@ -22,7 +22,7 @@ void MorningTrigger::Action()
 	for (const auto& p : group_list)
 	{
 		auto enabled = p->GetState<State::TriggerStatus>("TriggerStatus");
-		if (enabled->GetTriggerStatus("MorningTrigger"))
+		if (enabled->GetTriggerStatus("Morning"))
 		{
 			auto GroupInfo = client.Call(&Cyan::MiraiBot::GetGroupConfig, p->gid);
 			logging::INFO("Send morning <MorningTrigger>\t-> " + GroupInfo.Name + "(" + to_string(p->gid.ToInt64()) + ")");

@@ -32,7 +32,7 @@ void BililiveTrigger::Action()
 	for (const auto& p : group_list)
 	{
 		auto enabled = p->GetState<State::TriggerStatus>("TriggerStatus");
-		if (enabled->GetTriggerStatus("BililiveTrigger"))
+		if (enabled->GetTriggerStatus("Bililive"))
 		{
 			auto BiliList = p->GetState<State::BililiveList>("BililiveList");
 			state_list.emplace(p->gid, BiliList);
@@ -82,7 +82,7 @@ void BililiveTrigger::Action()
 			string cover = content["data"]["user_cover"].get<string>();
 			string area = content["data"]["area_name"].get<string>();
 			result = cli.Get(
-				"/live_user/v1/Master/info", {{"uid", to_string(room_id)}},
+				"/live_user/v1/Master/info", {{"uid", to_string(uid)}},
 				{{"Accept-Encoding", "gzip"}, {"User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"}});
 			if (!Utils::CheckHttpResponse(result, "BililiveTrigger: user_info")) continue;
 
