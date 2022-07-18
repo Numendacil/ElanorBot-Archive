@@ -22,15 +22,15 @@ unordered_map<string, unique_ptr<State::StateBase>> RegisterStates()
 {
 	unordered_map<string, unique_ptr<State::StateBase>> v;
 
-	#define REGISTER(_class_, _name_) v[_name_] = make_unique<_class_>();
+	#define REGISTER(_class_) v[string(_class_::_NAME_)] = make_unique<_class_>();
 
-	REGISTER(State::AccessCtrlList, "AccessCtrlList")
-	REGISTER(State::Activity, "Activity")
-	REGISTER(State::BililiveList, "BililiveList")
-	REGISTER(State::CommandPerm, "CommandPerm")
-	REGISTER(State::CoolDown, "CoolDown")
-	REGISTER(State::LastMessage, "LastMessage")
-	REGISTER(State::TriggerStatus, "TriggerStatus")
+	REGISTER(State::AccessCtrlList)
+	REGISTER(State::Activity)
+	REGISTER(State::BililiveList)
+	REGISTER(State::CommandPerm)
+	REGISTER(State::CoolDown)
+	REGISTER(State::LastMessage)
+	REGISTER(State::TriggerStatus)
 
 	#undef REGISTER
 	
@@ -43,11 +43,11 @@ Group::Group(Cyan::GID_t group_id, Cyan::QQ_t owner_id,
 	const std::vector<std::pair<std::string, bool>>& trigger_list) 
 	: gid(group_id), suid(owner_id), States(RegisterStates())
 {
-	auto command = this->GetState<State::CommandPerm>("CommandPerm");
+	auto command = this->GetState<State::CommandPerm>();
 	for (const auto& p : command_list)
 		command->AddCommand(p.first, p.second);
 
-	auto trigger = this->GetState<State::TriggerStatus>("TriggerStatus");
+	auto trigger = this->GetState<State::TriggerStatus>();
 	for (const auto& p : trigger_list)
 		trigger->AddTrigger(p.first, p.second);
 

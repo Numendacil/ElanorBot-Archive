@@ -21,6 +21,9 @@ protected:
 	std::map<long, info> user_list;		// Map uid -> room_id
 	mutable std::mutex mtx;
 public:
+
+	static constexpr std::string_view _NAME_ = "BililiveList";
+
 	void Insert(long uid, long room_id)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);

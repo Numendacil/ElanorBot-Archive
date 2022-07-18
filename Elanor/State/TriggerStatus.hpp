@@ -18,6 +18,9 @@ protected:
 	std::unordered_map<std::string, bool> Enabled;	// { key : {current, default} }
 
 public:
+
+	static constexpr std::string_view _NAME_ = "TriggerStatus";
+
 	bool ExistTrigger(const std::string& trigger) const
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);

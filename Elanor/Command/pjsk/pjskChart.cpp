@@ -95,7 +95,7 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const v
 		}
 	}
 
-	auto cd = group.GetState<State::CoolDown>("CoolDown");
+	auto cd = group.GetState<State::CoolDown>();
 	chrono::seconds remaining;
 	auto holder = cd->GetRemaining("pjskChart", 20s, remaining);
 

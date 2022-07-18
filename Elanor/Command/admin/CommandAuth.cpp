@@ -42,7 +42,7 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 		return true;
 	}
 
-	auto permission = group.GetState<State::CommandPerm>("CommandPerm");
+	auto permission = group.GetState<State::CommandPerm>();
 	if (command == "set" || command == "reset" || command == "show" || command == "list")
 	{
 		if (command == "list")

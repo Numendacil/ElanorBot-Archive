@@ -25,7 +25,7 @@ bool Repeat::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vect
 {
 	Cyan::MessageChain LastMsg;
 	bool Repeated;
-	auto state = group.GetState<State::LastMessage>("LastMessage");
+	auto state = group.GetState<State::LastMessage>();
 	state->Get(LastMsg, Repeated);
 
 	if (tokens[0] == LastMsg.ToString())

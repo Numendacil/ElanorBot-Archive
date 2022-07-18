@@ -23,30 +23,30 @@ namespace Bot
 vector<pair<string, unique_ptr<GroupCommand::GroupCommandBase>>> RegisterCommands()
 {
 	vector<pair<string, unique_ptr<GroupCommand::GroupCommandBase>>> v;
-	#define REGISTER(_class_, _name_) v.push_back(move(make_pair( _name_, move(make_unique<_class_>()))));
+	#define REGISTER(_class_) v.push_back(move(make_pair( string(_class_::_NAME_), move(make_unique<_class_>()))));
 
-	REGISTER(GroupCommand::WhiteList, "WhiteList")
-	REGISTER(GroupCommand::BlackList, "BlackList")
-	REGISTER(GroupCommand::CommandAuth, "CommandAuth")
-	REGISTER(GroupCommand::SetTrigger, "Trigger")
+	REGISTER(GroupCommand::WhiteList)
+	REGISTER(GroupCommand::BlackList)
+	REGISTER(GroupCommand::CommandAuth)
+	REGISTER(GroupCommand::SetTrigger)
 
-	REGISTER(GroupCommand::RollDice, "RollDice")
-	REGISTER(GroupCommand::Repeat, "Repeat")
-	REGISTER(GroupCommand::Recall, "Recall")
-	REGISTER(GroupCommand::AtBot, "AtBot")
-	REGISTER(GroupCommand::Bililive, "Bililive")
-	REGISTER(GroupCommand::Answer, "Answer")
+	REGISTER(GroupCommand::RollDice)
+	REGISTER(GroupCommand::Repeat)
+	REGISTER(GroupCommand::Recall)
+	REGISTER(GroupCommand::AtBot)
+	REGISTER(GroupCommand::Bililive)
+	REGISTER(GroupCommand::Answer)
 
-	REGISTER(GroupCommand::Petpet, "Petpet")
-	REGISTER(GroupCommand::Choyen, "Choyen")
-	REGISTER(GroupCommand::ImageSearch, "ImageSearch")
-	REGISTER(GroupCommand::Pixiv, "Pixiv")
+	REGISTER(GroupCommand::Petpet)
+	REGISTER(GroupCommand::Choyen)
+	REGISTER(GroupCommand::ImageSearch)
+	REGISTER(GroupCommand::Pixiv)
 
-	REGISTER(GroupCommand::pjskUpdate, "pjskUpdate")
-	REGISTER(GroupCommand::pjskSongGuess, "pjskSongGuess")
-	REGISTER(GroupCommand::pjskCoverGuess, "pjskCoverGuess")
-	REGISTER(GroupCommand::pjskChart, "pjskChart")
-	REGISTER(GroupCommand::pjskMusicInfo, "pjskMusicInfo")
+	REGISTER(GroupCommand::pjskUpdate)
+	REGISTER(GroupCommand::pjskSongGuess)
+	REGISTER(GroupCommand::pjskCoverGuess)
+	REGISTER(GroupCommand::pjskChart)
+	REGISTER(GroupCommand::pjskMusicInfo)
 
 	#undef REGISTER
 	return v;
@@ -55,10 +55,10 @@ vector<pair<string, unique_ptr<GroupCommand::GroupCommandBase>>> RegisterCommand
 vector<pair<string, unique_ptr<Trigger::TriggerBase>>> RegisterTriggers()
 {
 	vector<pair<string, unique_ptr<Trigger::TriggerBase>>> v;
-	#define REGISTER(_class_, _name_) v.push_back(move(make_pair( _name_, move(make_unique<_class_>()))));
+	#define REGISTER(_class_) v.push_back(move(make_pair( string(_class_::_NAME_), move(make_unique<_class_>()))));
 
-	REGISTER(Trigger::BililiveTrigger, "Bililive")
-	REGISTER(Trigger::MorningTrigger, "Morning")
+	REGISTER(Trigger::BililiveTrigger)
+	REGISTER(Trigger::MorningTrigger)
 
 	#undef REGISTER
 	return v;
@@ -155,7 +155,7 @@ void ElanorBot::GroupMessageEventHandler(Cyan::GroupMessage& gm)
 	
 	Group& group = this->groups->GetGroup(gm.Sender.Group.GID);
 	
-	auto access_list = group.GetState<State::AccessCtrlList>("AccessCtrlList");
+	auto access_list = group.GetState<State::AccessCtrlList>();
 
 	if (access_list->IsBlackList(gm.Sender.QQ))
 		return;

@@ -21,7 +21,7 @@ void MorningTrigger::Action()
 	Bot::Client& client = Bot::Client::GetClient();
 	for (const auto& p : group_list)
 	{
-		auto enabled = p->GetState<State::TriggerStatus>("TriggerStatus");
+		auto enabled = p->GetState<State::TriggerStatus>();
 		if (enabled->GetTriggerStatus("Morning"))
 		{
 			auto GroupInfo = client.Call(&Cyan::MiraiBot::GetGroupConfig, p->gid);

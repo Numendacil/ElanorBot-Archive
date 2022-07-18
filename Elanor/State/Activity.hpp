@@ -30,6 +30,9 @@ protected:
 	std::deque<AnswerInfo> answers;
 
 public:
+
+	static constexpr std::string_view _NAME_ = "Activity";
+
 	struct Holder
 	{
 	private:

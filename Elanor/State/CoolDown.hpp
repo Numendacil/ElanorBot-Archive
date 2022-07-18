@@ -27,6 +27,8 @@ protected:
 
 public:
 
+	static constexpr std::string_view _NAME_ = "CoolDown";
+
 	struct Holder
 	{
 	private:

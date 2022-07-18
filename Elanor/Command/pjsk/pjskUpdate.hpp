@@ -9,6 +9,9 @@ namespace GroupCommand
 class pjskUpdate : public GroupCommandBase
 {
 public:
+
+	static constexpr std::string_view _NAME_ = "pjskUpdate";
+
 	virtual int Permission(void) override { return 50; }
 	virtual bool Parse(const Cyan::MessageChain& msg, std::vector<std::string>& tokens) override;
 	virtual bool Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const std::vector<std::string>& tokens) override;

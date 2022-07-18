@@ -33,7 +33,7 @@ bool Bililive::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const ve
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling Bililive <Bililive>" + Utils::GetDescription(gm));
-	auto BiliList = group.GetState<State::BililiveList>("BililiveList");
+	auto BiliList = group.GetState<State::BililiveList>();
 	string command = tokens[1];
 	Utils::ToLower(command);
 	Bot::Client& client = Bot::Client::GetClient();

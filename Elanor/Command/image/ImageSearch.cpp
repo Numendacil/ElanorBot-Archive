@@ -134,7 +134,7 @@ bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 	}
 
 
-	auto cd = group.GetState<State::CoolDown>("CoolDown");
+	auto cd = group.GetState<State::CoolDown>();
 	chrono::seconds remaining;
 	auto holder = cd->GetRemaining("ImageSearch", cooldown, remaining);
 

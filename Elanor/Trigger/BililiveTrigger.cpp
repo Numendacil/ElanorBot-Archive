@@ -31,10 +31,10 @@ void BililiveTrigger::Action()
 	map<Cyan::GID_t, State::BililiveList*> state_list;
 	for (const auto& p : group_list)
 	{
-		auto enabled = p->GetState<State::TriggerStatus>("TriggerStatus");
+		auto enabled = p->GetState<State::TriggerStatus>();
 		if (enabled->GetTriggerStatus("Bililive"))
 		{
-			auto BiliList = p->GetState<State::BililiveList>("BililiveList");
+			auto BiliList = p->GetState<State::BililiveList>();
 			state_list.emplace(p->gid, BiliList);
 			for (const auto &id : BiliList->GetList())
 			{

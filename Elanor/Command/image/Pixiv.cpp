@@ -36,7 +36,7 @@ bool GetPixivById(const Cyan::GroupMessage& gm, Bot::Group& group, long pid, int
 	using namespace date;
 	using namespace std::chrono;
 	Bot::Client& client = Bot::Client::GetClient();
-	auto cd = group.GetState<State::CoolDown>("CoolDown");
+	auto cd = group.GetState<State::CoolDown>();
 	chrono::seconds remaining;
 	auto holder = cd->GetRemaining("Pixiv", 20s, remaining);
 

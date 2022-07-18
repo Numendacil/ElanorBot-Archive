@@ -9,6 +9,9 @@ namespace GroupCommand
 class Answer : public GroupCommandBase
 {
 public:
+
+	static constexpr std::string_view _NAME_ = "Answer";
+
 	virtual int Permission(void) override { return 0; }
 	virtual int Priority(void) override { return 5; }
 	virtual bool Parse(const Cyan::MessageChain& msg, std::vector<std::string>& tokens) override;

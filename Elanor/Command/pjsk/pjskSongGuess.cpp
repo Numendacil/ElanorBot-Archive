@@ -46,7 +46,7 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	logging::INFO("Calling pjskSongGuess <pjskSongGuess>" + Utils::GetDescription(gm));
 	Bot::Client& client = Bot::Client::GetClient();
 
-	auto state = group.GetState<State::Activity>("Activity");
+	auto state = group.GetState<State::Activity>();
 	auto holder = state->CheckAndStart("pjsk");
 	const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 	if (!holder)

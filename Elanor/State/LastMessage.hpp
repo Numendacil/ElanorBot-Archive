@@ -16,6 +16,9 @@ protected:
 	mutable std::mutex mtx;
 
 public:
+
+	static constexpr std::string_view _NAME_ = "LastMessage";
+
 	void Set(const Cyan::MessageChain& m, bool r);
 	void Get(Cyan::MessageChain& m, bool& r) const;
 

@@ -5,6 +5,7 @@
 #include <State/StateBase.hpp>
 #include <mutex>
 #include <string>
+#include <string_view>
 #include <unordered_set>
 
 namespace State
@@ -19,6 +20,8 @@ protected:
 	std::unordered_set<Cyan::QQ_t> BlackList;
 
 public:
+
+	static constexpr std::string_view _NAME_ = "AccessCtrlList";
 
 	bool IsWhiteList(const Cyan::QQ_t& id) const
 	{

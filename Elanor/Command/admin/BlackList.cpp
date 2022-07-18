@@ -40,7 +40,7 @@ bool BlackList::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const v
 		return true;
 	}
 
-	auto access_list = group.GetState<State::AccessCtrlList>("AccessCtrlList");
+	auto access_list = group.GetState<State::AccessCtrlList>();
 	if (command == "clear")
 	{
 		access_list->BlackListClear();

@@ -17,8 +17,19 @@
 namespace Bot
 {
 
-class Group
+template <typename T> 
+class _has_name_
 {
+	typedef char yes_type;
+	typedef long no_type;
+	template <typename U> static yes_type test(decltype(&U::_NAME_));
+	template <typename U> static no_type test(...);
+
+	public:
+	static constexpr bool value = sizeof(test<T>(0)) == sizeof(yes_type);
+};
+
+class Group {
 
 protected:
 	mutable std::mutex mtx;
@@ -36,12 +47,13 @@ public:
 	const Cyan::QQ_t suid;
 
 	template<class T>
-	T* GetState(const std::string& str) const
+	T* GetState() const
 	{
 		static_assert(std::is_base_of<State::StateBase, T>::value, "T must be a derived class of StateBase.");
+		static_assert(_has_name_<T>::value, "T must contain a static atrribute _NAME_");
 		std::lock_guard<std::mutex> lk(this->mtx);
-		assert(this->States.count(str));
-		auto ptr = this->States.at(str).get();
+		assert(this->States.count(std::string(T::_NAME_)));
+		auto ptr = this->States.at(std::string(T::_NAME_)).get();
 		assert(ptr != nullptr);
 		return static_cast<T*>(ptr);
 	}
@@ -51,7 +63,6 @@ public:
 		this->ToFile(); 
 	}
 };
-
 }
 
 #endif

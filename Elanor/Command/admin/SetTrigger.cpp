@@ -41,7 +41,7 @@ bool SetTrigger::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const 
 		return true;
 	}
 
-	auto trigger_status = group.GetState<State::TriggerStatus>("TriggerStatus");
+	auto trigger_status = group.GetState<State::TriggerStatus>();
 
 	if (command == "set" || command == "status" || command == "list")
 	{
