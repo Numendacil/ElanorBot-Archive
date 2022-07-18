@@ -49,6 +49,14 @@ vector<pair<string, unique_ptr<GroupCommand::GroupCommandBase>>> RegisterCommand
 	REGISTER(GroupCommand::pjskMusicInfo)
 
 	#undef REGISTER
+
+	sort(v.begin(), 
+		v.end(), 
+		[](const pair<string, unique_ptr<GroupCommand::GroupCommandBase>>& a, const pair<string, unique_ptr<GroupCommand::GroupCommandBase>>& b)
+		{
+			return (a.second)->Priority() > (b.second)->Priority();
+		});
+
 	return v;
 }
 
