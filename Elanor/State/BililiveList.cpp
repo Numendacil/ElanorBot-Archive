@@ -8,6 +8,7 @@ namespace State
 
 json BililiveList::Serialize()
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	nlohmann::json content;
 	for (const auto& u : this->user_list)
 	{
@@ -22,6 +23,7 @@ json BililiveList::Serialize()
 
 void BililiveList::Deserialize(const json &content)
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	for (const auto& p : content.items())
 	{
 		nlohmann::json member = p.value();

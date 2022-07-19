@@ -8,6 +8,7 @@ namespace State
 
 json AccessCtrlList::Serialize()
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	json content;
 	for (const auto& p : this->WhiteList)
 		content["WhiteList"] += p.ToInt64();
@@ -18,6 +19,7 @@ json AccessCtrlList::Serialize()
 
 void AccessCtrlList::Deserialize(const json &content)
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	if (content.contains("WhiteList"))
 	{
 		if (content["WhiteList"].type() == json::value_t::array)

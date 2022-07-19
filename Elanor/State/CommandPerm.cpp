@@ -8,6 +8,7 @@ namespace State
 
 std::vector<std::string> CommandPerm::GetCommandList() const
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	std::vector<std::string> v;
 	v.reserve(this->Permission.size());
 	for (const auto& p : this->Permission)
@@ -17,6 +18,7 @@ std::vector<std::string> CommandPerm::GetCommandList() const
 
 json CommandPerm::Serialize()
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	using namespace std::chrono;
 	json content;
 	for (const auto& p : this->Permission)
@@ -29,6 +31,7 @@ json CommandPerm::Serialize()
 
 void CommandPerm::Deserialize(const json &content)
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	for (const auto& p : content.items())
 	{
 		if (p.value().contains("current"))

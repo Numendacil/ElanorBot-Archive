@@ -42,6 +42,7 @@ std::unique_ptr<CoolDown::Holder> CoolDown::GetRemaining(const std::string &id, 
 
 json CoolDown::Serialize()
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	using namespace std::chrono;
 	json content;
 	for (const auto& p : this->cd)
@@ -57,6 +58,7 @@ json CoolDown::Serialize()
 
 void CoolDown::Deserialize(const json &content)
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	for (const auto& p : content.items())
 	{
 		using namespace std::chrono;

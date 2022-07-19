@@ -22,6 +22,7 @@ void LastMessage::Get(Cyan::MessageChain &m, bool &r) const
 
 json LastMessage::Serialize()
 {
+	std::lock_guard<std::mutex> lk(this->mtx);
 	json content;
 	content["Message"] = this->LastMsg.ToJson();
 	content["Repeated"] = this->Repeated;
@@ -30,6 +31,7 @@ json LastMessage::Serialize()
 
 void LastMessage::Deserialize(const json &content)
 { 
+	std::lock_guard<std::mutex> lk(this->mtx);
 	if (content.contains("Message"))
 	{
 		this->LastMsg = Cyan::MessageChain();
