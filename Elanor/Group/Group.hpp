@@ -53,6 +53,7 @@ public:
 		static_assert(_has_name_<T>::value, "T must contain a static atrribute _NAME_");
 		std::lock_guard<std::mutex> lk(this->mtx);
 		assert(this->States.count(std::string(T::_NAME_)));
+		assert(this->States.at(std::string(T::_NAME_)));
 		auto ptr = this->States.at(std::string(T::_NAME_)).get();
 		assert(ptr != nullptr);
 		return static_cast<T*>(ptr);

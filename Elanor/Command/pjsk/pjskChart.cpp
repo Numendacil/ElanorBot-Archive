@@ -47,6 +47,14 @@ bool pjskChart::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const v
 		vector<pair<json, unordered_set<string>>> alias_pair;
 		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
+
+		if (!ifile)
+		{
+			logging::WARN("Unable to open alias.json <pjskChart>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
+			return false;
+		}
+
 		json alias = json::parse(ifile);
 		ifile.close();
 

@@ -57,11 +57,17 @@ bool pjskCoverGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, co
 		return false;
 	}
 
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("请在规定时间内发送曲绘对应的歌曲名称。回答请以句号开头捏"));
-
 	json music, alias;
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+
+		if (!ifile)
+		{
+			logging::WARN("Unable to open meta.json <pjskCoverGuess>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			return false;
+		}
+
 		json meta_data = json::parse(ifile);
 		ifile.close();
 
@@ -74,6 +80,14 @@ bool pjskCoverGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, co
 	}
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
+
+		if (!ifile)
+		{
+			logging::WARN("Unable to open alias.json <pjskCoverGuess>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			return false;
+		}
+
 		json alias_data = json::parse(ifile);
 		ifile.close();
 
@@ -86,6 +100,8 @@ bool pjskCoverGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, co
 			}
 		}
 	}
+	
+	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("请在规定时间内发送曲绘对应的歌曲名称。回答请以句号开头捏"));
 	logging::INFO("题目为 <pjskCoverGuess>: " + music.dump() + alias.dump());
 
 	string cover, cover_ans_path;

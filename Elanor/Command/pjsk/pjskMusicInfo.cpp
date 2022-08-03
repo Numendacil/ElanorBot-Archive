@@ -6,6 +6,8 @@
 #include <Utils/Utils.hpp>
 #include <filesystem>
 
+#include "mirai/defs/QQType.hpp"
+#include "mirai/messages/ImageMessage.hpp"
 #include "pjskMusicInfo.hpp"
 
 using namespace std;
@@ -45,6 +47,14 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	{
 		vector<pair<json, unordered_set<string>>> alias_pair;
 		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
+
+		if (!ifile)
+		{
+			logging::WARN("Unable to open alias.json <pjskMusicInfo>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			return false;
+		}
+
 		json alias = json::parse(ifile);
 		ifile.close();
 
@@ -82,9 +92,21 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	string translate = music["translate"].get<string>();
 	double length = -1;
 	string cover_path;
+	string cover_org_path;
+	string lyricist;
+	string composer;
+	string arranger;
 	logging::INFO("获取歌曲信息 <pjskMusicInfo>: " + title + Utils::GetDescription(gm, false));
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+		
+		if (!ifile)
+		{
+			logging::WARN("Unable to open meta.json <pjskMusicInfo>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			return false;
+		}
+
 		json meta = json::parse(ifile);
 		ifile.close();
 
@@ -96,30 +118,40 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 					length = p.value()["length"].get<double>();
 				cover_path = MediaFilesPath
 						+ "images/pjsk/cover_small/" + p.value()["assetbundleName"].get<string>() + "_small.png";
+				if (p.value()["hasOriginCover"].get<bool>())
+					cover_org_path = MediaFilesPath
+						+ "images/pjsk/cover_small/" + p.value()["assetbundleName"].get<string>() + "_org_small.png";
+
+				lyricist = p.value()["lyricist"].get<string>();
+				composer = p.value()["composer"].get<string>();
+				arranger = p.value()["arranger"].get<string>();
 				break;
 			}
 		}
 	}
-	assert(length > 0);
 	string msg = 	"歌曲id: " + to_string(id)
-			+ "\n曲名: " + title
-			+ "\n译名: " + translate
-			+ "\n时长: " + to_string(int(length))
-			+ "s\n其它名称:";
+			+ "\n曲名: " + title + ((translate.empty()) ? "" : "      译名: " + translate)
+			+ "\n作词: " + lyricist + "      作曲: " + composer + "      编曲: " + arranger
+			+ ((length < 0)? "" : "\n时长: " + to_string(int(length)) + 's')
+			+ "\n其它名称:";
 	for (const auto& s : alias)
 	{
 		msg += " 「" + s + "」";
 	}
 
-	if (filesystem::exists(cover_path))
+	Cyan::MessageChain m = Cyan::MessageChain().Plain(msg);
+
+	if (!cover_path.empty() && filesystem::exists(cover_path))
 	{
-		msg += '\n';
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg).Image({.Path = cover_path}));
+		m += string("\n");
+		m.Add<Cyan::ImageMessage>(Cyan::MiraiImage{.Path = cover_path});
 	}
-	else
+	if (!cover_org_path.empty() && filesystem::exists(cover_org_path))
 	{
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg));
+		m += string("\n");
+		m.Add<Cyan::ImageMessage>(Cyan::MiraiImage{.Path = cover_org_path});
 	}
+	client.Send(gm.Sender.Group.GID, m);
 	
 	return true;
 }

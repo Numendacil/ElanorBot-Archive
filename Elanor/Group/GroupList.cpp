@@ -1,8 +1,10 @@
 #include "GroupList.hpp"
+#include "ThirdParty/log.h"
 #include "mirai/defs/QQType.hpp"
 #include <cassert>
 #include <filesystem>
 #include <mutex>
+#include <string>
 #include <vector>
 
 namespace Bot
@@ -21,7 +23,7 @@ GroupList::GroupList(Cyan::QQ_t owner_id,
 			try
 			{
 				Cyan::GID_t gid = (Cyan::GID_t)std::stol(entry.path().stem());
-				this->group_list.try_emplace(gid, gid, owner_id, this->command_list, this->trigger_list);
+				this->group_list.try_emplace(gid, gid, this->owner, this->command_list, this->trigger_list);
 			}
 			catch(const std::logic_error& e)
 			{

@@ -61,6 +61,14 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	json music, alias;
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+
+		if (!ifile)
+		{
+			logging::WARN("Unable to open meta.json <pjskSongGuess>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			return false;
+		}
+
 		json meta_data = json::parse(ifile);
 		ifile.close();
 
@@ -75,6 +83,14 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	}
 	{
 		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
+
+		if (!ifile)
+		{
+			logging::WARN("Unable to open alias.json <pjskSongGuess>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			return false;
+		}
+
 		json alias_data = json::parse(ifile);
 		ifile.close();
 

@@ -14,8 +14,8 @@ class GroupList
 {
 protected:
 	std::map<Cyan::GID_t, Group> group_list;
-	const std::vector<std::pair<std::string, int>>& command_list;
-	const std::vector<std::pair<std::string, bool>>& trigger_list;
+	const std::vector<std::pair<std::string, int>> command_list;
+	const std::vector<std::pair<std::string, bool>> trigger_list;
 	Cyan::QQ_t owner;
 
 	mutable std::mutex mtx;

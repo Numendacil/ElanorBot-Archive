@@ -15,6 +15,8 @@ target_sources(ElanorBot
 		Repeat.cpp
 		RollDice.hpp
 		RollDice.cpp
+		Sing.hpp
+		Sing.cpp
 	)
 
 add_subdirectory(admin)

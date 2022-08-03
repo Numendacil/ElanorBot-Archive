@@ -35,7 +35,6 @@ public:
 		CoolDown* obj;
 		std::string id;
 	public:
-		friend class CoolDown;
 		Holder(CoolDown* cd, const std::string& str) : obj(cd), id(str) {}
 		Holder(Holder&) = delete;
 		~Holder()

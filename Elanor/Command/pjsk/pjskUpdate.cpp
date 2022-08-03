@@ -49,11 +49,18 @@ bool UpdateAlias(const Cyan::GroupMessage& gm, Bot::Group& group, vector<int> mu
 		unordered_map<int, json> alias_map;	// For quick lookup
 		{
 			ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
-			json alias = json::parse(ifile);
-			ifile.close();
+			if (!ifile)
+			{
+				logging::INFO("alias.json does not exist, creating a new one <pjskUpdate: UpdateAlias>");
+			}
+			else
+			{
+				json alias = json::parse(ifile);
+				ifile.close();
 
-			for (const auto &p : alias.items())
-				alias_map.emplace((p.value())["musicId"].get<int>(), p.value());
+				for (const auto &p : alias.items())
+					alias_map.emplace((p.value())["musicId"].get<int>(), p.value());
+			}
 		}
 
 		for (const auto id : musicId)
@@ -111,11 +118,19 @@ bool UpdateMetadata(const Cyan::GroupMessage& gm, Bot::Group& group)
 		{
 			logging::INFO("Reading from meta.json <pjskUpdate: UpdateMetadata>");
 			ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
-			json meta_data = json::parse(ifile);
-			ifile.close();
 
-			for (const auto &p : meta_data.items())
-				music_index.emplace((p.value())["musicId"].get<int>(), p.value());
+			if (!ifile)
+			{
+				logging::INFO("meta.json does not exist, creating a new one <pjskUpdate: UpdateMetadata>");
+			}
+			else
+			{
+				json meta_data = json::parse(ifile);
+				ifile.close();
+
+				for (const auto &p : meta_data.items())
+					music_index.emplace((p.value())["musicId"].get<int>(), p.value());
+			}
 		}
 
 		logging::INFO("Reading info from sekai.best <pjskUpdate: UpdateMetadata>");
@@ -182,6 +197,9 @@ bool UpdateMetadata(const Cyan::GroupMessage& gm, Bot::Group& group)
 				content["title"] = item.value()["title"];
 				content["assetbundleName"] = item.value()["assetbundleName"];
 				content["fillerSec"] = item.value()["fillerSec"];
+				content["lyricist"] = item.value()["lyricist"];
+				content["composer"] = item.value()["composer"];
+				content["arranger"] = item.value()["arranger"];
 
 				string cover = content["assetbundleName"].get<string>();
 				auto result_cover_org = resource_cli.Head(("/music/jacket/" + cover + "_rip/" + cover + "_org.png").c_str(),
@@ -304,6 +322,14 @@ bool DownloadFiles(const Cyan::GroupMessage& gm, Bot::Group& group)
 		{
 			logging::INFO("Reading from meta.json <pjskUpdate: DownloadFiles>");
 			ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+
+			if (!ifile)
+			{
+				logging::WARN("meta.json does not exist <pjskUpdate: DownloadFiles>");
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("缺少索引，不知道要下载啥了捏"));
+				return false;
+			}
+
 			json meta_data = json::parse(ifile);
 			ifile.close();
 
@@ -482,6 +508,14 @@ bool ProbeSongLength(const Cyan::GroupMessage& gm, Bot::Group& group, bool force
 		logging::INFO("Reading from meta.json <pjskUpdate: ProbeSongLength>");
 		const string MediaFilesPath = Utils::Configs.Get<string>("/MediaFiles"_json_pointer, "media_files/");
 		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+
+		if (!ifile)
+		{
+			logging::WARN("meta.json does not exist <pjskUpdate: ProbeSongLength>");
+			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("缺少索引，不知道有啥歌捏"));
+			return false;
+		}
+		
 		json meta_data = json::parse(ifile);
 		ifile.close();
 
@@ -504,7 +538,7 @@ bool ProbeSongLength(const Cyan::GroupMessage& gm, Bot::Group& group, bool force
 				p.value()["length"] = stod(result);
 			}
 		}
-		ofstream ofile(MediaFilesPath + "music/pjsk/meta_data.json");
+		ofstream ofile(MediaFilesPath + "music/pjsk/meta.json");
 		ofile << meta_data.dump(1, '\t');
 		ofile.close();
 		return true;
@@ -532,6 +566,8 @@ bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const 
 			return false;
 		if (!DownloadFiles(gm, group))
 			return false;
+		if (!ProbeSongLength(gm, group, false))
+			return false;
 		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("更新好了捏"));
 		return true;
 	}
@@ -544,6 +580,14 @@ bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const 
 		{
 			logging::INFO("Reading from meta.json <pjskUpdate: UpdateMetadata>");
 			ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+
+			if (!ifile)
+			{
+				logging::WARN("meta.json does not exist <pjskUpdate>");
+				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("缺少索引，不知道要更新啥了捏"));
+				return false;
+			}
+		
 			json meta_data = json::parse(ifile);
 			ifile.close();
 
@@ -551,6 +595,14 @@ bool pjskUpdate::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const 
 				id_list.push_back((p.value())["musicId"].get<int>());
 		}
 		if (!UpdateAlias(gm, group, id_list))
+			return false;
+		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("更新好了捏"));
+		return true;
+	}
+
+	if (command == "length")
+	{
+		if (!ProbeSongLength(gm, group))
 			return false;
 		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("更新好了捏"));
 		return true;

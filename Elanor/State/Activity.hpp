@@ -39,7 +39,6 @@ public:
 		Activity* obj;
 		std::string name;
 	public:
-		friend class Activity;
 		Holder(Activity* cd, const std::string& str) : obj(cd), name(str) {}
 		Holder(Holder&) = delete;
 		~Holder()
