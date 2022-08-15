@@ -6,14 +6,15 @@
 
 #include "Repeat.hpp"
 
-using namespace std;
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool Repeat::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool Repeat::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.ToString();
+	string str = msg.ToJson().dump();
 	if (str.empty() || str == "[]")
 		return false;
 	tokens.clear();
@@ -21,23 +22,23 @@ bool Repeat::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return true;
 }
 
-bool Repeat::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool Repeat::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
-	Cyan::MessageChain LastMsg;
+	Mirai::MessageChain LastMsg;
 	bool Repeated;
 	auto state = group.GetState<State::LastMessage>();
 	state->Get(LastMsg, Repeated);
 
-	if (tokens[0] == LastMsg.ToString())
+	if (tokens[0] == LastMsg.ToJson().dump())
 	{
 	//	logging::INFO("有人复读 <Repeat>: " + tokens[0] + Utils::GetDescription(gm));
 		if (!Repeated)
 		{
-			uniform_int_distribution rng_repeat(1, 10);
+			std::uniform_int_distribution rng_repeat(1, 10);
 			if (rng_repeat(Utils::rng_engine) == 1)
 			{
-				state->Set(gm.MessageChain, true);
-				Bot::Client::GetClient().Send(gm.Sender.Group.GID, gm.MessageChain);
+				state->Set(gm.GetMessage(), true);
+				Bot::Client::GetClient().SendGroupMessage(gm.GetSender().group.id, gm.GetMessage());
 				logging::INFO("bot复读成功 <Repeat>" + Utils::GetDescription(gm, false));
 				return true;
 			}
@@ -45,7 +46,7 @@ bool Repeat::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vect
 	}
 	else
 	{
-		state->Set(gm.MessageChain, false);
+		state->Set(gm.GetMessage(), false);
 	}
 	return false;
 }

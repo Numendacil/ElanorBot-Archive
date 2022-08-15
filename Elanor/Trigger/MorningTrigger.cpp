@@ -3,11 +3,10 @@
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 #include <State/TriggerStatus.hpp>
-#include <mirai.h>
+#include <libmirai/mirai.hpp>
 
 #include "MorningTrigger.hpp"
 
-using namespace std;
 
 namespace Trigger
 {
@@ -24,9 +23,9 @@ void MorningTrigger::Action()
 		auto enabled = p->GetState<State::TriggerStatus>();
 		if (enabled->GetTriggerStatus("Morning"))
 		{
-			auto GroupInfo = client.Call(&Cyan::MiraiBot::GetGroupConfig, p->gid);
-			logging::INFO("Send morning <MorningTrigger>\t-> " + GroupInfo.Name + "(" + to_string(p->gid.ToInt64()) + ")");
-			client.Send(p->gid, Cyan::MessageChain().Plain("起床啦！"));
+			auto GroupInfo = client.GetMiraiClient().GetGroupConfig(p->gid);
+			logging::INFO("Send morning <MorningTrigger>\t-> " + GroupInfo.name + "(" + p->gid.to_string() + ")");
+			client.SendGroupMessage(p->gid, Mirai::MessageChain().Plain("起床啦！"));
 		}
 	}
 }

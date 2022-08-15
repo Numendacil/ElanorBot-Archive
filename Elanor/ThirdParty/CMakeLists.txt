@@ -7,7 +7,7 @@ target_sources(ElanorBot
 		croncpp.h
 		date.h
 		log.h
-		json.hpp
-		httplib.hpp
 		uuid.h
 	)
+
+target_link_libraries(ElanorBot PRIVATE httplib::httplib)

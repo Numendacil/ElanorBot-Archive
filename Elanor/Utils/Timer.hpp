@@ -24,9 +24,9 @@ public:
 		return t;
 	}
 
-	size_t LaunchOnce(std::function<void()> func, std::chrono::milliseconds delay);
-	size_t LaunchLoop(std::function<void()> func, std::chrono::milliseconds interval, bool RandStart = false);
-	size_t LaunchAt(std::function<void()> func, const std::string& cron_str, int num = -1);
+	std::size_t LaunchOnce(std::function<void()> func, std::chrono::milliseconds delay);
+	std::size_t LaunchLoop(std::function<void()> func, std::chrono::milliseconds interval, bool RandStart = false);
+	std::size_t LaunchAt(std::function<void()> func, const std::string& cron_str, int num = -1);
 
 	void Stop(size_t id)
 	{
@@ -63,11 +63,11 @@ public:
 
 private:
 	Timer() {};
-	size_t GetWorker(void);
+	std::size_t GetWorker(void);
 
 	struct WorkerState
 	{
-		size_t id;
+		std::size_t id;
 		bool finished = true;
 		bool stop = false;
 	};
@@ -75,7 +75,7 @@ private:
 	std::vector<std::pair<std::thread, WorkerState>> worker;
 	std::mutex mtx;
 	std::condition_variable cv;
-	size_t id_count = 0;
+	std::size_t id_count = 0;
 };
 
 }

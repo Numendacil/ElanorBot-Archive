@@ -1,10 +1,3 @@
-#include <State/Activity.hpp>
-#include <ThirdParty/log.h>
-#include <ThirdParty/uuid.h>
-#include <ThirdParty/json.hpp>
-#include <Group/Group.hpp>
-#include <Client/Client.hpp>
-#include <Utils/Utils.hpp>
 #include <fstream>
 #include <sstream>
 #include <chrono>
@@ -12,21 +5,29 @@
 #include <unordered_set>
 #include <filesystem>
 
-#include <mirai.h>
+#include <ThirdParty/log.h>
+#include <ThirdParty/uuid.h>
+#include <nlohmann/json.hpp>
+#include <libmirai/mirai.hpp>
+#include <State/Activity.hpp>
+#include <Group/Group.hpp>
+#include <Client/Client.hpp>
+#include <Utils/Utils.hpp>
 
 #include "pjskSongGuess.hpp"
 
-using namespace std;
 using json = nlohmann::json;
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool pjskSongGuess::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool pjskSongGuess::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() >= char_traits<char>::length("#pjsk 猜歌"))
+	if (str.length() >= std::char_traits<char>::length("#pjsk 猜歌"))
 	{
 		Utils::ToLower(str);
 		if (Utils::Tokenize(tokens, str) < 2)
@@ -40,7 +41,7 @@ bool pjskSongGuess::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 
 
 
-bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool pjskSongGuess::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling pjskSongGuess <pjskSongGuess>" + Utils::GetDescription(gm));
@@ -52,42 +53,42 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	if (!holder)
 	{
 		logging::INFO("有活动正在进行 <pjskSongGuess>" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("有活动正在进行中捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("有活动正在进行中捏"));
 		return false;
 	}
 
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("请在规定时间内发送音频选段对应的歌曲名称。回答请以句号开头捏"));
 
 	json music, alias;
 	{
-		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+		std::ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
 
 		if (!ifile)
 		{
 			logging::WARN("Unable to open meta.json <pjskSongGuess>");
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 
 		json meta_data = json::parse(ifile);
 		ifile.close();
 
-		uniform_int_distribution<int> rng1(0, meta_data.size() - 1);
+		std::uniform_int_distribution<int> rng1(0, meta_data.size() - 1);
 		do
 		{
 			music = meta_data[rng1(Utils::rng_engine)];
-			uniform_int_distribution<int> rng2(0, music["vocal"].size() - 1);
+			std::uniform_int_distribution<int> rng2(0, music["vocal"].size() - 1);
 			music["vocal"] = music["vocal"][rng2(Utils::rng_engine)];
 		} 
-		while (!filesystem::exists(MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3"));
+		while (!std::filesystem::exists(MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3"));
 	}
 	{
-		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
+		std::ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
 
 		if (!ifile)
 		{
 			logging::WARN("Unable to open alias.json <pjskSongGuess>");
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 
@@ -106,7 +107,7 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	logging::INFO("题目为 <pjskSongGuess>: " + music.dump() + alias.dump());
 
 
-	unordered_set<string> alias_map;
+	std::unordered_set<string> alias_map;
 	for (const auto &item : alias.items())
 	{
 		string str = string(item.value());
@@ -124,9 +125,9 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	{
 		music_path = MediaFilesPath + "music/pjsk/songs/" + music["vocal"]["assetbundleName"].get<string>() + ".mp3";
 		uuids::basic_uuid_random_generator rng(Utils::rng_engine);
-		string tmp1 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
-		string tmp2 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
-		audio_ans_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
+		string tmp1 = MediaFilesPath + "tmp/" + uuids::to_string(rng()) + ".mp3";
+		string tmp2 = MediaFilesPath + "tmp/" + uuids::to_string(rng()) + ".pcm";
+		audio_ans_path = MediaFilesPath + "tmp/" + uuids::to_string(rng()) + ".slk";
 
 		if (music.contains("length"))
 			length = music["length"].get<double>();
@@ -142,13 +143,13 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 		}
 		double max_inter_2 = interval * ((round - 1) * 0.8 + 1.0) / 2.0;
 		double ans_interval_2 = 4;
-		uniform_real_distribution<double> rng_real(2.0 + ans_interval_2 + max_inter_2, length - max_inter_2 - 2.0 - ans_interval_2);
+		std::uniform_real_distribution<double> rng_real(2.0 + ans_interval_2 + max_inter_2, length - max_inter_2 - 2.0 - ans_interval_2);
 		pos = rng_real(Utils::rng_engine);
 
 		Utils::exec({
 			"ffmpeg",
-			"-ss", to_string(pos - ans_interval_2 - max_inter_2),
-			"-t", to_string((max_inter_2 + ans_interval_2) * 2.0),
+			"-ss", std::to_string(pos - ans_interval_2 - max_inter_2),
+			"-t", std::to_string((max_inter_2 + ans_interval_2) * 2.0),
 			"-v", "quiet",
 			"-i", music_path, 
 			"-acodec", "copy", 
@@ -181,19 +182,19 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 		string audio_path;
 		{
 			uuids::basic_uuid_random_generator rng(Utils::rng_engine);
-			string tmp1 = MediaFilesPath + "tmp/" + to_string(rng()) + ".mp3";
-			string tmp2 = MediaFilesPath + "tmp/" + to_string(rng()) + ".pcm";
-			audio_path = MediaFilesPath + "tmp/" + to_string(rng()) + ".slk";
+			string tmp1 = MediaFilesPath + "tmp/" + uuids::to_string(rng()) + ".mp3";
+			string tmp2 = MediaFilesPath + "tmp/" + uuids::to_string(rng()) + ".pcm";
+			audio_path = MediaFilesPath + "tmp/" + uuids::to_string(rng()) + ".slk";
 
 			
 			double inter_2 = interval * (i * incr + 1.0) / 2.0;
 			string apad = "";
 			if (2.0 * inter_2 < 0.9)
-				apad = ",apad=pad_dur=" + to_string(int(ceil(900 - 2000 * inter_2))) + "ms";
+				apad = ",apad=pad_dur=" + std::to_string(int(ceil(900 - 2000 * inter_2))) + "ms";
 
 			Utils::exec({"ffmpeg",
-				     "-ss", to_string(pos - inter_2),
-				     "-t", to_string(inter_2 * 2),
+				     "-ss", std::to_string(pos - inter_2),
+				     "-t", std::to_string(inter_2 * 2),
 				     "-v", "quiet",
 				     "-i", music_path,
 				     "-acodec", "copy",
@@ -217,21 +218,21 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 				     "-tencent", "-quiet"});
 		}
 		logging::INFO("音频处理完毕 <pjskSongGuess>: " + audio_path);
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Add<Cyan::VoiceMessage>(Cyan::MiraiVoice{.Path = audio_path}));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Audio("", "", audio_path, ""));
 
-		const auto tp = chrono::system_clock::now();
+		const auto tp = std::chrono::system_clock::now();
 		bool flag = false;
 		while (true)
 		{
 			State::Activity::AnswerInfo info;
-			if (!state->WaitForAnswerUntil(tp + chrono::seconds(21), info))
+			if (!state->WaitForAnswerUntil(tp + std::chrono::seconds(21), info))
 				break;
 			Utils::ToLower(info.answer);
 			Utils::ReplaceMark(info.answer);
 			if (alias_map.contains(info.answer))
 			{
-				logging::INFO("回答正确 <pjskSongGuess>: " + info.answer + "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("回答正确"), info.message_id);
+				logging::INFO("回答正确 <pjskSongGuess>: " + info.answer + "\t-> [" + gm.GetSender().group.name + "(" + gm.GetSender().group.id.to_string() + ")]");
+				client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("回答正确"), info.message_id);
 				flag = true;
 				break;
 			}
@@ -254,11 +255,11 @@ bool pjskSongGuess::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	}
 
 	logging::INFO("公布答案 <pjskSongGuess>: " + music["title"].get<string>()
-					+ "\t-> [" + gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")]");
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain()
+					+ "\t-> [" + gm.GetSender().group.name + "(" + gm.GetSender().group.id.to_string() + ")]");
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain()
 				.Plain("正确答案是: \n" + answer + "\n")
-				.Image({.Path = cover}));
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Add<Cyan::VoiceMessage>(Cyan::MiraiVoice{.Path = audio_ans_path}));
+				.Image("", "", cover, ""));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Audio("", "", audio_ans_path, ""));
 
 	return true;
 }

@@ -1,15 +1,15 @@
-#include "Client.hpp"
-
-#include <mirai/defs/QQType.hpp>
-#include <ThirdParty/log.h>
 
 #include <chrono>
-#include <mirai.h>
 #include <memory>
 #include <stdexcept>
 #include <thread>
 
-using namespace std;
+#include <ThirdParty/log.h>
+#include <libmirai/Api/Client.hpp>
+
+#include "Client.hpp"
+
+using namespace Mirai;
 
 namespace Bot
 {
@@ -17,16 +17,16 @@ namespace Bot
 Client::Client()
 {
 	this->Connected = false;
-	this->interval = chrono::milliseconds(500);
+	this->interval = std::chrono::milliseconds(500);
 	this->max_retry = 3;
-	this->client = make_unique<Cyan::MiraiBot>();
+	this->client = std::make_unique<MiraiClient>();
 }
 Client::~Client()
 {
 	if (this->Connected)
 	{
 		this->Connected = false;
-		this->cv.notify_all();
+		this->cv.notify_one();
 		if (this->th.joinable())
 			this->th.join();
 		this->client->Disconnect();
@@ -39,7 +39,7 @@ void Client::MsgQueue()
 	{
 		Message msg;
 		{
-			unique_lock<mutex> lk(this->q_mtx);
+			std::unique_lock<std::mutex> lk(this->q_mtx);
 			this->cv.wait(lk, [this]() -> bool
 			{ 
 				if (!this->Connected)
@@ -48,85 +48,79 @@ void Client::MsgQueue()
 			});
 			if (!this->Connected)
 				return;
-			msg = move(this->message.front());
+			msg = std::move(this->message.front());
 			this->message.pop();
 		}
 
 		try
 		{
-			this_thread::sleep_for(this->interval);
+			std::this_thread::sleep_for(this->interval);
+			MessageId_t id = 0;
 			switch (msg.type)
 			{
 			case Message::GROUP:
-				this->client->SendMessage(msg.gid, msg.msg, msg.mid);
+				id = this->client->SendGroupMessage(msg.GroupId, msg.msg, msg.QuoteId, true);
 				break;
 			case Message::FRIEND:
-				this->client->SendMessage(msg.qqid, msg.msg, msg.mid);
+				id = this->client->SendFriendMessage(msg.qq, msg.msg, msg.QuoteId, true);
 				break;
 			case Message::TEMP:
-				this->client->SendMessage(msg.gid, msg.qqid, msg.msg, msg.mid);
+				id = this->client->SendTempMessage(msg.qq, msg.GroupId, msg.msg, msg.QuoteId, true);
 				break;
 			default:
 				logging::ERROR("waht");
 			}
+			msg.SendId.set_value(id);
 		}
-		catch(runtime_error& e)
+		catch(std::exception& e)
 		{
-			logging::WARN(string("MsgQueue: ") + e.what());
-			if (msg.count < this->max_retry)
+			logging::WARN(std::string("MsgQueue: ") + e.what());
+			if (msg.count + 1 < this->max_retry)
 			{
-				unique_lock<mutex> lk(this->q_mtx);
+				std::unique_lock<std::mutex> lk(this->q_mtx);
 				msg.count++;
-				this->message.push(move(msg));
+				this->message.push(std::move(msg));
 			}
 		}
 	}
 }
 
-void Client::Send(const Cyan::GID_t& gid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
+std::future<Mirai::MessageId_t> Client::SendGroupMessage(GID_t GroupId, const MessageChain& msg, std::optional<MessageId_t> QuoteId)
 {
-	unique_lock<mutex> lk(this->q_mtx);
-	this->message.emplace(gid, (Cyan::QQ_t)0, msg, mid, Message::GROUP, 0);
-	this->cv.notify_all();
+	std::unique_lock<std::mutex> lk(this->q_mtx);
+	auto SendId = this->message.emplace(GroupId, 0_qq, msg, QuoteId, Message::GROUP).SendId.get_future();
+	this->cv.notify_one();
+	return SendId;
 }
 
-void Client::Send(const Cyan::QQ_t& qqid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
+std::future<Mirai::MessageId_t> Client::SendFriendMessage(QQ_t qq, const MessageChain& msg, std::optional<MessageId_t> QuoteId)
 {
-	unique_lock<mutex> lk(this->q_mtx);
-	this->message.emplace((Cyan::GID_t)0, qqid, msg, mid, Message::FRIEND, 0);
-	this->cv.notify_all();
+	std::unique_lock<std::mutex> lk(this->q_mtx);
+	auto SendId = this->message.emplace(0_gid, qq, msg, QuoteId, Message::FRIEND).SendId.get_future();
+	this->cv.notify_one();
+	return SendId;
 }
 
-void Client::Send(const Cyan::GID_t& gid, const Cyan::QQ_t& qqid, const Cyan::MessageChain& msg, Cyan::MessageId_t mid)
+std::future<Mirai::MessageId_t> Client::SendTempMessage(GID_t GroupId, QQ_t qq, const MessageChain& msg, std::optional<MessageId_t> QuoteId)
 {
-	unique_lock<mutex> lk(this->q_mtx);
-	this->message.emplace(gid, qqid, msg, mid, Message::TEMP, 0);
-	this->cv.notify_all();
+	std::unique_lock<std::mutex> lk(this->q_mtx);
+	auto SendId = this->message.emplace(GroupId, qq, msg, QuoteId, Message::TEMP).SendId.get_future();
+	this->cv.notify_one();
+	return SendId;
 }
 
-void Client::Connect(const Cyan::SessionOptions &opts)
+void Client::Connect(const SessionConfigs &opts)
 {
-	this->client->Connect(opts);
+	this->client->SetSessionConfig(opts);
+	this->client->Connect();
 	this->Connected = true;
-	this->th = thread(&Client::MsgQueue, this);
-}
-
-void Client::Reconnect()
-{
-	this->Connected = false;
-	this->cv.notify_all();
-	if (this->th.joinable())
-		this->th.join();
-	
-	this->client->Reconnect();
-	this->Connected = true;
-	this->th = thread(&Client::MsgQueue, this);
+	this->th = std::thread(&Client::MsgQueue, this);
 }
 
 void Client::Disconnect()
 {
 	this->Connected = false;
-	this->cv.notify_all();
+	this->cv.notify_one();
 	if (this->th.joinable())
 		this->th.join();
 	this->client->Disconnect();

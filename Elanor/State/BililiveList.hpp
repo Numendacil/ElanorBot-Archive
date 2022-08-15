@@ -1,10 +1,11 @@
 #ifndef _BILILIVE_LIST_HPP_
 #define _BILILIVE_LIST_HPP_
 
-#include <State/StateBase.hpp>
 #include <map>
 #include <vector>
 #include <mutex>
+
+#include <State/StateBase.hpp>
 
 namespace State
 {

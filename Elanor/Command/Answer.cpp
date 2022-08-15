@@ -6,14 +6,13 @@
 
 #include "Answer.hpp"
 
-using namespace std;
 
 namespace GroupCommand
 {
 
-bool Answer::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool Answer::Parse(const Mirai::MessageChain& msg, std::vector<std::string>& tokens)
 {
-	string str = msg.GetPlainText();
+	std::string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
 	if (str[0] != '.')
 		return false;
@@ -22,7 +21,7 @@ bool Answer::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return true;
 }
 
-bool Answer::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool Answer::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const std::vector<std::string>& tokens) 
 {
 	auto state = group.GetState<State::Activity>();
 	if (!state->HasActivity())
@@ -31,7 +30,7 @@ bool Answer::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vect
 	{
 		assert(!tokens.empty());
 		logging::INFO("<Answer: pjsk>: " + tokens[0] + Utils::GetDescription(gm));
-		state->AddAnswer({tokens[0], gm.MessageId()});
+		state->AddAnswer({tokens[0], gm.GetMessage().GetSourceInfo()->id});
 		return true;
 	}
 	return false;

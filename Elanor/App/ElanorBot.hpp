@@ -11,8 +11,7 @@
 #include <Trigger/TriggerBase.hpp>
 #include <Group/GroupList.hpp>
 
-#include <mirai/defs/defs.hpp>
-#include <mirai/events/events.hpp>
+#include <libmirai/mirai.hpp>
 
 namespace Bot
 {
@@ -35,17 +34,9 @@ protected:
 
 	bool is_running;
 
-	const Cyan::QQ_t suid;
+	const Mirai::QQ_t suid;
 
-public:
-	ElanorBot(Cyan::QQ_t owner_id);
-
-	void NudgeEventHandler(Cyan::NudgeEvent& e);
-	void GroupMessageEventHandler(Cyan::GroupMessage& gm);
-	void LostConnectionHandler(Cyan::LostConnection& e);
-	void EventParsingErrorHandler(Cyan::EventParsingError& e);
-
-	void run()
+	void _run()
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		if (this->is_running) return;
@@ -53,7 +44,7 @@ public:
 		for (const auto& p : this->triggers)
 			p.second->TriggerOn();
 	}
-	void stop()
+	void _stop()
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		if (!this->is_running) return;
@@ -62,9 +53,19 @@ public:
 			p.second->TriggerOff();
 	}
 
+public:
+	ElanorBot(Mirai::QQ_t owner_id);
+
+	void NudgeEventHandler(Mirai::NudgeEvent& e);
+	void GroupMessageEventHandler(Mirai::GroupMessageEvent& gm);
+	void ConnectionOpenedHandler(Mirai::ClientConnectionEstablishedEvent& e);
+	void ConnectionClosedHandler(Mirai::ClientConnectionClosedEvent& e);
+	void ConnectionErrorHandler(Mirai::ClientConnectionErrorEvent& e);
+	void ParseErrorHandler(Mirai::ClientParseErrorEvent& e);
+
 	~ElanorBot()
 	{
-		this->stop();
+		this->_stop();
 	}
 };
 

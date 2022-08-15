@@ -3,7 +3,8 @@
 
 #include <State/StateBase.hpp>
 #include <mutex>
-#include <mirai/defs/MessageChain.hpp>
+
+#include <libmirai/Messages/MessageChain.hpp>
 
 namespace State
 {
@@ -11,7 +12,7 @@ namespace State
 class LastMessage : public StateBase
 {
 protected:
-	Cyan::MessageChain LastMsg = Cyan::MessageChain();
+	Mirai::MessageChain LastMsg = Mirai::MessageChain();
 	bool Repeated = false;
 	mutable std::mutex mtx;
 
@@ -19,8 +20,8 @@ public:
 
 	static constexpr std::string_view _NAME_ = "LastMessage";
 
-	void Set(const Cyan::MessageChain& m, bool r);
-	void Get(Cyan::MessageChain& m, bool& r) const;
+	void Set(const Mirai::MessageChain& m, bool r);
+	void Get(Mirai::MessageChain& m, bool& r) const;
 
 	virtual nlohmann::json Serialize() override;
 	virtual void Deserialize(const nlohmann::json& content) override;

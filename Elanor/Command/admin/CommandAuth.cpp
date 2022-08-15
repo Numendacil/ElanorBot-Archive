@@ -1,22 +1,24 @@
+#include <string>
 #include <Utils/Utils.hpp>
 #include <ThirdParty/log.h>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 #include <State/CommandPerm.hpp>
-#include <string>
 
 #include "CommandAuth.hpp"
 
-using namespace std;
+
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool CommandAuth::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool CommandAuth::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() > char_traits<char>::length("#auth"))
+	if (str.length() > std::char_traits<char>::length("#auth"))
 	{
 		if (Utils::Tokenize(tokens, str) < 2)
 			return false;
@@ -27,7 +29,7 @@ bool CommandAuth::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool CommandAuth::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 1);
 	logging::INFO("Calling Auth <CommandAuth>" + Utils::GetDescription(gm));
@@ -38,7 +40,7 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 	if (command == "help" || command == "h" || command == "帮助")
 	{
 		logging::INFO("帮助文档 <CommandAuth>" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("usage:\n#auth set [command] [level]\n#auth {reset/show} [command]\n#auth list"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("usage:\n#auth set [command] [level]\n#auth {reset/show} [command]\n#auth list"));
 		return true;
 	}
 
@@ -51,17 +53,17 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 			string message = "指令权限列表";
 			for (const auto& s : list)
 			{
-				message += "\n" + s + ": " + to_string(permission->GetPermission(s).first);
+				message += "\n" + s + ": " + std::to_string(permission->GetPermission(s).first);
 			}
 			logging::INFO("输出权限列表 <CommandAuth>" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(message));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(message));
 			return true;
 		}
 
 		if (tokens.size() < 3)
 		{
 			logging::INFO("缺少参数[command] <CommandAuth>: " + tokens[1] + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("缺少参数[command]，是被你吃了嘛"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("缺少参数[command]，是被你吃了嘛"));
 			return false;
 		}
 		
@@ -69,7 +71,7 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 		if (!permission->ExistCommand(target))
 		{
 			logging::INFO("无效参数[command] <CommandAuth>: " + target + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + "是哪个指令捏，不知道捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(target + "是哪个指令捏，不知道捏"));
 			return false;
 		}
 
@@ -78,15 +80,15 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 		if (command == "reset")
 		{
 			permission->UpdatePermission(target, perm.second);
-			logging::INFO("重置权限 <CommandAuth>: " + target + "(" + to_string(perm.first) + " -> " + to_string(perm.second) + ")" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("重置 " + target + " 的权限等级为 " + to_string(perm.second)));
+			logging::INFO("重置权限 <CommandAuth>: " + target + "(" + std::to_string(perm.first) + " -> " + std::to_string(perm.second) + ")" + Utils::GetDescription(gm, false));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("重置 " + target + " 的权限等级为 " + std::to_string(perm.second)));
 			return true;
 		}
 
 		if (command == "show")
 		{
-			logging::INFO("输出指令权限 <CommandAuth>: " + target + "(" + to_string(perm.first) + ")" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + " 的权限等级为 " + to_string(perm.first)));
+			logging::INFO("输出指令权限 <CommandAuth>: " + target + "(" +std:: to_string(perm.first) + ")" + Utils::GetDescription(gm, false));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(target + " 的权限等级为 " + std::to_string(perm.first)));
 			return true;
 		}
 
@@ -95,7 +97,7 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 		if (tokens.size() < 4)
 		{
 			logging::INFO("缺少参数[level] <CommandAuth>: " + tokens[1] + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("缺少参数[level]，是被你吃了嘛"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("缺少参数[level]，是被你吃了嘛"));
 			return false;
 		}
 
@@ -106,33 +108,33 @@ bool CommandAuth::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 			if (auth > 100 || auth < 0)
 			{
 				logging::INFO("无效参数[level] <CommandAuth>: " + tokens[3] + Utils::GetDescription(gm, false));
-				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("权限等级必须在0到100之间捏"));
+				client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("权限等级必须在0到100之间捏"));
 				return false;
 			}
 		}
-		catch(const logic_error& e)
+		catch(const std::logic_error& e)
 		{
 			logging::INFO("无效参数[level] <CommandAuth>: " + tokens[3] + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("你觉得" + tokens[3] + "很像个整数么"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("你觉得" + tokens[3] + "很像个整数么"));
 			return false;
 		}
 
-		if ((perm.first >= 50 || auth >= 50) && gm.Sender.QQ != group.suid)
+		if ((perm.first >= 50 || auth >= 50) && gm.GetSender().id != group.suid)
 		{
 			logging::INFO("权限不足 <CommandAuth>: 无法修改该指令的权限(" + target + ")" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("你没资格啊，你没资格\n正因如此你没资格啊，你没资格"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("你没资格啊，你没资格\n正因如此你没资格啊，你没资格"));
 			return false;
 		}
 
 		permission->UpdatePermission(target, auth);
 		logging::INFO("更新权限 <CommandAuth>: " + target + "(" + tokens[3] + ")" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("指令权限更新好了捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("指令权限更新好了捏"));
 		return true;
 	}
 
 
 	logging::INFO("未知命令 <CommandAuth>: " + tokens[1] + Utils::GetDescription(gm, false));
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[1] + "是什么指令捏，不知道捏"));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(tokens[1] + "是什么指令捏，不知道捏"));
 	return false;
 }
 

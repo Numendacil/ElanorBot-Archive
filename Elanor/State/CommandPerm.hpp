@@ -1,12 +1,13 @@
 #ifndef _COMMAND_PERMISSION_HPP_
 #define _COMMAND_PERMISSION_HPP_
 
-#include <State/StateBase.hpp>
 #include <mutex>
 #include <string>
 #include <unordered_set>
 #include <utility>
 #include <vector>
+
+#include <State/StateBase.hpp>
 
 namespace State
 {

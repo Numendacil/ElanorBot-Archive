@@ -1,13 +1,14 @@
 #ifndef _COOLDOWN_HPP_
 #define _COOLDOWN_HPP_
 
-#include <State/StateBase.hpp>
 #include <mutex>
 #include <string>
 #include <sstream>
 #include <unordered_map>
 #include <optional>
 #include <chrono>
+
+#include <State/StateBase.hpp>
 
 namespace State
 {

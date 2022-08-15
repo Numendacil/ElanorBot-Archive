@@ -1,6 +1,6 @@
-#include "CoolDown.hpp"
-#include <ThirdParty/json.hpp>
+#include <nlohmann/json.hpp>
 #include <ThirdParty/date.h>
+#include "CoolDown.hpp"
 
 using json = nlohmann::json;
 

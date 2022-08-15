@@ -1,16 +1,20 @@
-#include "GroupList.hpp"
-#include "ThirdParty/log.h"
-#include "mirai/defs/QQType.hpp"
 #include <cassert>
 #include <filesystem>
 #include <mutex>
 #include <string>
 #include <vector>
+#include <ThirdParty/log.h>
+
+#include "GroupList.hpp"
+
+using std::string;
+using std::vector;
+using std::pair;
 
 namespace Bot
 {
 
-GroupList::GroupList(Cyan::QQ_t owner_id, 
+GroupList::GroupList(Mirai::QQ_t owner_id, 
 		const std::vector<std::pair<std::string, int>>& command_list,
 		const std::vector<std::pair<std::string, bool>>& trigger_list) : 
 		command_list(command_list), trigger_list(trigger_list), owner(owner_id)
@@ -22,7 +26,7 @@ GroupList::GroupList(Cyan::QQ_t owner_id,
 		{
 			try
 			{
-				Cyan::GID_t gid = (Cyan::GID_t)std::stol(entry.path().stem());
+				Mirai::GID_t gid = (Mirai::GID_t)std::stol(entry.path().stem());
 				this->group_list.try_emplace(gid, gid, this->owner, this->command_list, this->trigger_list);
 			}
 			catch(const std::logic_error& e)
@@ -33,7 +37,7 @@ GroupList::GroupList(Cyan::QQ_t owner_id,
 	}
 }
 
-Group& GroupList::GetGroup(Cyan::GID_t gid)
+Group& GroupList::GetGroup(Mirai::GID_t gid)
 {
 	std::lock_guard<std::mutex> lk(this->mtx);
 	auto it = this->group_list.find(gid);
