@@ -3,21 +3,23 @@
 #include <Utils/Utils.hpp>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
-#include <mirai.h>
+#include <string>
+#include <libmirai/mirai.hpp>
 
 #include "Sing.hpp"
 
-using namespace std;
 using json = nlohmann::json;
+using std::vector;
+using std::string;
 
 namespace GroupCommand
 {
 
-bool Sing::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool Sing::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() >= char_traits<char>::length("#sing"))
+	if (str.length() >= std::char_traits<char>::length("#sing"))
 	{
 		Utils::ToLower(str);
 		Utils::Tokenize(tokens, str);
@@ -27,7 +29,7 @@ bool Sing::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool Sing::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool Sing::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	Bot::Client& client = Bot::Client::GetClient();
 	logging::INFO("Calling Sing <Sing>" + Utils::GetDescription(gm));
@@ -57,7 +59,7 @@ bool Sing::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector
 		"-tencent", "-quiet"
 		});
 
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Add<Cyan::VoiceMessage>(Cyan::MiraiVoice{.Path = audio_path}));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Audio("", "", audio_path, ""));
 	return true;
 }
 

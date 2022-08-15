@@ -1,14 +1,13 @@
-#include <Utils/Timer.hpp>
 #include <Utils/Utils.hpp>
 #include <ThirdParty/croncpp.h>
 #include <ThirdParty/log.h>
 
-using namespace std;
+#include "Timer.hpp"
 
 namespace Utils
 {
 
-size_t Timer::GetWorker(void)
+std::size_t Timer::GetWorker(void)
 {
 	this->id_count++;
 	for (size_t i = 0; i < this->worker.size(); ++i)
@@ -21,20 +20,20 @@ size_t Timer::GetWorker(void)
 			return i;
 		}
 	}
-	this->worker.push_back(make_pair<thread, WorkerState>(thread(), {this->id_count, false, false}));
+	this->worker.push_back(make_pair<std::thread, WorkerState>(std::thread(), {this->id_count, false, false}));
 	return this->worker.size() - 1;
 }
 
 
 
-size_t Timer::LaunchOnce(function<void()> func, chrono::milliseconds delay)
+std::size_t Timer::LaunchOnce(std::function<void()> func, std::chrono::milliseconds delay)
 {
-	lock_guard<mutex> lk(this->mtx);
+	std::lock_guard<std::mutex> lk(this->mtx);
 	size_t idx = this->GetWorker();
-	this->worker[idx].first = thread([this, func, delay, idx]
+	this->worker[idx].first = std::thread([this, func, delay, idx]
 	{
 		{
-			unique_lock<mutex> lk(this->mtx);
+			std::unique_lock<std::mutex> lk(this->mtx);
 			if (cv.wait_for(lk, delay, [this, idx]{ return this->worker[idx].second.stop;}))
 				return;
 		}
@@ -43,13 +42,13 @@ size_t Timer::LaunchOnce(function<void()> func, chrono::milliseconds delay)
 		{
 			func();
 		}
-		catch (const exception& e)
+		catch (const std::exception& e)
 		{
-			logging::WARN("Exception occured <Timer::LaunchOnce>: " + string(e.what()));
+			logging::WARN("Exception occured <Timer::LaunchOnce>: " + std::string(e.what()));
 		}
 
 		{
-			lock_guard<mutex> lk(this->mtx);
+			std::lock_guard<std::mutex> lk(this->mtx);
 			this->worker[idx].second.finished = true;
 		}
 	});
@@ -58,18 +57,18 @@ size_t Timer::LaunchOnce(function<void()> func, chrono::milliseconds delay)
 
 
 
-size_t Timer::LaunchLoop(function<void()> func, chrono::milliseconds interval, bool RandStart)
+std::size_t Timer::LaunchLoop(std::function<void()> func, std::chrono::milliseconds interval, bool RandStart)
 {
-	lock_guard<mutex> lk(this->mtx);
+	std::lock_guard<std::mutex> lk(this->mtx);
 	size_t idx = this->GetWorker();
-	this->worker[idx].first = thread([this, func, interval, RandStart, idx]
+	this->worker[idx].first = std::thread([this, func, interval, RandStart, idx]
 	{
 		if (RandStart)
 		{
 			std::uniform_real_distribution<float> dist(0, 1);
 			auto pre = interval * dist(Utils::rng_engine);
 			{
-				unique_lock<mutex> lk(this->mtx);
+				std::unique_lock<std::mutex> lk(this->mtx);
 				if (cv.wait_for(lk, pre, [this, idx]{ return this->worker[idx].second.stop;}))
 				{
 					this->worker[idx].second.finished = true;
@@ -84,13 +83,13 @@ size_t Timer::LaunchLoop(function<void()> func, chrono::milliseconds interval, b
 			{
 				func();
 			}
-			catch (const exception &e)
+			catch (const std::exception &e)
 			{
-				logging::WARN("Exception occured <Timer::LaunchLoop>: " + string(e.what()));
+				logging::WARN("Exception occured <Timer::LaunchLoop>: " + std::string(e.what()));
 			}
 
 			{
-				unique_lock<mutex> lk(this->mtx);
+				std::unique_lock<std::mutex> lk(this->mtx);
 				if (cv.wait_for(lk, interval, [this, idx]{ return this->worker[idx].second.stop;}))
 				{
 					this->worker[idx].second.finished = true;
@@ -104,19 +103,19 @@ size_t Timer::LaunchLoop(function<void()> func, chrono::milliseconds interval, b
 
 
 
-size_t Timer::LaunchAt(function<void()> func, const string& cron_str, int num)
+std::size_t Timer::LaunchAt(std::function<void()> func, const std::string& cron_str, int num)
 {
 	auto crontab = cron::make_cron(cron_str);
-	lock_guard<mutex> lk(this->mtx);
+	std::lock_guard<std::mutex> lk(this->mtx);
 	size_t idx = this->GetWorker();
-	this->worker[idx].first = thread([this, func, crontab, num, idx]
+	this->worker[idx].first = std::thread([this, func, crontab, num, idx]
 	{
 		int count = 0;
 		while (true)
 		{
-			auto t = cron::cron_next(crontab, chrono::system_clock::now());
+			auto t = cron::cron_next(crontab, std::chrono::system_clock::now());
 			{
-				unique_lock<mutex> lk(this->mtx);
+				std::unique_lock<std::mutex> lk(this->mtx);
 				if (cv.wait_until(lk, t, [this, idx]{ return this->worker[idx].second.stop;}))
 				{
 					this->worker[idx].second.finished = true;
@@ -128,9 +127,9 @@ size_t Timer::LaunchAt(function<void()> func, const string& cron_str, int num)
 			{
 				func();
 			}
-			catch (const exception &e)
+			catch (const std::exception &e)
 			{
-				logging::WARN("Exception occured <Timer::LaunchAt>: " + string(e.what()));
+				logging::WARN("Exception occured <Timer::LaunchAt>: " + std::string(e.what()));
 			}
 
 			if (num > 0)
@@ -138,7 +137,7 @@ size_t Timer::LaunchAt(function<void()> func, const string& cron_str, int num)
 				count++;
 				if (count >= num)
 				{
-					unique_lock<mutex> lk(this->mtx);
+					std::unique_lock<std::mutex> lk(this->mtx);
 					this->worker[idx].second.finished = true;
 					return;
 				}

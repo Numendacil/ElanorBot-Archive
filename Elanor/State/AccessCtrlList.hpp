@@ -1,12 +1,13 @@
 #ifndef _ACCESS_CONTROL_LIST_HPP_
 #define _ACCESS_CONTROL_LIST_HPP_
 
-#include <mirai/defs/QQType.hpp>
-#include <State/StateBase.hpp>
 #include <mutex>
 #include <string>
 #include <string_view>
 #include <unordered_set>
+
+#include <libmirai/Types/Types.hpp>
+#include <State/StateBase.hpp>
 
 namespace State
 {
@@ -16,26 +17,26 @@ class AccessCtrlList : public StateBase
 protected:
 	mutable std::mutex mtx;
 	
-	std::unordered_set<Cyan::QQ_t> WhiteList;
-	std::unordered_set<Cyan::QQ_t> BlackList;
+	std::unordered_set<Mirai::QQ_t> WhiteList;
+	std::unordered_set<Mirai::QQ_t> BlackList;
 
 public:
 
 	static constexpr std::string_view _NAME_ = "AccessCtrlList";
 
-	bool IsWhiteList(const Cyan::QQ_t& id) const
+	bool IsWhiteList(const Mirai::QQ_t& id) const
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		return this->WhiteList.contains(id);
 	}
 
-	void WhiteListAdd(const Cyan::QQ_t& id)
+	void WhiteListAdd(const Mirai::QQ_t& id)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		this->WhiteList.insert(id);
 	}
 
-	void WhiteListDelete(const Cyan::QQ_t& id)
+	void WhiteListDelete(const Mirai::QQ_t& id)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		this->WhiteList.erase(id);
@@ -47,25 +48,25 @@ public:
 		this->WhiteList.clear();
 	}
 
-	std::vector<Cyan::QQ_t> GetWhiteList(void)
+	std::vector<Mirai::QQ_t> GetWhiteList(void)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
-		return std::vector<Cyan::QQ_t>(this->WhiteList.begin(), this->WhiteList.end());
+		return std::vector<Mirai::QQ_t>(this->WhiteList.begin(), this->WhiteList.end());
 	}
 
-	bool IsBlackList(const Cyan::QQ_t& id) const
+	bool IsBlackList(const Mirai::QQ_t& id) const
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		return this->BlackList.contains(id);
 	}
 
-	void BlackListAdd(const Cyan::QQ_t& id)
+	void BlackListAdd(const Mirai::QQ_t& id)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		this->BlackList.insert(id);
 	}
 
-	void BlackListDelete(const Cyan::QQ_t& id)
+	void BlackListDelete(const Mirai::QQ_t& id)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
 		this->BlackList.erase(id);
@@ -77,10 +78,10 @@ public:
 		this->BlackList.clear();
 	}
 	
-	std::vector<Cyan::QQ_t> GetBlackList(void)
+	std::vector<Mirai::QQ_t> GetBlackList(void)
 	{
 		std::lock_guard<std::mutex> lk(this->mtx);
-		return std::vector<Cyan::QQ_t>(this->BlackList.begin(), this->BlackList.end());
+		return std::vector<Mirai::QQ_t>(this->BlackList.begin(), this->BlackList.end());
 	}
 
 	virtual nlohmann::json Serialize() override;

@@ -2,7 +2,7 @@
 #define _STATE_BASE_HPP_
 
 #include <string>
-#include <ThirdParty/json.hpp>
+#include <nlohmann/json.hpp>
 
 namespace State
 {

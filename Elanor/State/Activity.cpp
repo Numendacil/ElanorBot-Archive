@@ -1,7 +1,7 @@
-#include "Activity.hpp"
 #include <algorithm>
 #include <memory>
 #include <string>
+#include "Activity.hpp"
 
 namespace State
 {

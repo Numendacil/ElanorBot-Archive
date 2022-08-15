@@ -1,23 +1,24 @@
 #include <ThirdParty/log.h>
-#include <ThirdParty/json.hpp>
-#include <ThirdParty/httplib.hpp>
+#include <nlohmann/json.hpp>
+#include <httplib.h>
 #include <Utils/Utils.hpp>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 
 #include "Choyen.hpp"
 
-using namespace std;
 using json = nlohmann::json;
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool Choyen::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool Choyen::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() > char_traits<char>::length("#choyen"))
+	if (str.length() > std::char_traits<char>::length("#choyen"))
 	{
 		if (Utils::Tokenize(tokens, str, 3) < 2)
 			return false;
@@ -28,7 +29,7 @@ bool Choyen::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool Choyen::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool Choyen::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling Choyen <Choyen>" + Utils::GetDescription(gm));
 	assert(tokens.size() > 1);
@@ -39,13 +40,13 @@ bool Choyen::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vect
 		if (tokens[1] == "help" || tokens[1] == "h" || tokens[1] == "帮助")
 		{
 			logging::INFO("帮助文档 <Choyen>" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("usage:\n#choyen [line1] [line2]"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("usage:\n#choyen [line1] [line2]"));
 			return true;
 		}
 		else
 		{
 			logging::INFO("缺少参数[line2] <Choyen>" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("你的第二行字捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("你的第二行字捏"));
 			return false;
 		}
 	}
@@ -54,29 +55,30 @@ bool Choyen::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vect
 	if (tokens[1].empty())
 	{
 		logging::INFO("参数1为空 <Choyen>" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("看不到第一句话捏，是口口剑22嘛"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("看不到第一句话捏，是口口剑22嘛"));
 		return false;
 	}
 	if (tokens[2].empty())
 	{
 		logging::INFO("参数2为空 <Choyen>" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("看不到第二句话捏，是口口剑22嘛"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("看不到第二句话捏，是口口剑22嘛"));
 		return false;
 	}
 
 	const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
-	httplib_ssl_zlib::Client cli(url_local);
+	httplib::Client cli(url_local);
+	Utils::SetClientOptions(cli);
 	auto result = cli.Get("/gen/choyen/", {{"upper", tokens[1]}, {"lower", tokens[2]}}, {{"Accept-Encoding", "gzip"}});
 	if (!Utils::CheckHttpResponse(result, "Choyen"))
 	{
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 	json msg = json::parse(result->body);
 
 	assert(msg.contains("result"));
 	logging::INFO("上传图片 <Choyen>" + Utils::GetDescription(gm, false));
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Image({.Base64 = msg["result"]}));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Image("", "", "", msg["result"]));
 	return true;
 }
 

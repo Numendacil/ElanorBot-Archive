@@ -1,5 +1,5 @@
+#include <nlohmann/json.hpp>
 #include "CommandPerm.hpp"
-#include <ThirdParty/json.hpp>
 
 using json = nlohmann::json;
 

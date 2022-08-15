@@ -1,16 +1,18 @@
 #ifndef _UTILS_HPP_
 #define _UTILS_HPP_
 
-#include <mirai/third-party/nlohmann/json.hpp>
-#include <ThirdParty/json.hpp>
 #include <random>
 #include <optional>
-#include <mirai/defs/MessageChain.hpp>
-#include <mirai/events/events.hpp>
 
-namespace httplib_ssl_zlib
+#include <nlohmann/json.hpp>
+#include <libmirai/mirai.hpp>
+
+namespace httplib
 {
-	class Result;
+
+class Client;
+class Result;
+
 }
 
 namespace Utils
@@ -39,7 +41,7 @@ namespace Utils
 			if (this->config.contains(key))
 				return this->config.at(key).get<T>();
 			else
-				return nullopt;
+				return std::nullopt;
 		}
 	};
 }
@@ -58,14 +60,13 @@ namespace Utils
 	int ToBool(const std::string&);
 	int Tokenize(std::vector<std::string>&, std::string, int = -1);
 
-	bool CheckHttpResponse(const httplib_ssl_zlib::Result& result, const std::string& Caller = "");
+	bool CheckHttpResponse(const httplib::Result& result, const std::string& Caller = "");
+	void SetClientOptions(httplib::Client& cli);
 
-	std::string GetDescription(const Cyan::GroupMessage &, bool = true);
-	std::string GetDescription(const Cyan::FriendMessage &, bool = true);
+	std::string GetDescription(const Mirai::GroupMessageEvent &, bool = true);
+	std::string GetDescription(const Mirai::FriendMessageEvent &, bool = true);
 
-
-	void SendGroupMessage(const Cyan::GroupMessage &gm, const Cyan::MessageChain &msg);
-	void QuoteGroupMessage(const Cyan::GroupMessage &gm, const Cyan::MessageChain &msg);
+	std::string GetText(const Mirai::MessageChain& msg);
 }
 
 #endif

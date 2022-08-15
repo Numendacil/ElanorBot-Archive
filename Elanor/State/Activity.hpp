@@ -1,13 +1,13 @@
 #ifndef _ACTIVITY_HPP_
 #define _ACTIVITY_HPP_
 
-#include <State/StateBase.hpp>
 #include <mutex>
 #include <condition_variable>
 #include <memory>
 #include <string>
 #include <deque>
-#include <mirai/defs/QQType.hpp>
+#include <libmirai/Types/BasicTypes.hpp>
+#include <State/StateBase.hpp>
 
 namespace State
 {
@@ -18,7 +18,7 @@ public:
 	struct AnswerInfo
 	{
 		std::string answer;
-		Cyan::MessageId_t message_id;
+		Mirai::MessageId_t message_id;
 	};
 
 protected:

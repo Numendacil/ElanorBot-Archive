@@ -5,8 +5,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include <mirai/defs/defs.hpp>
-
 namespace Bot
 {
 

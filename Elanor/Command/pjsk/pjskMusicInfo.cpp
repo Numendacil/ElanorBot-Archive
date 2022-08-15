@@ -1,27 +1,26 @@
-#include <ThirdParty/json.hpp>
+#include <filesystem>
+#include <nlohmann/json.hpp>
 #include <ThirdParty/date.h>
 #include <State/CoolDown.hpp>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 #include <Utils/Utils.hpp>
-#include <filesystem>
 
-#include "mirai/defs/QQType.hpp"
-#include "mirai/messages/ImageMessage.hpp"
 #include "pjskMusicInfo.hpp"
 
-using namespace std;
 using namespace date;
 using json = nlohmann::json;
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool pjskMusicInfo::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool pjskMusicInfo::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() >= char_traits<char>::length("#pjsk info"))
+	if (str.length() >= std::char_traits<char>::length("#pjsk info"))
 	{
 		Utils::ToLower(str);
 		if (Utils::Tokenize(tokens, str) < 3)
@@ -35,7 +34,7 @@ bool pjskMusicInfo::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 
 
 
-bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool pjskMusicInfo::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	assert(tokens.size() > 2);
 	logging::INFO("Calling pjskMusicInfo <pjskMusicInfo>" + Utils::GetDescription(gm));
@@ -45,13 +44,13 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 
 	json music;
 	{
-		vector<pair<json, unordered_set<string>>> alias_pair;
-		ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
+		vector<std::pair<json, std::unordered_set<string>>> alias_pair;
+		std::ifstream ifile(MediaFilesPath + "music/pjsk/alias.json");
 
 		if (!ifile)
 		{
 			logging::WARN("Unable to open alias.json <pjskMusicInfo>");
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 
@@ -60,7 +59,7 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 
 		for (const auto &p : alias.items())
 		{
-			unordered_set<string> s;
+			std::unordered_set<string> s;
 			for (const auto &item : p.value()["alias"].items())
 			{
 				string str = string(item.value());
@@ -83,7 +82,7 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	if (music.is_null())
 	{
 		logging::INFO("未知歌曲 <pjskMusicInfo>: " + target + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(target + "是什么歌捏，不知道捏"));
 		return false;
 	}
 	int id = music["musicId"].get<int>();
@@ -98,12 +97,12 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 	string arranger;
 	logging::INFO("获取歌曲信息 <pjskMusicInfo>: " + title + Utils::GetDescription(gm, false));
 	{
-		ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
+		std::ifstream ifile(MediaFilesPath + "music/pjsk/meta.json");
 		
 		if (!ifile)
 		{
 			logging::WARN("Unable to open meta.json <pjskMusicInfo>");
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 			return false;
 		}
 
@@ -129,29 +128,29 @@ bool pjskMusicInfo::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, con
 			}
 		}
 	}
-	string msg = 	"歌曲id: " + to_string(id)
+	string msg = 	"歌曲id: " + std::to_string(id)
 			+ "\n曲名: " + title + ((translate.empty()) ? "" : "      译名: " + translate)
 			+ "\n作词: " + lyricist + "      作曲: " + composer + "      编曲: " + arranger
-			+ ((length < 0)? "" : "\n时长: " + to_string(int(length)) + 's')
+			+ ((length < 0)? "" : "\n时长: " + std::to_string(int(length)) + 's')
 			+ "\n其它名称:";
 	for (const auto& s : alias)
 	{
 		msg += " 「" + s + "」";
 	}
 
-	Cyan::MessageChain m = Cyan::MessageChain().Plain(msg);
+	Mirai::MessageChain m = Mirai::MessageChain().Plain(msg);
 
-	if (!cover_path.empty() && filesystem::exists(cover_path))
+	if (!cover_path.empty() && std::filesystem::exists(cover_path))
 	{
-		m += string("\n");
-		m.Add<Cyan::ImageMessage>(Cyan::MiraiImage{.Path = cover_path});
+		m += Mirai::PlainMessage("\n");
+		m.Image("", "", cover_path, "");
 	}
-	if (!cover_org_path.empty() && filesystem::exists(cover_org_path))
+	if (!cover_org_path.empty() && std::filesystem::exists(cover_org_path))
 	{
-		m += string("\n");
-		m.Add<Cyan::ImageMessage>(Cyan::MiraiImage{.Path = cover_org_path});
+		m += Mirai::PlainMessage("\n");
+		m.Image("", "", cover_org_path, "");
 	}
-	client.Send(gm.Sender.Group.GID, m);
+	client.SendGroupMessage(gm.GetSender().group.id, m);
 	
 	return true;
 }

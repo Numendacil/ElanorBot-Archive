@@ -1,11 +1,12 @@
 #ifndef _TRIGGER_STATUS_HPP_
 #define _TRIGGER_STATUS_HPP_
 
-#include <State/StateBase.hpp>
 #include <mutex>
 #include <string>
 #include <unordered_set>
 #include <utility>
+
+#include <State/StateBase.hpp>
 
 namespace State
 {

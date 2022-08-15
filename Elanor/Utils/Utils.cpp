@@ -6,21 +6,25 @@
 #include <algorithm>
 #include <cctype>
 
-#include <ThirdParty/httplib.hpp>
+#include <httplib.h>
 #include <ThirdParty/log.h>
+#include <libmirai/mirai.hpp>
+
 #include <Command/Command.hpp>
 #include <State/State.hpp>
 #include <Trigger/Trigger.hpp>
-#include <Utils/Factory.hpp>
 #include <Utils/Utils.hpp>
 
-using namespace std;
+using json = nlohmann::json;
+using std::string;
+using std::vector;
+using std::pair;
 
 namespace Utils
 {
 	bool BotConfig::FromFile(const string &filepath)
 	{
-		ifstream ifile(filepath);
+		std::ifstream ifile(filepath);
 		if (ifile.fail())
 		{
 			logging::WARN("Failed to open file <BotConfig>: " + filepath);
@@ -30,7 +34,7 @@ namespace Utils
 		{
 			this->config = json::parse(ifile);
 		}
-		catch (const exception& e)
+		catch (const std::exception& e)
 		{
 			logging::WARN("Failed to parse file <BotConfig>: " + string(e.what()));
 			return false;
@@ -41,8 +45,8 @@ namespace Utils
 
 namespace Utils
 {
-	random_device rd;
-	mt19937 rng_engine(rd());
+	std::random_device rd;
+	std::mt19937 rng_engine(rd());
 	BotConfig Configs;
 
 	string exec(const vector<string>& cmd)
@@ -129,10 +133,10 @@ namespace Utils
 	{
 		string s = str;
 		ToLower(s);
-		const string TrueStr[] = {"1", "true", "on", "yes"};
-		const string FalseStr[] = {"0", "false", "off", "no"};
-		static_assert(extent<decltype(TrueStr)>::value == extent<decltype(FalseStr)>::value);
-		for (int i = 0; i < extent<decltype(TrueStr)>::value; i++)
+		constexpr std::string_view TrueStr[] = {"1", "true", "on", "yes"};
+		constexpr std::string_view FalseStr[] = {"0", "false", "off", "no"};
+		static_assert(std::extent<decltype(TrueStr)>::value == std::extent<decltype(FalseStr)>::value);
+		for (int i = 0; i < std::extent<decltype(TrueStr)>::value; i++)
 		{
 			if (s == TrueStr[i])
 				return 1;
@@ -144,7 +148,7 @@ namespace Utils
 
 	int Tokenize(vector<string> &token, string str, int count)
 	{
-		istringstream iss(str);
+		std::istringstream iss(str);
 		string s;
 		int i = 0;
 		while (iss >> quoted(s) && i != count)
@@ -155,9 +159,9 @@ namespace Utils
 		return token.size();
 	}
 
-	bool CheckHttpResponse(const httplib_ssl_zlib::Result& result, const string& Caller)
+	bool CheckHttpResponse(const httplib::Result& result, const string& Caller)
 	{
-		if (result.error() != httplib_ssl_zlib::Error::Success || !result)
+		if (result.error() != httplib::Error::Success || !result)
 		{
 			logging::WARN("Connection to server failed <" + Caller + ">: " + to_string(result.error()));
 			return false;
@@ -170,9 +174,9 @@ namespace Utils
 		return true;
 	}
 
-	bool CheckHttpResponse(const httplib_ssl_zlib::Result& result, const string& Caller, int& code)
+	bool CheckHttpResponse(const httplib::Result& result, const string& Caller, int& code)
 	{
-		if (result.error() != httplib_ssl_zlib::Error::Success || !result)
+		if (result.error() != httplib::Error::Success || !result)
 		{
 			logging::WARN("Connection to server failed <" + Caller + ">: " + to_string(result.error()));
 			code = -1;
@@ -188,16 +192,39 @@ namespace Utils
 		return true;
 	}
 
-	string GetDescription(const Cyan::GroupMessage &gm, bool from)
+	void SetClientOptions(httplib::Client& cli)
 	{
-		string member = gm.Sender.MemberName + "(" + to_string(gm.Sender.QQ.ToInt64()) + ")";
-		string group = gm.Sender.Group.Name + "(" + to_string(gm.Sender.Group.GID.ToInt64()) + ")";
+		cli.set_compress(true);
+		cli.set_decompress(true);
+		cli.set_connection_timeout(300);
+		cli.set_read_timeout(300);
+		cli.set_write_timeout(120);
+		cli.set_keep_alive(true);
+	}
+
+	string GetDescription(const Mirai::GroupMessageEvent &gm, bool from)
+	{
+		string member = gm.GetSender().MemberName + "(" + gm.GetSender().id.to_string() + ")";
+		string group = gm.GetSender().group.name + "(" + gm.GetSender().group.id.to_string() + ")";
 		return ((from) ? "\t<- [" : "\t-> [") + member + ", " + group + "]";
 	}
 
-	string GetDescription(const Cyan::FriendMessage &fm, bool from)
+	string GetDescription(const Mirai::FriendMessageEvent &fm, bool from)
 	{
-		string profile = fm.Sender.NickName + "(" + to_string(fm.Sender.QQ.ToInt64()) + ")";
+		string profile = fm.GetSender().nickname + "(" + fm.GetSender().id.to_string() + ")";
 		return ((from) ? "\t<- [" : "\t-> [") + profile + "]";
+	}
+
+	string GetText(const Mirai::MessageChain& msg)
+	{
+		string text;
+		for(const auto& p : msg)
+		{
+			if (p->GetType() == Mirai::PlainMessage::_TYPE_)
+			{
+				text += static_cast<Mirai::PlainMessage*>(p.get())->GetText();
+			}
+		}
+		return text;
 	}
 }

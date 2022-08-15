@@ -1,8 +1,9 @@
 #ifndef	_MORNING_TRIGGER_HPP_
 #define _MORNING_TRIGGER_HPP_
 
-#include <Trigger/CronTriggerBase.hpp>
 #include <string_view>
+
+#include <Trigger/CronTriggerBase.hpp>
 
 namespace Trigger
 {

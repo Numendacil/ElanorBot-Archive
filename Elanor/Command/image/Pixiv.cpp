@@ -1,26 +1,27 @@
 #include <ThirdParty/log.h>
-#include <ThirdParty/json.hpp>
-#include <ThirdParty/httplib.hpp>
+#include <nlohmann/json.hpp>
+#include <httplib.h>
 #include <State/CoolDown.hpp>
 #include <Utils/Utils.hpp>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 
-#include <mirai.h>
+#include <libmirai/mirai.hpp>
 
 #include "Pixiv.hpp"
 
-using namespace std;
 using json = nlohmann::json;
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool Pixiv::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool Pixiv::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() > char_traits<char>::length("#pix"))
+	if (str.length() > std::char_traits<char>::length("#pix"))
 	{
 		if (Utils::Tokenize(tokens, str) < 2)
 			return false;
@@ -31,30 +32,31 @@ bool Pixiv::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool GetPixivById(const Cyan::GroupMessage& gm, Bot::Group& group, long pid, int page)
+bool GetPixivById(const Mirai::GroupMessageEvent& gm, Bot::Group& group, long pid, int page)
 {
 	using namespace date;
 	using namespace std::chrono;
 	Bot::Client& client = Bot::Client::GetClient();
 	auto cd = group.GetState<State::CoolDown>();
-	chrono::seconds remaining;
+	std::chrono::seconds remaining;
 	auto holder = cd->GetRemaining("Pixiv", 20s, remaining);
 
 	if (remaining > 0s)
 	{
-		stringstream ss;
+		std::stringstream ss;
 		ss << remaining;
 		logging::INFO("冷却剩余<Pixiv>: " + ss.str() + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
 		return false;
 	}
 	assert(holder);
 	const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
-	httplib_ssl_zlib::Client cli(url_local);
-	auto result = cli.Get("/pixiv/id/", {{"id", to_string(pid)}, {"page", to_string(page)}}, {{"Accept-Encoding", "gzip"}});
+	httplib::Client cli(url_local);
+	Utils::SetClientOptions(cli);
+	auto result = cli.Get("/pixiv/id/", {{"id", std::to_string(pid)}, {"page", std::to_string(page)}}, {{"Accept-Encoding", "gzip"}});
 	if (!Utils::CheckHttpResponse(result, "Pixiv"))
 	{
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 	json msg = json::parse(result->body);
@@ -63,7 +65,7 @@ bool GetPixivById(const Cyan::GroupMessage& gm, Bot::Group& group, long pid, int
 	if (!msg.contains("image"))
 	{
 		logging::INFO("上传结果<Pixiv>: 未找到图片" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(msg["info"].get<string>()));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(msg["info"].get<string>()));
 		return true;
 	}
 	json info = json::parse(msg["info"].get<string>());
@@ -90,22 +92,22 @@ bool GetPixivById(const Cyan::GroupMessage& gm, Bot::Group& group, long pid, int
 		int num_page = info["page_count"].get<int>();
 		if (num_page > 1)
 		{
-			message += "页码: " + to_string((num_page > page - 1) ? page : 1) + "/" + to_string(num_page) + "\n";
+			message += "页码: " + std::to_string((num_page > page - 1) ? page : 1) + "/" + std::to_string(num_page) + "\n";
 		}
 	}
-	catch (const exception& e)
+	catch (const std::exception& e)
 	{
 		logging::WARN("Error occured while parsing result <Pixiv>: " +string(e.what()) + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 
 	logging::INFO("上传结果 <Pixiv>" + Utils::GetDescription(gm, false));
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(message).Image({.Base64 = msg["image"]}));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(message).Image("", "", "", msg["image"]));
 	return true;
 }
 
-bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool Pixiv::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling Pixiv<Pixiv>" + Utils::GetDescription(gm));
 	assert(tokens.size() > 1);
@@ -115,7 +117,7 @@ bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vecto
 	if (command == "help" || command == "h" || command == "帮助")
 	{
 		logging::INFO("帮助文档<Pixiv>" + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("usage:\n#pixiv id [pid] (page)"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("usage:\n#pixiv id [pid] (page)"));
 		return true;
 	}
 	else if (command == "id")
@@ -123,7 +125,7 @@ bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vecto
 		if (tokens.size() < 3)
 		{
 			logging::INFO("缺少参数[pid] <Pixiv>" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("不发pid看个锤子图"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("不发pid看个锤子图"));
 			return true;
 		}
 		long pid = 0;
@@ -132,12 +134,12 @@ bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vecto
 		{
 			pid = stol(tokens[2]);
 			if (pid <= 0)
-				throw logic_error("[pid] must be positive");
+				throw std::logic_error("[pid] must be positive");
 		}
-		catch (const logic_error& e)
+		catch (const std::logic_error& e)
 		{
 			logging::INFO("无效[pid] <Pixiv>: " + tokens[2] + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[2] + "是个锤子pid"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(tokens[2] + "是个锤子pid"));
 			return false;
 		}
 		if (tokens.size() > 3)
@@ -146,12 +148,12 @@ bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vecto
 			{
 				page = stoi(tokens[3]);
 				if (page <= 0)
-					throw logic_error("[page] must be positive");
+					throw std::logic_error("[page] must be positive");
 			}
-			catch (const logic_error &e)
+			catch (const std::logic_error &e)
 			{
 				logging::INFO("无效[page] <Pixiv>: " + tokens[3] + Utils::GetDescription(gm, false));
-				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[3] + "是个锤子页码"));
+				client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(tokens[3] + "是个锤子页码"));
 				return false;
 			}
 		}
@@ -159,7 +161,7 @@ bool Pixiv::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vecto
 	}
 
 	logging::INFO("未知指令 <Pixiv>: " + tokens[1] + Utils::GetDescription(gm, false));
-	client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[1] + "是什么指令捏，不认识捏"));
+	client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(tokens[1] + "是什么指令捏，不认识捏"));
 	return false;
 }
 

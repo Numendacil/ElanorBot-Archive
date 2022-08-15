@@ -1,26 +1,28 @@
 #include <ThirdParty/log.h>
-#include <ThirdParty/json.hpp>
-#include <ThirdParty/httplib.hpp>
+#include <nlohmann/json.hpp>
+#include <httplib.h>
 #include <State/CoolDown.hpp>
 #include <Utils/Utils.hpp>
 #include <Group/Group.hpp>
 #include <Client/Client.hpp>
 
-#include <mirai.h>
+#include <libmirai/mirai.hpp>
+#include <string>
 
 #include "ImageSearch.hpp"
 
-using namespace std;
 using json = nlohmann::json;
+using std::string;
+using std::vector;
 
 namespace GroupCommand
 {
 
-bool ImageSearch::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
+bool ImageSearch::Parse(const Mirai::MessageChain& msg, vector<string>& tokens)
 {
-	string str = msg.GetPlainText();
+	string str = Utils::GetText(msg);
 	Utils::ReplaceMark(str);
-	if (str.length() >= char_traits<char>::length("#search"))
+	if (str.length() >= std::char_traits<char>::length("#search"))
 	{
 		Utils::ToLower(str);
 		Utils::Tokenize(tokens, str);
@@ -30,7 +32,7 @@ bool ImageSearch::Parse(const Cyan::MessageChain& msg, vector<string>& tokens)
 	return false;
 }
 
-bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const vector<string>& tokens) 
+bool ImageSearch::Execute(const Mirai::GroupMessageEvent& gm, Bot::Group& group, const vector<string>& tokens) 
 {
 	logging::INFO("Calling ImageSearch <ImageSearch>" + Utils::GetDescription(gm));
 	Bot::Client& client = Bot::Client::GetClient();
@@ -40,7 +42,7 @@ bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 		if (tokens[1] == "help" || tokens[1] == "h" || tokens[1] == "帮助")
 		{
 			logging::INFO("帮助文档 <ImageSearch>" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("usage:\n#ImageSearch (server) [图片]"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("usage:\n#ImageSearch (server) [图片]"));
 			return true;
 		}
 
@@ -62,46 +64,46 @@ bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 		else
 		{
 			logging::INFO("未知搜索引擎 <ImageSearch>: " + tokens[1] + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain(tokens[1] + "是什么搜索引擎捏，不知道捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain(tokens[1] + "是什么搜索引擎捏，不知道捏"));
 			return false;
 		}
 	}
 	
-	logging::INFO("搜索引擎 <ImageSearch>: " + to_string(server) + Utils::GetDescription(gm, false));
+	logging::INFO("搜索引擎 <ImageSearch>: " + std::to_string(server) + Utils::GetDescription(gm, false));
 	string url = "";
-	auto img = gm.MessageChain.GetAll<Cyan::ImageMessage>();
+	auto img = gm.GetMessage().GetAll<Mirai::ImageMessage>();
 	if (img.size())
 	{
-		url = img[0].ToMiraiImage().Url;
+		url = img[0].GetImage().url;
 	}
 	else
 	{
-		auto quote = gm.MessageChain.GetAll<Cyan::QuoteMessage>();
+		auto quote = gm.GetMessage().GetAll<Mirai::QuoteMessage>();
 		if (quote.empty())
 		{
 			logging::INFO("格式错误 <ImageSearch>: 未附带图片或回复" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("图捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("图捏"));
 			return false;
 		}
 		try
 		{
-			Cyan::GroupMessage quote_gm = client.Call(&Cyan::MiraiBot::GetGroupMessageFromId, quote[0].MessageId());
-			img = quote_gm.MessageChain.GetAll<Cyan::ImageMessage>();
+			Mirai::GroupMessageEvent quote_gm = gm.GetMiraiClient().GetGroupMessage(quote[0].GetQuoteId(), quote[0].GetGroupId());
+			img = quote_gm.GetMessage().GetAll<Mirai::ImageMessage>();
 			if (img.size())
 			{
-				url = img[0].ToMiraiImage().Url;
+				url = img[0].GetImage().url;
 			}
 			else
 			{
 				logging::INFO("格式错误 <ImageSearch>: 回复内容不包含图片" + Utils::GetDescription(gm, false));
-				client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("图捏"));
+				client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("图捏"));
 				return false;
 			}
 		}
-		catch (Cyan::MiraiApiHttpException &)
+		catch (Mirai::MiraiApiHttpException &)
 		{
 			logging::INFO("无法从回复内容获得图片 <ImageSearch>" + Utils::GetDescription(gm, false));
-			client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("消息太久了，看不到是什么图捏"));
+			client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("消息太久了，看不到是什么图捏"));
 			return false;
 		}
 	}
@@ -110,7 +112,7 @@ bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 	using namespace date;
 	using namespace std::chrono;
 
-	chrono::seconds cooldown;
+	std::chrono::seconds cooldown;
 	string path;
 
 	switch(server)
@@ -135,36 +137,37 @@ bool ImageSearch::Execute(const Cyan::GroupMessage& gm, Bot::Group& group, const
 
 
 	auto cd = group.GetState<State::CoolDown>();
-	chrono::seconds remaining;
+	std::chrono::seconds remaining;
 	auto holder = cd->GetRemaining("ImageSearch", cooldown, remaining);
 
 	if (remaining > 0s)
 	{
-		stringstream ss;
+		std::stringstream ss;
 		ss << remaining;
 		logging::INFO("冷却剩余 <ImageSearch>: " + ss.str() + Utils::GetDescription(gm, false));
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("冷却中捏（剩余: " + ss.str() + "）"));
 		return false;
 	}
 	assert(holder);
 
 	const string url_local = Utils::Configs.Get<string>("/PythonServer"_json_pointer, "localhost:8000");
-	httplib_ssl_zlib::Client cli( url_local);
+	httplib::Client cli(url_local);
+	Utils::SetClientOptions(cli);
 	auto result = cli.Get(("/image-search/" + path).c_str(), {{"url", url}}, {{"Accept-Encoding", "gzip"}});
 	if (!Utils::CheckHttpResponse(result, "ImageSearch"))
 	{
-		client.Send(gm.Sender.Group.GID, Cyan::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
+		client.SendGroupMessage(gm.GetSender().group.id, Mirai::MessageChain().Plain("该服务寄了捏，怎么会事捏"));
 		return false;
 	}
 	json msg = json::parse(result->body);
 
 	assert(msg.contains("info"));
-	Cyan::MessageChain message;
-	message += msg["info"];
+	Mirai::MessageChain message;
+	message += Mirai::PlainMessage(msg["info"].get<string>());
 	if (msg.contains("image"))
-		message = message + Cyan::MessageChain().Image({.Base64 = msg["image"]});
+		message += Mirai::ImageMessage("", "", "", msg["image"]);
 	logging::INFO("上传结果 <ImageSearch>" + Utils::GetDescription(gm, false));
-	client.Send(gm.Sender.Group.GID, message);
+	client.SendGroupMessage(gm.GetSender().group.id, message);
 	return true;
 }
 

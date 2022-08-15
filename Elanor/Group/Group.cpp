@@ -1,28 +1,28 @@
 #include <exception>
 #include <filesystem>
 #include <fstream>
-#include <State/State.hpp>
+#include <memory>
 
-#include <ThirdParty/json.hpp>
+#include <nlohmann/json.hpp>
+#include <State/State.hpp>
 #include <ThirdParty/log.h>
 
 #include <Utils/Timer.hpp>
-#include <memory>
 
 #include "Group.hpp"
 
 
-using namespace std;
 using json = nlohmann::json;
+using std::string;
 
 namespace Bot
 {
 
-unordered_map<string, unique_ptr<State::StateBase>> RegisterStates()
+std::unordered_map<string, std::unique_ptr<State::StateBase>> RegisterStates()
 {
-	unordered_map<string, unique_ptr<State::StateBase>> v;
+	std::unordered_map<string, std::unique_ptr<State::StateBase>> v;
 
-	#define REGISTER(_class_) v[string(_class_::_NAME_)] = make_unique<_class_>();
+	#define REGISTER(_class_) v[string(_class_::_NAME_)] = std::make_unique<_class_>();
 
 	REGISTER(State::AccessCtrlList)
 	REGISTER(State::Activity)
@@ -38,7 +38,7 @@ unordered_map<string, unique_ptr<State::StateBase>> RegisterStates()
 }
 
 
-Group::Group(Cyan::GID_t group_id, Cyan::QQ_t owner_id,
+Group::Group(Mirai::GID_t group_id, Mirai::QQ_t owner_id,
 	const std::vector<std::pair<std::string, int>>& command_list,
 	const std::vector<std::pair<std::string, bool>>& trigger_list) 
 	: gid(group_id), suid(owner_id), States(RegisterStates())
@@ -53,23 +53,23 @@ Group::Group(Cyan::GID_t group_id, Cyan::QQ_t owner_id,
 
 	this->FromFile();
 	
-	Utils::Timer::GetInstance().LaunchLoop([this]{ this->ToFile(); }, chrono::hours(1), true);
+	Utils::Timer::GetInstance().LaunchLoop([this]{ this->ToFile(); }, std::chrono::hours(1), true);
 }
 
 void Group::ToFile(void)
 {
 	json content;
 	{
-		lock_guard<mutex> lk(this->mtx);
+		std::lock_guard<std::mutex> lk(this->mtx);
 		for (const auto& p : this->States)
 			if (!p.second->Serialize().empty())
 				content["States"][p.first] = p.second->Serialize();
 	}
 
-	filesystem::path Path = "./bot";
+	std::filesystem::path Path = "./bot";
 	try
 	{
-		filesystem::create_directory(Path);
+		std::filesystem::create_directory(Path);
 	}
 	catch(const std::exception& e)
 	{
@@ -77,10 +77,10 @@ void Group::ToFile(void)
 		return;
 	}
 
-	Path /= to_string(this->gid.ToInt64());
+	Path /= this->gid.to_string();
 	{
-		lock_guard<mutex> lk(this->mtx_file);
-		ofstream file(Path);
+		std::lock_guard<std::mutex> lk(this->mtx_file);
+		std::ofstream file(Path);
 		if (!file)
 		{
 			logging::WARN("Failed to open file " + string(Path) + " for writing");
@@ -94,14 +94,14 @@ void Group::ToFile(void)
 void Group::FromFile(void)
 {
 	json content;
-	filesystem::path Path = "./bot";
-	Path /= to_string(this->gid.ToInt64());
-	if (!filesystem::exists(Path))
+	std::filesystem::path Path = "./bot";
+	Path /= this->gid.to_string();
+	if (!std::filesystem::exists(Path))
 		return;
 	try
 	{
-		lock_guard<mutex> lk(this->mtx_file);
-		ifstream file(Path);
+		std::lock_guard<std::mutex> lk(this->mtx_file);
+		std::ifstream file(Path);
 		if (!file)
 		{
 			logging::WARN("Failed to open file " + string(Path) + " for reading");
@@ -116,7 +116,7 @@ void Group::FromFile(void)
 	}
 	logging::INFO("Reading from file " + string(Path));
 	{
-		lock_guard<mutex> lk(this->mtx);
+		std::lock_guard<std::mutex> lk(this->mtx);
 		if (content.contains("States"))
 		{
 			assert(content["States"].type() == json::value_t::object);

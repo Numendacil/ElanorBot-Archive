@@ -1,5 +1,5 @@
+#include <nlohmann/json.hpp>
 #include "TriggerStatus.hpp"
-#include <ThirdParty/json.hpp>
 
 using json = nlohmann::json;
 
